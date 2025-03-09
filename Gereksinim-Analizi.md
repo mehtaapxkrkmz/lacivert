@@ -6,6 +6,7 @@ Tüm gereksinimlerinizi çıkardıktan sonra beraber tartışıyoruz ve son gere
 3. .....
 
 # Gereksinim Dağılımları
-1. [Ali Atabak'ın Gereksinimleri](Ali-Atabak-Gereksinimler.md)
-2. [Ayşe Topu Tut'nn Gereksinimleri](Ali-Atabak-Gereksinimler.md)
-3. ........
+1. [Enis Özgür'ün Gereksinimleri](Enis-Özgür-Gereksinimler.md)
+2. [Mehtap Korkmaz'ın Gereksinimleri](Mehtap-Korkmaz-Gereksinimler.md)
+3. [Nida Ekinci'nin Gereksinimleri](Nida-Ekinci-Gereksinimler.md)
+4. [Sude Melek Acar'ın Gereksinimleri](Sude-Melek-Acar-Gereksinimler.md)

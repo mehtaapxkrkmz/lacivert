@@ -12,7 +12,7 @@
 
 **Grup Adı:** Belirlediğiniz grup adı
 
-**Proje Ekibi:** Ali, Veli, Selami, Ayşe, Fatma, Hayriye
+**Proje Ekibi:** Enis Özgür, Mehtap Korkmaz, Nida Ekinci, Sude Melek Acar
 
 1. [Gereksinim Analizi](Gereksinim-Analizi.md)
 2. [Durum Diyagramı](Durum-Diyagramı.md)
