@@ -1,8 +1,14 @@
-1. Giriş Yapma: Kullanıcıların hizmetlere erişmek için onlardan istenen kimlik doğrulama sürecidir. Bu gereksinim, kullanıcının hesabına yalnızca yetkili kullanıcıların erişmesini sağlamak için kullanılır ve aynı zamanda kişisel verilerin güvenliği açısından da önemlidir. Giriş yapma gereksinimi, genellikle bir kullanıcı adı ve şifre kombinasyonu veya başka bir kimlik doğrulama yöntemi ile gerçekleştirilir. 
-2. Üye Olma: Kullanıcıların yeni hesaplar oluşturarak hizmetin tüm özelliklerine erişmelerini ve etkileşimde bulunmalarını sağlar. Kullanıcıların kişisel bilgilerinin toplanmasını ve hesap doğrulama işlemlerinin yapılmasını içerir. Kullanıcılar genellikle bir kullanıcı adı ve şifre kombinasyonu belirleyerek hesaplarını oluştururlar. Bu işlevselliğin kullanımı, kullanıcıların kişiselleştirilmiş bir deneyim yaşamalarına ve hizmetin kullanımını kolaylaştırmalarına olanak tanır.
+1-Ürün detaylarını görüntüleme: Kullanıcılar, seçtikleri ürünün açıklamasını, fiyatını, özelliklerini görebilecek.
+
+2-Ürün ekleme: Yetkili kişiler (örneğin mağaza yöneticileri), sisteme yeni ürünler ekleyebilir. Yani bir mağazaya yeni gelen giyim ürünleri sistemde listelenerek müşterilere sunulabilir.
+
+3-Ürün silme: Yetkili kişiler, artık satılmayan veya stokta bulunmayan ürünleri sistemden kaldırabilir. Böylece müşteriler, satın alamayacakları ürünleri görüp zaman kaybetmez.
+
+4-Ürün bilgisi güncelleme: Yetkili kişiler, bir ürünün adını, fiyatını, açıklamasını veya diğer bilgilerini değiştirebilir. Örneğin, bir ürün indirime girdiyse fiyatını düşürebilir veya açıklamasına yeni bilgiler ekleyebilirler.
+
+5-Slayt görüntüleme: Kullanıcı, bir ürünün üzerine geldiğinde, o ürüne ait farklı açılardan çekilmiş fotoğrafları slayt şeklinde görebilir. Böylece ürünü daha iyi inceleyebilir, mesela bir çantanın hem önünü hem arkasını görebilir.
+
+6-İndirimli ürün görseline etiket yerleştirme: İndirime giren ürünlerin fotoğraflarında, "İndirim" veya "%20 İndirim" gibi etiketler görünür. Bu sayede kullanıcılar, hangi ürünlerin indirimde olduğunu kolayca fark edebilir.
 
 
-
-
- ----
  
