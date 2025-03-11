@@ -1,7 +1,11 @@
-1. Giriş Yapma: Kullanıcıların hizmetlere erişmek için onlardan istenen kimlik doğrulama sürecidir. Bu gereksinim, kullanıcının hesabına yalnızca yetkili kullanıcıların erişmesini sağlamak için kullanılır ve aynı zamanda kişisel verilerin güvenliği açısından da önemlidir. Giriş yapma gereksinimi, genellikle bir kullanıcı adı ve şifre kombinasyonu veya başka bir kimlik doğrulama yöntemi ile gerçekleştirilir. 
-2. Üye Olma: Kullanıcıların yeni hesaplar oluşturarak hizmetin tüm özelliklerine erişmelerini ve etkileşimde bulunmalarını sağlar. Kullanıcıların kişisel bilgilerinin toplanmasını ve hesap doğrulama işlemlerinin yapılmasını içerir. Kullanıcılar genellikle bir kullanıcı adı ve şifre kombinasyonu belirleyerek hesaplarını oluştururlar. Bu işlevselliğin kullanımı, kullanıcıların kişiselleştirilmiş bir deneyim yaşamalarına ve hizmetin kullanımını kolaylaştırmalarına olanak tanır.
+1. Yorum Ekleme: Kullanıcılar, bir ürünü satın almadan önce veya satın aldıktan sonra ürün hakkındaki düşüncelerini yorum yaparak paylaşabilir. Ürün için yapılan yorumlar; alışveriş yapacak diğer kullanıcılara ürünün kalitesi, kullanımı veya beklentileri karşılayıp karşılamadığı gibi konularda bilgi sunar. Böylece kullanıcılar, gerçek deneyimlere dayalı geri bildirimleri okuyarak alışveriş kararları verebilir.
 
+2. Yorum Silme: Kullanıcılar, daha önce yazdıkları yorumları istediği zaman silebilir. Bu özellik, kullanıcıların yanlış yazdığı veya zamanla geçerliliğini yitiren yorumları kaldırmasını sağlar. Örneğin, kullanıcının ürünle ilgili yaşadığı deneyim değişirse veya yorumunda hata yapmışsa bu yorumu silebilir.
 
+3. Yorum Güncelleme: Kullanıcılar, daha önce yazdığı yorumları düzenleyebilir. Örneğin kullanıcı, ürünle ilgili deneyimlerini güncelleyebilir veya önceki yorumlarında eksik ya da hatalı bir bilgi olduğunu fark ederse bu bilgiyi düzeltebilir.
 
+4.Puanlama: Kullanıcılar, ürünleri belirli bir puanlama sistemiyle (örneğin 1 ile 5 arasında yıldızlar) değerlendirir. Her bir puan, ürünün kullanıcı tarafından ne kadar beğenildiğini gösterir. 1 yıldız düşük memnuniyeti, 5 yıldız ise yüksek memnuniyeti ifade eder. Bu sistem, ürünün genel kalitesi hakkında bir değerlendirme sağlar ve kullanıcının farklı ürünleri karşılaştırarak hangi ürünün daha yüksek puan aldığını görmesini kolaylaştırır. Ayrıca kullanıcının ürün hakkında genel bir fikir edinmesine olanak tanır.
 
- 
+5.Ürün Sıralama: Kullanıcılar, ürünleri fiyatlarına göre artan veya azalan sırayla listeleyebilir. Bu özellik, kullanıcının belirli bir fiyat aralığında ürün arayabilmesini sağlar.
+
+6.Ürün Filtreleme: Kullanıcılar, ürünleri özelliklerine (örneğin renk, fiyat, cinsiyet) göre filtreleyebilir. Bu özellik, kullanıcının aradığı ürünleri belirli özelliklere göre listelemesini sağlar.
