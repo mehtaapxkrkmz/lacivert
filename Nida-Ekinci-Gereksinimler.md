@@ -1,7 +1,11 @@
-1. Giriş Yapma: Kullanıcıların hizmetlere erişmek için onlardan istenen kimlik doğrulama sürecidir. Bu gereksinim, kullanıcının hesabına yalnızca yetkili kullanıcıların erişmesini sağlamak için kullanılır ve aynı zamanda kişisel verilerin güvenliği açısından da önemlidir. Giriş yapma gereksinimi, genellikle bir kullanıcı adı ve şifre kombinasyonu veya başka bir kimlik doğrulama yöntemi ile gerçekleştirilir. 
-2. Üye Olma: Kullanıcıların yeni hesaplar oluşturarak hizmetin tüm özelliklerine erişmelerini ve etkileşimde bulunmalarını sağlar. Kullanıcıların kişisel bilgilerinin toplanmasını ve hesap doğrulama işlemlerinin yapılmasını içerir. Kullanıcılar genellikle bir kullanıcı adı ve şifre kombinasyonu belirleyerek hesaplarını oluştururlar. Bu işlevselliğin kullanımı, kullanıcıların kişiselleştirilmiş bir deneyim yaşamalarına ve hizmetin kullanımını kolaylaştırmalarına olanak tanır.
+1- Sepete Ürün Ekleme: Kullanıcı satın almayı düşündüğü ürünü, ürün sayfasındaki “Sepete Ekle” seçeneğiyle sepetine kaydedip alışverişine devam edebilecek. “Sepet” sayfası görüntülendiğinde ürünlerin görseli, başlığı, ürün kodu, bedeni, fiyatı ve adedi görülebilecek. Listelenmiş ürünlerin altında sipariş toplamı ve “Satın Al” butonu yer alacak.
 
+2- Sepetten Ürün Silme: “Sepet” sayfasında görüntülenen ürünlerin yanındaki çöp kutusu simgesi ile ürün sepetten silinebilecek.
 
+3- Sepet Güncelleme: “Sepet” sayfasında görüntülenen ürünlerin adedi, stok sayısına bağlı olarak değiştirilebilecek.
 
+4- Vitrin Sayfasını Görüntüleme: Anasayfayadaki, döneme ait kampanya ve koleksiyon görsellerinden oluşan ve ilgili filtrenin uygulanmış olduğu sayfaya yönlendiren linkler sayesinde kullanıcıların yeniliklerden daha kolay haberdar olması sağlanacak ve sitede gezinme kolaylaştırılacak.
 
- ----
+5- Kategorilere Göre Filtreleme: Anasayfadaki gezinti çubuğunda yer alan kategori başlıklarına tıklanarak alt kategoriler görüntülenebilecek. Kullanıcı bunlardan birine tıkladığında ilgili filtrenin uygulanmış olduğu sayfaya yönlendirilecek. 
+
+6- Ürün Arama: Anasayfadaki gezinti çubuğunda yer alan büyüteç simgesine tıklandığında, açılan “Arama” sayfasında arama yapılabilecek. Aynı zamanda arama metnine yazılmak üzere tıklanabilir kategori başlıkları yer alacak.
