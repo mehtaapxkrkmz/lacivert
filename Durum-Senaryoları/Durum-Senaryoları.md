@@ -2,5 +2,5 @@ Gereksinim analizi sayfasında olduğu gibi herkes kendi ismiyle aşağıya numa
 
 1. [Enis Özgür Durum Senaryosu](https://github.com/mehtaapxkrkmz/lacivert/raw/main/Durum-Senaryolar%C4%B1/Enis%C3%96zg%C3%BCrDurumSenaryosu.pdf)
 2. [Mehtap Korkmaz Durum Senaryosu](MehtapKorkmazDurumSenaryosu.pdf)
-3. [Nida Ekinci Durum Senaryosu](NidaEkinciDurumSenaryosu.pdf)
+3. [Nida Ekinci Durum Senaryosu](https://github.com/mehtaapxkrkmz/lacivert/raw/main/Durum-Senaryolar%C4%B1/NidaEkinciDurumSenaryosu.pdf)
 4. [Sude Melek Acar Durum Senaryosu](SudeMelekAcarDurumSenaryosu.pdf)
