@@ -10,7 +10,7 @@
 8. Sepetten ürün silme: Kullanıcıların sepete ekledikleri ürünleri kaldırması (Nida Ekinci)
 9. Sepet güncelleme: Kullanıcıların sepetlerindeki ürünlerin adetlerini değiştirmesi veya sepet içeriğini güncellemesi (Nida Ekinci)
 10. Kategorilere göre filtreleme: Kullanıcıların ana menüden belirli kategorilere tıklayarak ilgili ürünleri filtrelemesi (Nida Ekinci)
-11. Vitrin sayfasını görüntüleme: Kullanıcıların anasayfada öne çıkan kampanya ve koleksiyon görsellerini görüntülemesi (Nida Ekinci)
+11. Sepeti Görüntüleme: Kullanıcının sepetten ürün silebileceği ve sepeti güncelleyebileceği "Sepet" sayfasını görüntülemesi (Nida Ekinci)
 12. Ürün arama: Kullanıcıların arama çubuğunu kullanarak istedikleri ürünleri bulabilmesi (Nida Ekinci)
 13. Ürün detaylarını görüntüleme: Kullanıcıların seçtikleri ürünün açıklamasını, fiyatını ve diğer detaylarını incelemesi (Enis Özgür)
 14. Ürün ekleme: Yetkili kullanıcıların veya yöneticilerin sisteme yeni ürünler eklemesi (Enis Özgür)
