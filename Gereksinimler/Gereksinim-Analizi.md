@@ -1,5 +1,7 @@
 # Gereksinimler
 
+- "Vitrin Sayfasını Görüntüleme" gereksinimi yerine "Sepeti Görüntüleme" gereksinimi eklendi.
+
 1. Üye Olma: E-posta, kullanıcı adı, şifre ile kullanıcı kaydı (Sude Melek Acar)
 2. Şifre Kurtarma: Unutulan şifreyi sıfırlama işlemi (Sude Melek Acar)
 3. Profil Güncelleme: Kullanıcı profil bilgilerini güncelleme(ad,soyad,iletişim bilgileri vb.) (Sude Melek Acar)
