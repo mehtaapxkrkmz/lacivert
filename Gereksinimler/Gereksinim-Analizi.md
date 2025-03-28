@@ -1,9 +1,9 @@
 # Gereksinimler
 
 - "Vitrin Sayfasını Görüntüleme" gereksinimi yerine "Sepeti Görüntüleme" gereksinimi eklendi.
-
+- "Şifre Kurtarma " gereksinimi yerine " Favori ürünleri görüntüleme " gereksinimi eklendi .
 1. Üye Olma: E-posta, kullanıcı adı, şifre ile kullanıcı kaydı (Sude Melek Acar)
-2. Şifre Kurtarma: Unutulan şifreyi sıfırlama işlemi (Sude Melek Acar)
+2. Favori ürünleri görüntüleme:Kullanıcı önceden  favorilediği ürünleri görüntüler . (Sude Melek Acar)
 3. Profil Güncelleme: Kullanıcı profil bilgilerini güncelleme(ad,soyad,iletişim bilgileri vb.) (Sude Melek Acar)
 4. Giriş Yapma: Kullanıcı adı ve şifre ile giriş yapabilme (Sude Melek Acar)
 5. Favori ürünleri ekleme: Kullanıcıların beğendikleri ürünleri favorilere eklemesi (Sude Melek Acar)
