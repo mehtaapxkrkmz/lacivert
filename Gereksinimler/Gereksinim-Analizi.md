@@ -25,7 +25,7 @@
 21. Yorum güncelleme: Kullanıcıların önceden yazdıkları yorumları düzenlemesi (Mehtap Korkmaz)
 22. Puanlama: Kullanıcıların ürünleri belirli bir ölçek üzerinden (örneğin 1-5 yıldız) puanlaması (Mehtap Korkmaz)
 23. Ürün Sıralama: Kullanıcıların ürünleri artan veya azalan fiyat sırasına göre listelemesi (Mehtap Korkmaz)
-24. Ürün filtreleme: Fiyat,renk vb. özelliklere göre ürünlerin filtrelenmesi (Mehtap Korkmaz)
+24. Ürün filtreleme: Renk, beden vb. özelliklere göre ürünlerin filtrelenmesi (Mehtap Korkmaz)
 
 
 # Gereksinim Dağılımları

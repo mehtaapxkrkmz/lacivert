@@ -6,6 +6,6 @@
 
 4.Puanlama: Kullanıcılar, ürünleri belirli bir puanlama sistemiyle (örneğin 1 ile 5 arasında yıldızlar) değerlendirir. Her bir puan, ürünün kullanıcı tarafından ne kadar beğenildiğini gösterir. 1 yıldız düşük memnuniyeti, 5 yıldız ise yüksek memnuniyeti ifade eder. Bu sistem, ürünün genel kalitesi hakkında bir değerlendirme sağlar ve kullanıcının farklı ürünleri karşılaştırarak hangi ürünün daha yüksek puan aldığını görmesini kolaylaştırır. Ayrıca kullanıcının ürün hakkında genel bir fikir edinmesine olanak tanır.
 
-5.Ürün Sıralama: Kullanıcılar, ürünleri fiyatlarına göre artan veya azalan sırayla listeleyebilir. Bu özellik, kullanıcının belirli bir fiyat aralığında ürün arayabilmesini sağlar.
+5.Ürün Sıralama: Kullanıcılar, ürünleri fiyatlarına göre artan veya azalan sırayla listeleyebilir.
 
-6.Ürün Filtreleme: Kullanıcılar, ürünleri özelliklerine (örneğin renk, fiyat, cinsiyet) göre filtreleyebilir. Bu özellik, kullanıcının aradığı ürünleri belirli özelliklere göre listelemesini sağlar.
+6.Ürün Filtreleme: Kullanıcılar, ürünleri özelliklerine (örneğin renk, beden) göre filtreleyebilir. Filtreleme sonucunda yalnızca kullanıcının seçtiği özelliklere uyan ürünler listelenir.
