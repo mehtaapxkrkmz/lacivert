@@ -15,7 +15,7 @@ lacivert E-Ticaret Platformu, kullanıcıların giyim ve moda ürünlerini kolay
 **Proje Ekibi:** Enis Özgür, Mehtap Korkmaz, Nida Ekinci, Sude Melek Acar
 
 1. [Gereksinim Analizi](Gereksinimler/Gereksinim-Analizi.md)
-2. [Durum Diyagramı](Durum-Diyagramı.md)
+2. [Durum Diyagramı](Durum-Diyagramı/Durum-Diyagramı.md)
 3. [Durum Senaryoları](Durum-Senaryoları/Durum-Senaryoları.md)
 4. [Front-End](Front-End.md)
 5. [Back-End](Back-End.md)
