@@ -1,0 +1,48 @@
+.admin{
+    display: flex;
+
+
+    .sidebar {
+        flex:2;
+        width: 250px;
+        background: #1f2937;
+        padding: 20px;
+        color: white;
+    
+        h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        ul li {
+            padding: 10px;
+            margin: 5px 0;
+            cursor: pointer;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        ul li:hover {
+            background: #374151;
+        }
+        ul li i {
+            font-size: 18px;
+        }   
+        
+    
+    }
+
+    .main-content {
+        flex: 9;
+        padding: 20px;
+    }
+}
+ 
+
+
+

@@ -1,0 +1,16 @@
+:root{
+    font-size: 16px
+}
+
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#root{
+    display: flex;
+    height: 100vh;
+    background-color: #f3f4f6;
+}
