@@ -10,4 +10,4 @@
 
 5- Kategorilere Göre Filtreleme: Anasayfadaki gezinti çubuğunda yer alan kategori başlıklarına tıklanarak alt kategoriler görüntülenebilecek. Kullanıcı bunlardan birine tıkladığında ilgili filtrenin uygulanmış olduğu vitrin sayfasına yönlendirilecek. 
 
-6- Ürün Arama: Anasayfadaki gezinti çubuğunda yer alan büyüteç simgesine tıklandığında, açılan “Arama” sayfasında arama yapılabilecek. Aynı zamanda arama metnine yazılmak üzere tıklanabilir kategori başlıkları yer alacak. Müşteri, yaptığı aramaya göre filtrelenmiş vitrin sayfasına yönlendirilecek.
+6- Ürün Arama: Anasayfadaki gezinti çubuğunda yer alan büyüteç simgesine tıklandığında, açılan “Arama” sayfasında arama yapılabilecek. Aynı zamanda arama metnine yazılmak üzere tıklanabilir kategori başlıkları yer alacak. Müşteri, yaptığı aramaya göre filtrelenmiş vitrin sayfasına yönlendirilecek.git
