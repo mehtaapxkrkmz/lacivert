@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import './App.css'
 import React from 'react'
 import Admin from './components/admin/Admin'
 import Test from './components/admin/Test'
@@ -26,12 +28,12 @@ const AppContent = () => {
   );
 };
 
-const App = () => {
+function App() {
   return (
     <Router>
       <AppContent />
     </Router>
-  );
-};
+  )
+}
 
-export default App;
+export default App
