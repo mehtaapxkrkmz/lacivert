@@ -1,0 +1,53 @@
+.rating-component {
+    margin-top: 20px;
+  
+    .stars {
+      margin-bottom: 10px;
+  
+      .star {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        font-size: 2rem;
+        line-height: 30px;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        color: #ccc;
+        transition: color 0.2s;
+  
+        &.filled {
+          color: #FFD700;
+        }
+      }
+    }
+  
+    textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+  
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+  
+      &:hover {
+        background-color: #45a049;
+      }
+    }
+  
+    .success {
+      margin-top: 10px;
+      color: green;
+      font-weight: bold;
+    }
+  }
+  
