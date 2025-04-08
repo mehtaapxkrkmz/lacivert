@@ -3,6 +3,7 @@ import './App.css'
 import React from 'react'
 import Admin from './components/admin/Admin'
 import Test from './components/admin/Test'
+import Home from './components/Home/Home'
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
 
 const AppContent = () => {
@@ -13,14 +14,15 @@ const AppContent = () => {
 
   return (
     <>
-      {!hideNav && (
+      {/*{!hideNav && (
         <nav>
           <Link to="/admin">admin</Link>
           ----------
           <Link to="/test">test</Link>
         </nav>
-      )}
+      )}*/}
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/test" element={<Test />} />
       </Routes>
