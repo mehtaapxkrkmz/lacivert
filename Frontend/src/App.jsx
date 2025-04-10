@@ -28,7 +28,7 @@ const AppContent = () => {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} /> {/* Ana sayfa */}         
         </Route>
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/*" element={<Admin />} />
         <Route path="/test" element={<Test />} />
       </Routes>
     </>
