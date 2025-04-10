@@ -89,7 +89,7 @@ function ProductDetails() {
             <span className="score">{product.score} / 5</span>
           </div>
           <div className="product-description">
-            <h3>Description</h3>
+            <h3>Açıklama</h3>
             <p>{product.description}</p>
           </div>
         </div>
