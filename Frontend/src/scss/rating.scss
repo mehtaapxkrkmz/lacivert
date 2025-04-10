@@ -1,53 +1,91 @@
-.rating-component {
-    margin-top: 20px;
-  
-    .stars {
-      margin-bottom: 10px;
-  
-      .star {
-        display: inline-block;
-        width: 30px;
-        height: 30px;
-        font-size: 2rem;
-        line-height: 30px;
-        text-align: center;
-        vertical-align: middle;
-        cursor: pointer;
-        color: #ccc;
-        transition: color 0.2s;
-  
-        &.filled {
-          color: #FFD700;
-        }
-      }
-    }
-  
-    textarea {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-  
-    button {
-      padding: 10px 20px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-  
-      &:hover {
-        background-color: #45a049;
-      }
-    }
-  
-    .success {
-      margin-top: 10px;
-      color: green;
-      font-weight: bold;
+.rating {
+  padding: 1rem;
+  background-color: #f9f9f9;
+  color: #333;
+
+  textarea {
+    width: 100%;
+    height: 100px;
+    padding: 0.5rem;
+    font-size: 1rem;
+    font-family: sans-serif;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    resize: none;
+    margin-top: 1rem;
+  }
+
+  button {
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background-color: #0077cc;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .stars {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .star {
+    cursor: pointer;
+    color: #ccc;
+
+    &:hover,
+    &.active {
+      color: gold;
     }
   }
-  
+
+  .success-message,
+  .error-message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    animation: slideIn 0.5s ease-out;
+  }
+
+  .success-message {
+    background-color: #28a745;
+    color: white;
+  }
+
+  .error-message {
+    background-color: #dc3545;
+    color: white;
+  }
+
+  .char-counter {
+    font-size: 0.85rem;
+    color: #666;
+    text-align: right;
+    margin-top: 0.25rem;
+  }
+
+  .average {
+    margin-top: 0.5rem;
+    font-weight: bold;
+  }
+
+  @keyframes slideIn {
+    from {
+      top: -50px;
+      opacity: 0;
+    }
+    to {
+      top: 20px;
+      opacity: 1;
+    }
+  }
+}
