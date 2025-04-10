@@ -3,8 +3,8 @@ import './App.css'
 import React from 'react'
 import Admin from './components/admin/Admin'
 import Test from './components/admin/Test'
-import Home from './components/Layout/Home'
-import Layout from './components/Layout/Layout'
+import Home from './components/guest/Layout/Home'
+import Layout from './components/guest/Layout/Layout'
 
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
 

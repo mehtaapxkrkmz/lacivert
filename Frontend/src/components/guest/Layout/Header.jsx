@@ -12,16 +12,15 @@ const Header = () => {
             <div className='items'>
                 <div className='categories'>
                     <NavLink to="/admin">ADMİN</NavLink>
-                    <NavLink to="/admin">TEST</NavLink>
-                    <NavLink to="/admin">JEAN</NavLink>
                     <NavLink to="/admin">KADIN</NavLink>
                     <NavLink to="/admin">ERKEK</NavLink>
                     <NavLink to="/admin">ÇOCUK</NavLink>
-                    <NavLink to="/admin">OUTLET</NavLink>
+                    {/*<NavLink to="/admin">JEAN</NavLink>
+                    <NavLink to="/admin">OUTLET</NavLink>*/}                   
                 </div>
                 <div className='logo'>
                     <NavLink to="/">
-                        <img src="..\public\logo512.png" alt="Logo" className="h-10" />
+                        <img src="../../../../public/images/lacivert-logo.png" alt="Logo"/>
                     </NavLink>                 
                 </div>
                 <div className='navbar'>
