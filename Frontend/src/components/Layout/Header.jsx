@@ -1,0 +1,65 @@
+import React from 'react';
+import { HiOutlineShoppingBag } from "react-icons/hi2";
+import { IoMdHeartEmpty } from "react-icons/io";
+import { VscAccount } from "react-icons/vsc";
+import { CiSearch } from "react-icons/ci";
+import { CiLogin } from "react-icons/ci";
+import { NavLink } from 'react-router-dom';
+
+const Header = () => {
+    return (
+        <div className='header'>
+            <div className='items'>
+                <div className='categories'>
+                    <NavLink to="/admin">ADMİN</NavLink>
+                    <NavLink to="/admin">TEST</NavLink>
+                    <NavLink to="/admin">JEAN</NavLink>
+                    <NavLink to="/admin">KADIN</NavLink>
+                    <NavLink to="/admin">ERKEK</NavLink>
+                    <NavLink to="/admin">ÇOCUK</NavLink>
+                    <NavLink to="/admin">OUTLET</NavLink>
+                </div>
+                <div className='logo'>
+                    <NavLink to="/">
+                        <img src="..\public\logo512.png" alt="Logo" className="h-10" />
+                    </NavLink>                 
+                </div>
+                <div className='navbar'>
+                    <div className='items'>
+                        <div className="search">
+                            <NavLink to="/admin">
+                                <input type="text" placeholder="   Arama Yap" />
+                            </NavLink>
+                            <NavLink to="/admin">
+                                <button type="submit"><CiSearch /></button>
+                            </NavLink>
+                        </div>
+                        <NavLink to="/admin">
+                            <div className="favorites">
+                                <IoMdHeartEmpty />
+                            </div>
+                        </NavLink>
+                        <NavLink to="/admin">
+                            <div className="account">
+                                <VscAccount className="VscAccount" />
+                            </div>
+                        </NavLink>
+                        <NavLink to="/admin">
+                            <div className="login">
+                                <CiLogin className="CiLogin" />
+                            </div>
+                        </NavLink>
+                        <NavLink to="/admin">
+                            <div className="basket">
+                                <HiOutlineShoppingBag />
+                                <span className="count">0</span>
+                            </div>
+                        </NavLink>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default Header;
