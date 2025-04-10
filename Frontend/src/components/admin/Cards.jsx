@@ -15,17 +15,17 @@ function Cards() {
   return (
     <div className='cards'>
       <Card 
-        title="Total Products" 
+        title="Toplam Ürün Sayısı" 
         value={dashboardData.totalProducts} 
         icon={<FaBox className="card-icon-element" />} 
       />
       <Card 
-        title="Total Revenue" 
+        title="Ürünlerin Toplam Değeri" 
         value={`$${dashboardData.totalRevenue.toLocaleString()}`} 
         icon={<FaMoneyBillWave className="card-icon-element" />} 
       />
       <Card 
-        title="Total Users" 
+        title="Toplam Kullanıcı Sayısı" 
         value={dashboardData.totalUsers} 
         icon={<FaUsers className="card-icon-element" />} 
       />

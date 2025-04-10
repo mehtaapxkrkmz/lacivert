@@ -2,6 +2,9 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import DashBoard from './DashBoard';
 import Products from './Products';
+import ProductDetails from './ProductDetails';
+import AddProduct from './AddProduct';
+import EditProduct from './EditProduct'; // Yeni bileşeni içe aktarın
 
 function Content() {
   return (
@@ -9,6 +12,9 @@ function Content() {
       <Routes>
         <Route path="/" element={<DashBoard />} />
         <Route path="products" element={<Products />} />
+        <Route path="products/:id" element={<ProductDetails />} />
+        <Route path="products/:id/edit" element={<EditProduct />} /> {/* Yeni rota */}
+        <Route path="addProduct" element={<AddProduct />} />
       </Routes>
     </div>
   );

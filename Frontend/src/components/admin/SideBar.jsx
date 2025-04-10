@@ -12,10 +12,10 @@ function SideBar() {
         <h2 >lacivert</h2>
       <ul>
         <li>
-          <Link to="/admin"><IoHome className="icon"/><span>Dashboard</span></Link>
+          <Link to="/admin"><IoHome className="icon"/><span>Özet Paneli</span></Link>
         </li>
         <li>
-          <Link to="/admin/products"><FaTags className="icon"/><span>Products</span></Link>
+          <Link to="/admin/products"><FaTags className="icon"/><span>Ürünler</span></Link>
         </li>
       </ul>
     </div>

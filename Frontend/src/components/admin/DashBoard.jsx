@@ -7,11 +7,11 @@ function DashBoard() {
   return (
     <div className='dashboard'>
       <div className="dashboard-header">
-        <h1>Dashboard</h1>
-        <p>Welcome to your admin dashboard</p>
+        <h1>Hoşgeldiniz</h1>
+        <p>Yeni ürün ekleyebilirsiniz.</p>
       </div>
       <Cards />
-      <Link to="/admin/add-product" className="add-product-button">
+      <Link to="/admin/addProduct" className="add-product-button">
         <IoMdAdd className="add-icon" />
         <span>Yeni Ürün Ekle</span>
       </Link>

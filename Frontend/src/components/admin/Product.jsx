@@ -7,12 +7,12 @@ function Product({ product }) {
   const defaultProduct = {
     id: 1,
     name: 'Sample Product',
-    image: 'https://via.placeholder.com/150',
+    images: ['https://via.placeholder.com/150'],
     score: 4.5
   };
 
   // Use provided product data or default
-  const { name, image, score } = product || defaultProduct;
+  const { name, images, score } = product || defaultProduct;
 
   // Function to render stars based on score
   const renderStars = (score) => {
@@ -42,7 +42,7 @@ function Product({ product }) {
   return (
     <div className="product-card">
       <div className="product-image">
-        <img src={image} alt={name} />
+        <img src={images[0]} alt={name} />
       </div>
       <div className="product-info">
         <h3 className="product-name">{name}</h3>
