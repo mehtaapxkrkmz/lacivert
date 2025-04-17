@@ -10,14 +10,15 @@ function AddProduct() {
     price: '',
     stock: '',
     category: '',
-    score: 0
+    score: 0,
+    isDiscounted: false
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     setProduct(prev => ({
       ...prev,
-      [name]: value
+      [name]: type === 'checkbox' ? checked : value
     }));
   };
 
@@ -163,6 +164,18 @@ function AddProduct() {
             <option value="Ayakkabı">Ayakkabı</option>
             <option value="Aksesuar">Aksesuar</option>
           </select>
+        </div>
+
+        <div className="form-group">
+          <label className="checkbox-label">
+            <input
+              type="checkbox"
+              name="isDiscounted"
+              checked={product.isDiscounted}
+              onChange={handleChange}
+            />
+            <span>İndirimli Ürün</span>
+          </label>
         </div>
 
         <div className="form-actions">

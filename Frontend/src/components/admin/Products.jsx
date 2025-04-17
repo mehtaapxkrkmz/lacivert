@@ -16,7 +16,8 @@ const products = [
     description: 'Vizon kumaştan üretilmiş, rahat kesimli klasik ceket.',
     price: 2999.99,
     stock: 50,
-    category: 'Giyim'
+    category: 'Giyim',
+    isDiscounted: true
   },
   {
     id: 2,
@@ -30,7 +31,8 @@ const products = [
     description: 'Kot kumaştan üretilmiş, slim fit pantolon.',
     price: 899.99,
     stock: 30,
-    category: 'Giyim'
+    category: 'Giyim',
+    isDiscounted: false
   },
   {
     id: 3,
@@ -44,7 +46,8 @@ const products = [
     description: 'Pamuklu kumaştan üretilmiş, klasik kesimli gömlek.',
     price: 499.99,
     stock: 45,
-    category: 'Giyim'
+    category: 'Giyim',
+    isDiscounted: true
   },
   {
     id: 4,
@@ -58,7 +61,8 @@ const products = [
     description: 'Deri malzemeden üretilmiş, rahat tabanlı ayakkabı.',
     price: 1299.99,
     stock: 25,
-    category: 'Ayakkabı'
+    category: 'Ayakkabı',
+    isDiscounted: false
   },
   {
     id: 5,
@@ -72,7 +76,8 @@ const products = [
     description: 'Yün kumaştan üretilmiş, klasik kesimli takım elbise.',
     price: 3999.99,
     stock: 15,
-    category: 'Giyim'
+    category: 'Giyim',
+    isDiscounted: true
   },
   {
     id: 6,
@@ -86,7 +91,8 @@ const products = [
     description: 'EVA malzemeden üretilmiş, rahat tabanlı terlik.',
     price: 199.99,
     stock: 100,
-    category: 'Ayakkabı'
+    category: 'Ayakkabı',
+    isDiscounted: false
   }
 ];
 
