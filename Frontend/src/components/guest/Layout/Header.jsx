@@ -12,9 +12,9 @@ const Header = () => {
             <div className='items'>
                 <div className='categories'>
                     <NavLink to="/admin">ADMİN</NavLink>
-                    <NavLink to="/urunler">KADIN</NavLink>
-                    <NavLink to="/urunler">ERKEK</NavLink>
-                    <NavLink to="/urunler">ÇOCUK</NavLink>
+                    <NavLink to="/admin">KADIN</NavLink>
+                    <NavLink to="/admin">ERKEK</NavLink>
+                    <NavLink to="/admin">ÇOCUK</NavLink>
                     {/*<NavLink to="/admin">JEAN</NavLink>
                     <NavLink to="/admin">OUTLET</NavLink>*/}                   
                 </div>

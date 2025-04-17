@@ -5,7 +5,6 @@ import Admin from './components/admin/Admin'
 import Test from './components/admin/Test'
 import Home from './components/guest/Layout/Home'
 import Layout from './components/guest/Layout/Layout'
-import Products from './components/guest/Products/Products'
 
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
 
@@ -27,8 +26,7 @@ const AppContent = () => {
       )}*/}
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} /> {/* Ana sayfa */}
-          <Route path="/urunler" element={<Products />} /> {/* Ürünler sayfası */}
+          <Route index element={<Home />} /> {/* Ana sayfa */}         
         </Route>
         <Route path="/admin/*" element={<Admin />} />
         <Route path="/test" element={<Test />} />
