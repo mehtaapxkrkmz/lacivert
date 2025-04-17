@@ -12,7 +12,7 @@ function Home() {
         <img src={home_content_3} alt="home_content_3" />
       </div>  
       <div className="product">
-        <h2>Ürünler</h2>
+       
         <Products2 />
       </div>
     </div>
