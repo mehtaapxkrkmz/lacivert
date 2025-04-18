@@ -7,6 +7,7 @@ import Home from './components/guest/Layout/Home'
 import Layout from './components/guest/Layout/Layout'
 
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
+import ProductDetails from '../src/components/guest/Layout/ProductDetails'
 
 
 const AppContent = () => {
@@ -28,6 +29,7 @@ const AppContent = () => {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} /> {/* Ana sayfa */}         
         </Route>
+        <Route path="/product/:id" element={<ProductDetails />} /> 
         <Route path="/admin/*" element={<Admin />} />
         <Route path="/test" element={<Test />} />
       </Routes>
