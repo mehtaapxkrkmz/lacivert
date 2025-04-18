@@ -1,9 +1,50 @@
-.productPage{
+.productPage {
     color: black;
     display: flex;
+    flex-direction: column;  /* Yorumlar ve ürün detayları dikey sıralanacak */
     width: 100%;
-    .productImages{
-        
+    
+    .productImages {
+      /* Görsellerin yerleşimini buradan ayarlayabilirsiniz */
+      display: flex;
+      justify-content: space-between;  /* Görselleri yatayda düzgün sıralıyoruz */
+      margin-bottom: 20px;  /* Görsellerin altında boşluk bırakıyoruz */
     }
   
-}
+    .productDetails {
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;  /* Ürün detayları ve yorumlar arasında boşluk bırakıyoruz */
+    }
+  
+    .comment-section {
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;  /* Yorum ve puanlama kısmı için üstten boşluk bırakıyoruz */
+    
+      h2 {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 15px;
+      }
+  
+      button {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    
+        &:hover {
+          background-color: #0056b3;
+        }
+      }
+    }
+  }
+  

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '/src/scss/comment/deleteComment.scss';
+import '/src/scss/comment/deleteComment.scss'; // SCSS dosyasını eklemeyi unutma
 
 const DeleteComment = ({ comment, index, onDelete }) => {
   const [showConfirm, setShowConfirm] = useState(false);
@@ -7,19 +7,19 @@ const DeleteComment = ({ comment, index, onDelete }) => {
 
   const handleDelete = () => {
     try {
-      onDelete(index);
+      onDelete(index); // Silme işlemi, üst bileşenden gelen onDelete fonksiyonu çağrılır
       setFeedbackMessage('Yorumunuz başarıyla silindi.');
     } catch (error) {
       setFeedbackMessage('Yorumunuz silinemedi. Lütfen tekrar deneyin.');
     }
-    setShowConfirm(false);
-    setTimeout(() => setFeedbackMessage(''), 3000);
+    setShowConfirm(false); // Onay penceresini kapat
+    setTimeout(() => setFeedbackMessage(''), 3000); // Mesajı 3 saniye sonra sil
   };
 
   const cancelDelete = () => {
-    setShowConfirm(false);
+    setShowConfirm(false); // Onay penceresini kapat
     setFeedbackMessage('Yorum silme işlemi iptal edildi.');
-    setTimeout(() => setFeedbackMessage(''), 3000);
+    setTimeout(() => setFeedbackMessage(''), 3000); // Mesajı 3 saniye sonra sil
   };
 
   return (
@@ -36,7 +36,7 @@ const DeleteComment = ({ comment, index, onDelete }) => {
         </div>
       )}
 
-      {feedbackMessage && <p className="feedback-message">{feedbackMessage}</p>}
+      {feedbackMessage && <p className="feedback-message">{feedbackMessage}</p>} {/* Kullanıcıya geri bildirim mesajı */}
     </div>
   );
 };
