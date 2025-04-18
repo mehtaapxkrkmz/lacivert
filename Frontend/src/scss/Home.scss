@@ -14,4 +14,48 @@
         width: 100%;
         height: 100%;
     }
+    // ... existing styles ...
+
+    .product{
+        .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 30px;
+        background-color: rgba(238, 20, 20, 0.977);
+    
+        .product-card {
+            border: 1px solid #eee;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: left;
+            transition: box-shadow 0.3s ease;
+            background-color: #fff;
+        
+                &:hover {
+                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                }
+            
+                img {
+                    width: 100%;
+                    height: auto;
+                    border-radius: 4px;
+                    object-fit: cover;
+                }
+            
+                h3 {
+                    margin: 12px 0 6px;
+                    font-size: 18px;
+                }
+                
+                .price{
+                }
+            
+        
+        }
+    }
+    }
+  
+  // ... rest of the styles ...
 }
+
+
