@@ -1,6 +1,10 @@
 
 @use "default";
 @use "admin";
-@use "rating";
 @use "products";
+@use "comment/rating";
+@use "comment/comment";
+@use "comment/addComment";
+@use "comment/deleteComment";
+@use "comment/updateComment";
 

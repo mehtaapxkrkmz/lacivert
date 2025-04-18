@@ -3,6 +3,7 @@ import home_content_1 from '../../../assets/home_content_1.png';
 import home_content_2 from '../../../assets/home_content_2.png';
 import home_content_3 from '../../../assets/home_content_3.png';
 import Products2 from '../../guest/Layout/Products2';
+
 function Home() {
   return (    
     <div className='home'>
@@ -15,9 +16,9 @@ function Home() {
        
         <Products2 />
       </div>
+     
     </div>
   );
 }
 
 export default Home;
-

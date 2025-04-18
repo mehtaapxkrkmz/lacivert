@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import '/src/scss/addComment.scss';
+import '/src/scss/comment/addComment.scss';
+import DeleteComment from './DeleteComment';
+import UpdateComment from './UpdateComment';
 
 const AddComment = () => {
   const CHARACTER_LIMIT = 250;
@@ -28,6 +30,22 @@ const AddComment = () => {
     setComment('');
     setSuccessMessage('Yorumunuz başarıyla eklendi!');
     setTimeout(() => setSuccessMessage(''), 3000);
+  };
+    
+  const handleDelete = (index) => {
+    setComments((prev) => {
+      const updated = [...prev];
+      updated.splice(index, 1);
+      return updated;
+    });
+  };
+
+  const handleUpdate = (updatedText, index) => {
+    setComments((prev) => {
+      const updated = [...prev];
+      updated[index] = updatedText;
+      return updated;
+    });
   };
 
   return (
@@ -59,7 +77,18 @@ const AddComment = () => {
         ) : (
           <ul>
             {comments.map((item, index) => (
-              <li key={index}>{item}</li>
+              <li key={index}>
+                <DeleteComment
+                  comment={item}
+                  index={index}
+                  onDelete={handleDelete}
+                />
+                <UpdateComment
+                  comment={{ text: item }}
+                  index={index}
+                  onUpdate={(updatedText) => handleUpdate(updatedText, index)}
+                />
+                </li>
             ))}
           </ul>
         )}

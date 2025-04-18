@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '/src/scss/rating.scss';
+import '/src/scss/comment/rating.scss';
 
 const Rating = () => {
   const CHARACTER_LIMIT = 250;

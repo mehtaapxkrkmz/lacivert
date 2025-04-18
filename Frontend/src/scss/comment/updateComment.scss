@@ -1,0 +1,77 @@
+.update-comment {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    background-color: #f9f9f9;
+  
+    h4 {
+      margin-bottom: 0.75rem;
+      font-size: 1.2rem;
+      color: #333;
+    }
+  
+    form {
+      display: flex;
+      flex-direction: column;
+  
+      textarea {
+        resize: vertical;
+        min-height: 80px;
+        padding: 0.75rem;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        transition: border-color 0.3s;
+  
+        &:focus {
+          border-color: #0077cc;
+          outline: none;
+        }
+      }
+  
+      .char-counter {
+        font-size: 0.85rem;
+        color: #666;
+        margin-bottom: 0.75rem;
+        text-align: right;
+      }
+  
+      button {
+        padding: 0.5rem 1rem;
+        font-size: 0.95rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-bottom: 0.5rem;
+        display: inline-block; 
+  
+        &:first-of-type {
+          background-color:#3399ff;
+          color: #fff;
+  
+          &:hover {
+            background-color: #267bbf;
+          }
+        }
+  
+        &.cancel-btn {
+          background-color: #4fa3f7;
+          color: #fff;
+  
+          &:hover {
+            background-color: #267bbf;
+          }
+        }
+      }
+    }
+  
+    .update-message {
+      margin-top: 0.5rem;
+      font-size: 0.95rem;
+      color: #008000; // başarılı güncelleme
+    }
+  }
+  
