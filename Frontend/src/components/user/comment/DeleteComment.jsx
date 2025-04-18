@@ -8,9 +8,9 @@ const DeleteComment = ({ comment, index, onDelete }) => {
   const handleDelete = () => {
     try {
       onDelete(index);
-      setFeedbackMessage('Yorum başarıyla silindi.');
+      setFeedbackMessage('Yorumunuz başarıyla silindi.');
     } catch (error) {
-      setFeedbackMessage('Yorum silinemedi. Lütfen tekrar deneyin.');
+      setFeedbackMessage('Yorumunuz silinemedi. Lütfen tekrar deneyin.');
     }
     setShowConfirm(false);
     setTimeout(() => setFeedbackMessage(''), 3000);
@@ -30,7 +30,7 @@ const DeleteComment = ({ comment, index, onDelete }) => {
 
       {showConfirm && (
         <div className="confirm-dialog">
-          <p>Yorumu silmek istediğinizden emin misiniz?</p>
+          <p>Yorumunuzu silmek istediğinizden emin misiniz?</p>
           <button className="yes" onClick={handleDelete}>Evet</button>
           <button className="no" onClick={cancelDelete}>Hayır</button>
         </div>
