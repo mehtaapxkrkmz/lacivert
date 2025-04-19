@@ -7,6 +7,7 @@ import Register from './components/guest/Register'
 import Profileupdate from './components/guest/Profileupdate'
 import Home from './components/guest/Layout/Home'
 import Layout from './components/guest/Layout/Layout'
+import ProductFilter from './components/guest/ProductFilter';
 
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
 import ProductDetails from '../src/components/guest/Layout/ProductDetails'
@@ -29,7 +30,10 @@ const AppContent = () => {
       )}*/}
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} /> {/* Ana sayfa */}         
+          <Route index element={<Home />} /> {/* Ana sayfa */}
+          <Route path="kadin" element={<ProductFilter category="Kadın" />} />
+          <Route path="erkek" element={<ProductFilter category="Erkek" />} />
+          <Route path="cocuk" element={<ProductFilter category="Çocuk" />} />         
         </Route>
         <Route path="/product/:id" element={<ProductDetails />} /> 
         <Route path="/admin/*" element={<Admin />} />
