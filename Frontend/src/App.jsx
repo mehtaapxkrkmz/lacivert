@@ -6,6 +6,7 @@ import Login from './components/guest/Login'
 import Register from './components/guest/Register'
 import Profileupdate from './components/guest/Profileupdate'
 import Home from './components/guest/Layout/Home'
+import Favori from './components/guest/Favori'
 import Layout from './components/guest/Layout/Layout'
 import ProductFilter from './components/guest/ProductFilter';
 
@@ -40,7 +41,8 @@ const AppContent = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profileupdate" element={<Profileupdate />} />
-      </Routes>
+        <Route path='/favori' element={<Favori />}      />
+         </Routes>
     </>
   );
 };
