@@ -2,7 +2,9 @@ import { useState } from 'react'
 import './App.css'
 import React from 'react'
 import Admin from './components/admin/Admin'
-import Test from './components/admin/Test'
+import Login from './components/guest/Login'
+import Register from './components/guest/Register'
+import Profileupdate from './components/guest/Profileupdate'
 import Home from './components/guest/Layout/Home'
 import Layout from './components/guest/Layout/Layout'
 
@@ -31,7 +33,9 @@ const AppContent = () => {
         </Route>
         <Route path="/product/:id" element={<ProductDetails />} /> 
         <Route path="/admin/*" element={<Admin />} />
-        <Route path="/test" element={<Test />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/profileupdate" element={<Profileupdate />} />
       </Routes>
     </>
   );

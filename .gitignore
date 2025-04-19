@@ -1,3 +1,4 @@
 .DS_Store
 lavicert/Frontend/node_modules/
+.qodo/history.sqlite
 .qodo

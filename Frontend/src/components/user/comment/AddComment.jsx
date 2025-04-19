@@ -3,96 +3,87 @@ import '/src/scss/comment/addComment.scss';
 import DeleteComment from './DeleteComment';
 import UpdateComment from './UpdateComment';
 
-const AddComment = () => {
-  const CHARACTER_LIMIT = 250;
+const AddComment = ({ productId }) => {
+  const [comments, setComments] = useState([
+    { id: 1, text: "Harika bir ürün!", rating: 5 },
+    { id: 2, text: "Fiyatı çok uygun.", rating: 4 },
+  ]);
 
-  const [comment, setComment] = useState('');
-  const [comments, setComments] = useState([]);
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [newComment, setNewComment] = useState('');
+  const [charCount, setCharCount] = useState(0);
 
-  const handleSubmit = (e) => {
+  const handleDelete = (commentId) => {
+    setComments(comments.filter(comment => comment.id !== commentId));
+  };
+
+  const handleUpdate = (updatedText, commentId) => {
+    setComments(
+      comments.map(comment =>
+        comment.id === commentId ? { ...comment, text: updatedText } : comment
+      )
+    );
+  };
+
+  const handleAddComment = (e) => {
     e.preventDefault();
-
-    if (!comment.trim()) {
-      setErrorMessage('Yorum içeriği boş bırakılamaz.');
-      setTimeout(() => setErrorMessage(''), 3000);
+    if (newComment.trim() === "") {
+      alert("Yorum boş olamaz!");
       return;
     }
 
-    if (comment.length > CHARACTER_LIMIT) {
-      setErrorMessage(`Yorum en fazla ${CHARACTER_LIMIT} karakter olabilir.`);
-      setTimeout(() => setErrorMessage(''), 3000);
-      return;
-    }
-
-    setComments((prev) => [...prev, comment.trim()]);
-    setComment('');
-    setSuccessMessage('Yorumunuz başarıyla eklendi!');
-    setTimeout(() => setSuccessMessage(''), 3000);
-  };
-    
-  const handleDelete = (index) => {
-    setComments((prev) => {
-      const updated = [...prev];
-      updated.splice(index, 1);
-      return updated;
-    });
+    const newCommentObj = {
+      id: comments.length + 1, // Benzersiz id oluşturuyoruz
+      text: newComment,
+      rating: 0, // Yorum başlangıçta puansız
+    };
+    setComments([...comments, newCommentObj]); // Yeni yorumu ekliyoruz
+    setNewComment(""); // Formu sıfırlıyoruz
+    setCharCount(0); // Karakter sayacını sıfırlıyoruz
   };
 
-  const handleUpdate = (updatedText, index) => {
-    setComments((prev) => {
-      const updated = [...prev];
-      updated[index] = updatedText;
-      return updated;
-    });
+  const handleTextChange = (e) => {
+    const text = e.target.value;
+    setNewComment(text);
+    setCharCount(text.length);
   };
 
   return (
     <div className="add-comment">
-      <h2>Yorum Yaz</h2>
-      <form onSubmit={handleSubmit}>
+      <h2>Yorumlar</h2>
+      
+      {/* Yorum ekleme formu */}
+      <form onSubmit={handleAddComment}>
         <textarea
+          value={newComment}
+          onChange={handleTextChange}
           placeholder="Yorumunuzu buraya yazın..."
-          value={comment}
-          onChange={(e) => {
-            if (e.target.value.length <= CHARACTER_LIMIT) {
-              setComment(e.target.value);
-            }
-          }}
+          maxLength={200} // Karakter sınırını belirledik
         />
-        <p className="char-counter">
-          {CHARACTER_LIMIT - comment.length} karakter kaldı
-        </p>
+        <div className="char-counter">
+          {charCount}/200
+        </div>
         <button type="submit">Yorum Ekle</button>
       </form>
 
-      {successMessage && <p className="success-message">{successMessage}</p>}
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
-
-      <div className="comment-list">
-        <h3>Eklenen Yorumlar</h3>
-        {comments.length === 0 ? (
-          <p className="no-comment">Henüz yorum yapılmadı.</p>
-        ) : (
-          <ul>
-            {comments.map((item, index) => (
-              <li key={index}>
-                <DeleteComment
-                  comment={item}
-                  index={index}
-                  onDelete={handleDelete}
-                />
-                <UpdateComment
-                  comment={{ text: item }}
-                  index={index}
-                  onUpdate={(updatedText) => handleUpdate(updatedText, index)}
-                />
-                </li>
-            ))}
-          </ul>
-        )}
-      </div>
+      {/* Yorumlar listesi */}
+      <ul>
+        {comments.map((item) => (
+          <li key={item.id}>
+            <p>{item.text}</p>
+            {item.rating > 0 && (
+              <p className="rating">Verilen Puan: {item.rating} ★</p>
+            )}
+            <DeleteComment
+              comment={item.text}
+              onDelete={() => handleDelete(item.id)} // Silme işlemi için id'yi geçiyoruz
+            />
+            <UpdateComment
+              comment={item.text}
+              onUpdate={(updatedText) => handleUpdate(updatedText, item.id)} // Güncelleme işlemi için id'yi geçiyoruz
+            />
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

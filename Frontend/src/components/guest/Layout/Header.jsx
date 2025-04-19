@@ -38,18 +38,18 @@ const Header = () => {
                                 <IoMdHeartEmpty />
                             </div>
                         </NavLink>
-                        <NavLink to="/admin">
+                        <NavLink to="/profileupdate">
                             <div className="account">
                                 <VscAccount className="VscAccount" />
                             </div>
                         </NavLink>
-                        <NavLink to="/admin">
+                        <NavLink to="/login">
                             <div className="login">
                                 <CiLogin className="CiLogin" />
                             </div>
                         </NavLink>
                         <NavLink to="/admin">
-                            <div className="basket">
+                            <div className="shopping-bag">
                                 <HiOutlineShoppingBag />
                                 <span className="count">0</span>
                             </div>
