@@ -3,6 +3,7 @@ import home_content_1 from '../../../assets/home_content_1.png';
 import home_content_2 from '../../../assets/home_content_2.png';
 import home_content_3 from '../../../assets/home_content_3.png';
 import Products from './Products';
+import '../../../scss/index.scss';
 
 function Home() {
   return (    
@@ -12,10 +13,8 @@ function Home() {
         <img src={home_content_2} alt="home_content_2" />
         <img src={home_content_3} alt="home_content_3" />
       </div>  
-      <div className="product">
+      
       <Products/>
-        
-      </div>
      
     </div>
   );

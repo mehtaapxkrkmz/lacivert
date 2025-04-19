@@ -1,13 +1,10 @@
 import React from 'react'
 import Product from './Product'
 import ProductList from '../../../../public/ProductList.js'
-import Home from './Home.jsx'
-import ProductDetails from './ProductDetails.jsx'
-import { Routes, Route } from 'react-router-dom';
 
 function Products() {
   return (
-    <div className="product-grid">
+    <div className="products">
       {ProductList.map((product) => (
         <Product
           key={product.id}
