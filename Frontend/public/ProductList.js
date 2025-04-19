@@ -7,7 +7,8 @@ const ProductList = [
       photos: [
         "https://sky-static.mavi.com/mnresize/820/1162/1110621-70204_image_1.jpg",
         "https://sky-static.mavi.com/mnresize/820/1162/1110621-70204_image_3.jpg",
-        "https://sky-static.mavi.com/mnresize/820/1162/1110621-70204_image_6.jpg"
+        "https://sky-static.mavi.com/mnresize/820/1162/1110621-70204_image_6.jpg",
+        "https://sky-static.mavi.com/mnresize/820/1162/1110621-70204_image_9.jpg"
       ],
       gender: "Kadın",
       sizes: [
@@ -20,6 +21,7 @@ const ProductList = [
       isDiscounted: true,
       oldPrice: 399.99,
       newPrice: 299.99,
+      productFeatures:"Yaka Detaylı Haki Ceket",
       comments: [
         {
           user: "Ayşe",
@@ -34,7 +36,8 @@ const ProductList = [
       photos: [
         "https://sky-static.mavi.com/mnresize/820/1162/0S10303-89353_image_1.jpg",
         "https://sky-static.mavi.com/mnresize/820/1162/0S10303-89353_image_2.jpg",
-        "https://sky-static.mavi.com/mnresize/820/1162/0S10303-89353_image_4.jpg"
+        "https://sky-static.mavi.com/mnresize/820/1162/0S10303-89353_image_4.jpg",
+        "https://sky-static.mavi.com/mnresize/820/1162/0S10303-89353_image_5.jpg"
       ],
       gender: "Erkek",
       sizes: [
@@ -47,6 +50,7 @@ const ProductList = [
       isDiscounted: false,
       oldPrice: 249.99,
       newPrice: 249.99,
+      productFeatures:"Mavi Polo Yaka uzun kollu, standart kesim",
       comments: [
         {
           user: "Mehmet",
@@ -61,7 +65,7 @@ const ProductList = [
       photos: [
         "https://sky-static.mavi.com/mnresize/820/1162/0S10303-89353_image_1.jpg",
         "https://sky-static.mavi.com/mnresize/820/1162/0S10303-89353_image_2.jpg",
-        "https://sky-static.mavi.com/mnresize/820/1162/0S10303-89353_image_4.jpg"
+        "https://sky-static.mavi.com/mnresize/820/1162/0S10303-89353_image_4.jpg","https://sky-static.mavi.com/mnresize/820/1162/0S10303-89353_image_5.jpg"
       ],
       gender: "Erkek",
       sizes: [
@@ -74,6 +78,7 @@ const ProductList = [
       isDiscounted: false,
       oldPrice: 249.99,
       newPrice: 249.99,
+      productFeatures:"Mavi Polo Yaka uzun kollu, standart kesim",
       comments: [
         {
           user: "Mehmet",

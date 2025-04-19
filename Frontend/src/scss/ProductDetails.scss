@@ -1,30 +1,119 @@
+/* Ürün Detay Kısmı*/
 .productPage {
+  padding-top: 1rem;
     color: black;
     display: flex;
     flex-direction: column;  /* Yorumlar ve ürün detayları dikey sıralanacak */
     width: 100%;
+    background-color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
     
-    .productImages {
-      /* Görsellerin yerleşimini buradan ayarlayabilirsiniz */
+    .productInfo{
       display: flex;
-      justify-content: space-between;  /* Görselleri yatayda düzgün sıralıyoruz */
-      margin-bottom: 20px;  /* Görsellerin altında boşluk bırakıyoruz */
+      flex-direction: row; /* resim ve detaylar yan yana olacak */
+      gap: 3rem; /* Sağ-sol boşluk */
+      background-color: white;
+
+      .productImages{
+        flex: 7;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); // Her satırda 2 sütun
+        gap: 16px; // Görseller arası boşluk
+        img{
+          width: 100%;
+          //aspect-ratio: 2.5 / 3; // en-boy oranı
+          object-fit: cover;
+          box-shadow: rgba(0, 0, 0, 0.1);
+        }
+      }
+      .productDetails{
+        flex: 4;
+        display: flex;
+        flex-direction: column; /* Ürün detayları dikey sıralanacak */
+        gap: 1rem; /* Üst-alt boşluk */
+        padding-top: 2rem;
+        padding-bottom: 2rem; /* Üst-alt boşluk */
+        padding-left: 2rem;
+
+        h2{
+          font-size: 1.5rem;
+          font-weight: 500 ;
+          
+          
+          color: #333;
+        }
+        .price{
+         
+          .original-price {
+            text-decoration: line-through;
+            display: inline;
+            color: #999; 
+            font-size: 0.9rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+          }
+
+          .discounted-price {
+            display: inline-block;
+            font-weight: 700;     
+            font-size: 1.2rem;    
+            color: #000000;   
+            transform: translateY(-3px); 
+          }
+        }
+
+        .order{
+          max-width: 90%;
+          padding: 0.5rem;
+          display: flex;
+          flex-direction: column;
+          button{
+            margin-top: 2rem;
+            display: block;
+            color: white;
+          }
+        }
+
+        .line{
+          color: #999;
+          max-width: 90%;
+        }
+        .productFeatures{
+          max-width: 90%;
+          padding: 1rem;
+          h3{
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #000000;
+            padding-bottom: 1rem;
+          }
+          p{
+            font-size: 0.9rem;
+            color: #494949;
+          }
+        }
+        
+
+      }
+
+
     }
   
-    .productDetails {
-      padding: 20px;
-      background-color: #f9f9f9;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      margin-bottom: 20px;  /* Ürün detayları ve yorumlar arasında boşluk bırakıyoruz */
-    }
-  
+
+
+
+
+
+    /* Yorum Kısmı */
+
+    
     .comment-section {
+      
       padding: 20px;
       background-color: #f9f9f9;
-      border-radius: 8px;
+      
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      margin-top: 20px;  /* Yorum ve puanlama kısmı için üstten boşluk bırakıyoruz */
+      
     
       h2 {
         font-size: 24px;
@@ -47,4 +136,3 @@
       }
     }
   }
-  
