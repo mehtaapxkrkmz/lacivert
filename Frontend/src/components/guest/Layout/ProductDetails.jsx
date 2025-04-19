@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../../../scss/index.scss'
 import '../../../scss/ProductDetails.scss';
 import AddComment from '../../user/comment/AddComment';
@@ -7,13 +7,38 @@ import DeleteComment from '../../user/comment/DeleteComment';
 import UpdateComment from '../../user/comment/UpdateComment';  
 import Select from 'react-select';
 
-
+// Accordion başlık ve içerikleri
+const accordionData = [
+  {
+    title: "Ürün Özellikleri",
+    content: (
+      <p>
+        Mavi'nin dış giyim koleksiyonundan Yaka Detaylı Haki Ceket. İki adet fermuarlı yan ve bir adet fermuarlı ön cep, çıt çıt ile ayarlanabilir etek. Bu ürün için özel wax/yağ kaplama tekniği uygulanmıştır. Kullanım süresince üzerindeki efektlerin zenginleşmesiyle kendine özgü bir görünüm kazanır. Zamanla belirginleşen bu efektler, ürüne daha karakteristik bir dokunuş katar.
+      </p>
+    )
+  },
+  {
+    title: "Yıkama Bilgileri",
+    content: (
+      <p>
+        Kuru temizleme yapılmamalı ve tersten ütülenmelidir. Hassas programda yıkayınız. Düşük ısıda ütüleyiniz.
+      </p>
+    )
+  },
+  {
+    title: "Ödeme Seçenekleri",
+    content: (
+      <p>
+        Kredi kartı, banka kartı ve kapıda ödeme seçenekleri mevcuttur.
+      </p>
+    )
+  }
+];
 
 function ProductDetails({id }) {
-  //react select objesi için stil
   const customSelectStyles = {
     control: (provided, state) => ({
-      ...provided,//default stilin üzerine ekleme yapıyoruz
+      ...provided,
       boxShadow: state.isFocused ? '0 0 0 2px #999' : 'none', 
       borderColor: state.isFocused ? '#999' : provided.borderColor,
       outline: 'none',
@@ -24,13 +49,18 @@ function ProductDetails({id }) {
       color: state.isFocused ? '#fff' : '#333',
     }),
   };
-  //react selectteki options için stiller
+
   const options = [
     { value: 'small', label: 'Small' },
     { value: 'medium', label: 'Medium' },
     { value: 'large', label: 'Large' }
   ];
 
+  const [openAccordion, setOpenAccordion] = useState(null);
+
+  const handleAccordion = (idx) => {
+    setOpenAccordion(openAccordion === idx ? null : idx);
+  };
 
   return (
     <div className="productPage">
@@ -44,8 +74,8 @@ function ProductDetails({id }) {
         <div className="productDetails">
           <h2>Yaka Detaylı Haki Ceket</h2>
           <p className="price">
-              <span class="original-price">1.299,99 TL</span>
-              <span class="discounted-price">909,99 TL</span>   
+              <span className="original-price">1.299,99 TL</span>
+              <span className="discounted-price">909,99 TL</span>   
           </p>
           <p className="product-code">Ürün Kodu: 0510303-89353</p>
           <br />
@@ -61,23 +91,48 @@ function ProductDetails({id }) {
           <br />
           <hr className='line'/>
 
-          <div className="productFeatures">
-              <h3>Ürün Özellikleri</h3>
-              <p>Mavi nin dış giyim koleksiyonundan Yaka Detaylı Haki Ceket. İki adet fermuarlı yan ve bir adet fermuarlı ön cep, çıt çıt ile ayarlanabilir etek. Bu ürün için özel wax/yağ kaplama tekniği uygulanmıştır. Kullanım süresince üzerindeki efektlerin zenginleşmesiyle kendine özgü bir görünüm kazanır. Zamanla belirginleşen bu efektler, ürüne daha karakteristik bir dokunuş katar. Kuru temizleme yapılmamalı ve tersten ütülenmelidir.</p>
-
-              
+          {/* Accordionlar Başlangıcı */}
+          <div className="accordion">
+            {accordionData.map((item, idx) => (
+              <div key={idx}>
+                <button
+                  className="accordion-toggle"
+                  onClick={() => handleAccordion(idx)}
+                    style={{
+                    width: '100%',
+                    padding: '10px',
+                    background: '#eee',
+                    border: 'none',
+                    cursor: 'pointer',
+                    textAlign: 'left',
+                    fontWeight: 'bold',
+                    marginBottom: '2px',
+                    backgroundColor:"white",
+                    transition: 'background 0.3s',
+                  }}
+                >
+                  {item.title}
+                  <span style={{ float: 'right' }}>{openAccordion === idx ? '-' : '+'}</span>
+                </button>
+                {openAccordion === idx && (
+                  <div className="accordion-content" style={{ padding: '10px', background: '#ffff', border: '1px solid #eee' }}>
+                    {item.content}
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
-                
+          {/* Accordionlar Sonu */}
         </div>
       </div>
-          {/* Yorum ve Puanlama Bileşenleri */}
-        <div className="comment-section">
-          <h2>Yorumlar ve Puanlama</h2>
-          <Rating productId={id} />  {/* Aynı şekilde Rating bileşenine de id geçiyoruz */}
-          <AddComment productId={id} />  {/* id burada productId olarak kullanılıyor */}
-          <DeleteComment productId={id} />  {/* DeleteComment bileşenine de id geçiyoruz */}
-          <UpdateComment productId={id} />  {/* UpdateComment bileşenine de id geçiyoruz */}
-        </div>
+      {/* Yorum ve Puanlama Bileşenleri */}
+      <div className="comment-section">
+        <h2>Yorumlar ve Puanlama</h2>
+        <Rating productId={id} />
+        <AddComment productId={id} />
+        <DeleteComment productId={id} />
+        <UpdateComment productId={id} />
+      </div>
     </div>
   )
 }
