@@ -29,6 +29,7 @@
         transition: box-shadow 0.3s ease, transform 0.3s ease;
         background-color: #fff;
         cursor: pointer;
+        position: relative;
   
         &:hover {
           box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -40,6 +41,19 @@
           height: auto;
           border-radius: 4px;
           object-fit: cover;
+        }
+        .disCounted{
+          background-color: red;
+          max-width: 30%;
+          color: white;
+          padding: 0.4rem 1rem;
+          border-radius: 0 0 4px 0;
+          position: absolute;
+          top: 1rem;
+          left: 1rem;
+          font-size: 13px;
+          font-weight: bold;
+          z-index: 2;
         }
   
         h3 {

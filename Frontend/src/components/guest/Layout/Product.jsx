@@ -11,6 +11,12 @@ function Product({ id, name, photos, oldPrice, newPrice, isDiscounted }) {
   return (
     <div className="product" onClick={handleProductClick}>
       <img src={photos[0]} alt={name} />
+      {isDiscounted && (
+        <div className="disCounted">
+          <span>İndirimli Ürün</span>
+        </div>
+      )}
+
       
       <h3>{name}</h3>
       <div className="price">
