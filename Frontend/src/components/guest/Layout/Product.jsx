@@ -15,9 +15,7 @@ function Product({ id, name, photos, oldPrice, newPrice, isDiscounted }) {
         <div className="disCounted">
           <span>İndirimli Ürün</span>
         </div>
-      )}
-
-      
+      )}   
       <div className='name'>{name}</div>
       <div className="price">
         {isDiscounted && (

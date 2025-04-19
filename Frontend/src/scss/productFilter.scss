@@ -1,10 +1,85 @@
 .product-filter{
     width: 100%;
     max-width: 1200px;
+    
     margin: 0 auto;
     padding: 20px 15px;
     font-family: Arial, sans-serif;
     color: black;
+    background-color: white;
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 30px;
+      padding: 20px;
+      background-color: #ffffff;
+      width: 100%;
+      color : #333;
+  
+      .product {
+        border: 1px solid #eee;
+        padding: 15px;
+        border-radius: 8px;
+        text-align: left;
+        transition: box-shadow 0.3s ease, transform 0.3s ease;
+        background-color: #fff;
+        cursor: pointer;
+        position: relative;
+  
+        &:hover {
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+          transform: scale(1.02);
+        }
+  
+        img {
+          width: 100%;
+          height: auto;
+          border-radius: 4px;
+          object-fit: cover;
+        }
+        .disCounted{
+          background-color: red;
+          max-width: 20%;
+          color: white;
+          padding: 0.3rem;
+          padding-left: 0.6rem;
+          border-radius: 0 0 4px 0;
+          position: absolute;
+          top: 1rem;
+          left: 1rem;
+          font-size: 13px;
+          font-weight: bold;
+          z-index: 2;
+          span{
+            background-color: red;
+          }
+        }
+  
+        .name{
+          margin: 12px 0 6px;
+          font-size: 18px;
+          color : #000000;
+        }
+  
+
+        .price {
+          font-size: 15px;
+  
+          .old-price {
+            text-decoration: line-through;
+            color: #aaa;
+            margin-right: 8px;
+          }
+  
+          .new-price {
+            color: #000;
+            font-weight: bold;
+          }
+  
+          
+        }
+      }
+    }
    
     .breadcrumbs {
       font-size: 14px;

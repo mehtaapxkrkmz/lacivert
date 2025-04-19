@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '/src/scss/productFilter.scss';
+import Products from './Layout/Products';
 
 const ProductFilter = ({ category }) => {
     const [activeFilters, setActiveFilters] = useState({});
@@ -187,6 +188,7 @@ const ProductFilter = ({ category }) => {
             </div>
 
             <div className="filter-divider"></div>
+            <Products/>
         </div>
     );
 };
