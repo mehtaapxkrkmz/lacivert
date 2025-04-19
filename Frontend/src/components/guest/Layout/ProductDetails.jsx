@@ -105,7 +105,7 @@ function ProductDetails({id }) {
                     border: 'none',
                     cursor: 'pointer',
                     textAlign: 'left',
-                    fontWeight: 'bold',
+                    fontWeight: '500',
                     marginBottom: '2px',
                     backgroundColor:"white",
                     transition: 'background 0.3s',
