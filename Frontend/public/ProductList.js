@@ -11,17 +11,15 @@ const ProductList = [
         "https://sky-static.mavi.com/mnresize/820/1162/1110621-70204_image_9.jpg"
       ],
       gender: "Kadın",
-      sizes: [
-        { label: "S", value: 36 },
-        { label: "M", value: 38 },
-        { label: "L", value: 40 }
-      ],
+      sizes: {S: 10, M: 20, L: 30},
       inCart: false,
       isFavorite: true,
       isDiscounted: true,
       oldPrice: 399.99,
       newPrice: 299.99,
-      productFeatures:"Yaka Detaylı Haki Ceket",
+      category: "Kadın",
+      productFeatures:"Mavi'nin dış giyim koleksiyonundan Yaka Detaylı Haki Ceket. İki adet fermuarlı yan ve bir adet fermuarlı ön cep, çıt çıt ile ayarlanabilir etek. Bu ürün için özel wax/yağ kaplama tekniği uygulanmıştır. Kullanım süresince üzerindeki efektlerin zenginleşmesiyle kendine özgü bir görünüm kazanır. Zamanla belirginleşen bu efektler, ürüne daha karakteristik bir dokunuş katar.",
+      score:5,
       comments: [
         {
           user: "Ayşe",
@@ -40,17 +38,15 @@ const ProductList = [
         "https://sky-static.mavi.com/mnresize/820/1162/0S10303-89353_image_5.jpg"
       ],
       gender: "Erkek",
-      sizes: [
-        { label: "M", value: 40 },
-        { label: "L", value: 42 },
-        { label: "XL", value: 44 }
-      ],
+      sizes: {S: 50, M: 70, L: 80},
       inCart: true,
       isFavorite: false,
       isDiscounted: false,
       oldPrice: 249.99,
       newPrice: 249.99,
-      productFeatures:"Mavi Polo Yaka uzun kollu, standart kesim",
+      category: "Erkek",
+      productFeatures:"Mavi'nin dış giyim koleksiyonundan Yaka Detaylı Haki Ceket. İki adet fermuarlı yan ve bir adet fermuarlı ön cep, çıt çıt ile ayarlanabilir etek. Bu ürün için özel wax/yağ kaplama tekniği uygulanmıştır. Kullanım süresince üzerindeki efektlerin zenginleşmesiyle kendine özgü bir görünüm kazanır. Zamanla belirginleşen bu efektler, ürüne daha karakteristik bir dokunuş katar.",
+      score:3,
       comments: [
         {
           user: "Mehmet",
@@ -60,7 +56,7 @@ const ProductList = [
       ]
     },
     {
-      id: 2,
+      id: 3,
       name: "Polo Yaka Mavi Patch Logo Lacivert",
       photos: [
         "https://sky-static.mavi.com/mnresize/820/1162/0S10303-89353_image_1.jpg",
@@ -68,17 +64,15 @@ const ProductList = [
         "https://sky-static.mavi.com/mnresize/820/1162/0S10303-89353_image_4.jpg","https://sky-static.mavi.com/mnresize/820/1162/0S10303-89353_image_5.jpg"
       ],
       gender: "Erkek",
-      sizes: [
-        { label: "M", value: 40 },
-        { label: "L", value: 42 },
-        { label: "XL", value: 44 }
-      ],
+      sizes: {S: 40, M: 80, L: 90},
       inCart: true,
       isFavorite: false,
       isDiscounted: false,
       oldPrice: 249.99,
       newPrice: 249.99,
-      productFeatures:"Mavi Polo Yaka uzun kollu, standart kesim",
+      category: "Erkek",
+      productFeatures:"Mavi'nin dış giyim koleksiyonundan Yaka Detaylı Haki Ceket. İki adet fermuarlı yan ve bir adet fermuarlı ön cep, çıt çıt ile ayarlanabilir etek. Bu ürün için özel wax/yağ kaplama tekniği uygulanmıştır. Kullanım süresince üzerindeki efektlerin zenginleşmesiyle kendine özgü bir görünüm kazanır. Zamanla belirginleşen bu efektler, ürüne daha karakteristik bir dokunuş katar.",
+      score:4,
       comments: [
         {
           user: "Mehmet",
@@ -89,5 +83,6 @@ const ProductList = [
     }
   ];
   
+
   export default ProductList;
   

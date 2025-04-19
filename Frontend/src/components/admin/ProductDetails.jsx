@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import { products } from './Products';
+import ProductList from '../../../public/ProductList'
 
 function ProductDetails() {
   const { id } = useParams();
@@ -10,7 +10,8 @@ function ProductDetails() {
   const [selectedImage, setSelectedImage] = useState(0);
 
   // Find the product with the matching ID
-  const product = products.find(p => p.id === parseInt(id));
+  const product = ProductList.find(p => p.id === parseInt(id));
+
 
   if (!product) {
     return (
@@ -63,10 +64,10 @@ function ProductDetails() {
       <div className="product-details-content">
         <div className="product-gallery">
           <div className="main-image">
-            <img src={product.images[selectedImage]} alt={product.name} />
+            <img src={product.photos[selectedImage]} alt={product.name} />
           </div>
           <div className="thumbnail-gallery">
-            {product.images.map((image, index) => (
+            {product.photos.map((image, index) => (
               <div 
                 key={index} 
                 className={`thumbnail ${selectedImage === index ? 'active' : ''}`}
@@ -82,15 +83,19 @@ function ProductDetails() {
           <h2 className="product-name">{product.name}</h2>
           <div className="product-meta">
             <span className="product-category">{product.category}</span>
-            <span className="product-stock">Stock: {product.stock}</span>
+            <span className="product-stock">Stok: 
+              <span className="stock-item">S: {product.sizes.S}</span>
+              <span className="stock-item">M: {product.sizes.M}</span>
+              <span className="stock-item">L: {product.sizes.L}</span>
+            </span>
           </div>
-          <div className="product-price">₺{product.price.toLocaleString('tr-TR', { minimumFractionDigits: 2 })}</div>
+          <div className="product-price">₺{product.newPrice.toLocaleString('tr-TR', { minimumFractionDigits: 2 })}</div>
           <div className="product-rating">
-            <span className="score">{product.score} / 5</span>
+            <span className="score">Puan : {product.score} / 5</span>
           </div>
           <div className="product-description">
             <h3>Açıklama</h3>
-            <p>{product.description}</p>
+            <p>{product.productFeatures}</p>
           </div>
         </div>
       </div>

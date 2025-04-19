@@ -18,7 +18,7 @@ function Product({ id, name, photos, oldPrice, newPrice, isDiscounted }) {
       )}
 
       
-      <h3>{name}</h3>
+      <div className='name'>{name}</div>
       <div className="price">
         {isDiscounted && (
           <>
