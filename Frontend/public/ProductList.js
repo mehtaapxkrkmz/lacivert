@@ -121,7 +121,7 @@ const ProductList = [
       sizes: {S: 40, M: 80, L: 90},
       inCart: true,
       isFavorite: false,
-      isDiscounted: false,
+      isDiscounted: true,
       oldPrice: 249.99,
       newPrice: 195,
       category: "Erkek",
