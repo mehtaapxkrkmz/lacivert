@@ -17,11 +17,7 @@ function Home() {
 
       <Products/>
 
-      {/*
-        <div className='product'>
-          <Favori/>
-        </div>
-      */}
+      
     </div>
   );
 }
