@@ -1,4 +1,4 @@
-Frontend'i yayınladığınız domain adresi: http://frontend.com
+Frontend'i yayınladığınız domain adresi: [http://lacivert.com](https://lacivert-proje2.vercel.app/)
 
 # Enis Özgür Frontend #
 1-Ürün detaylarını görüntüleme: Kullanıcılar, seçtikleri ürünün açıklamasını, fiyatını, özelliklerini görebilecek.
