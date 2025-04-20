@@ -8,7 +8,7 @@ lacivert E-Ticaret Platformu, kullanıcıların giyim ve moda ürünlerini kolay
 
 **Referans Uygulama:** [https://www.mavi.com/](https://www.mavi.com/)
 
-**Uygulama Adresi:** [abc.com](abc.com)
+**Uygulama Adresi:** [lacivert.com](https://lacivert-proje2.vercel.app/)
 
 **Grup Adı:** Grup f5
 

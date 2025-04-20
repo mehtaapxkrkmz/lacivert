@@ -5,10 +5,12 @@ import { Link, useLocation } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 function SideBar() {
   const location = useLocation();
+  
 
   return (
     <div className="sidebar">
         <NavLink to="/"><h2 >lacivert</h2></NavLink>
+        
       <ul>
         <li>
           <Link to="/admin"><IoHome className="icon"/><span>Özet Paneli</span></Link>
@@ -17,6 +19,7 @@ function SideBar() {
           <Link to="/admin/products"><FaTags className="icon"/><span>Ürünler</span></Link>
         </li>
       </ul>
+      
     </div>
   )
 }

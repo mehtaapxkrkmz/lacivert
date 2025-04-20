@@ -9,6 +9,7 @@ function Product({ id, name, photos, oldPrice, newPrice, isDiscounted ,isFavorit
   const handleProductClick = () => {
     navigate(`/product/${id}`); // Use the id to navigate to the product details page
   }
+  console.log(isDiscounted);
 
   const handleMouseMove = (e) => {
     const imageWidth = e.target.offsetWidth
@@ -41,9 +42,12 @@ function Product({ id, name, photos, oldPrice, newPrice, isDiscounted ,isFavorit
       />
       {isDiscounted && (
         <div className="disCounted">
-          <span>İndirimli Ürün</span>
+          <span id='etiket'>İndirimli Ürün</span>
         </div>
       )}
+      
+      
+      
       <span
   className={`heart-icon ${isFavorite ? 'favorited' : ''}`}
   onClick={(e) => {

@@ -5,6 +5,7 @@ import ProductList from '../../../public/ProductList';
 
 function EditProduct() {
   const { id } = useParams();
+  
   const navigate = useNavigate();
 
   const [product, setProduct] = useState({
