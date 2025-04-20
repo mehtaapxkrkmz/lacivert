@@ -14,9 +14,6 @@ Frontend'i yayınladığınız domain adresi: http://frontend.com
 6-İndirimli ürün görseline etiket yerleştirme: İndirime giren ürünlerin fotoğraflarında, "İndirim" yazan bir etiket verilir. Bu sayede kullanıcılar, hangi ürünlerin indirimde olduğunu kolayca fark edebilir.
 
 
- 
-
-
 # Mehtap Korkmaz Frontend #
 1. Yorum Ekleme: Ürün resimlerine tıklanıp ürün detay sayfasına gidildiğinde ürüne yorum yapılabilir.
 2. Yorum Silme: Ürün resimlerine tıklanıp ürün detay sayfasına gidildiğinde ürüne yapılan yorum silinebilir.
@@ -29,10 +26,11 @@ Frontend'i yayınladığınız domain adresi: http://frontend.com
 # Nida Ekinci Frontend #
 1. Sepete Ürün Ekleme: Kullanıcı satın almayı düşündüğü ürünü, ürün sayfasındaki “Sepete Ekle” seçeneğiyle sepetine kaydedip alışverişine devam edebilir.
 2. Sepetten Ürün Silme: Kullanıcı “Sepet” sayfasında görüntülenen ürünlerin yanındaki "Sil" butonu ile ürünü sepetten silebilir.
-3. Sepet Güncelleme: Kullanıcı “Sepet” sayfasında görüntülenen ürünlerin adedini değiştirebilecek. Eğer stok sayısı, adet artışına izin vermezse kullanıcıya hata mesajı gösterilecek. 
-4. Sepeti Görüntüleme: Kayıtlı üye, gezinti çubuğunda yer alan çanta ikonuna tıklayarak "Sepet" sayfasını görüntüleyebilecek. Bu sayfada sepete eklenen ürünler; beden, adet ve fiyat bilgisi ile birlikte listelenecek.
-5. Kategorilere Göre Filtreleme: Anasayfadaki gezinti çubuğunda yer alan kategori başlıklarına tıklanarak alt kategoriler görüntülenebilecek. Kullanıcı bunlardan birine tıkladığında ilgili filtrenin uygulanmış olduğu vitrin sayfasına yönlendirilecek. 
-6. Ürün Arama: Anasayfadaki gezinti çubuğunda yer alan büyüteç simgesine tıklandığında, açılan “Arama” sayfasında arama yapılabilecek. Aynı zamanda arama metnine yazılmak üzere tıklanabilir kategori başlıkları yer alacak. 
+3. Sepet Güncelleme: Kullanıcı “Sepet” sayfasında görüntülenen ürünlerin adedini değiştirebilir.
+4. Sepeti Görüntüleme: Kayıtlı üye, gezinti çubuğunda yer alan çanta ikonuna tıklayarak "Sepet" sayfasını görüntüleyebilir.
+5. Kategorilere Göre Filtreleme: Anasayfadaki gezinti çubuğunda yer alan kategori başlıklarına tıklanarak alt kategoriler görüntülenebilir.
+6. Ürün Arama: Anasayfadaki gezinti çubuğunda yer alan büyüteç simgesine tıklandığında, açılan “Arama” sayfasında arama yapılabilir. 
+
 
 # Sude Melek Acar Frontend #
 1. Üye Olma: Kullanıcı  Ad,Soyad,Telefon,Cinsiyet,Doğum Tarihi,Adres e-posta ve şifre ile üye olur.
