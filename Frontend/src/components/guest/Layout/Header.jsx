@@ -7,6 +7,7 @@ import { CiLogin } from "react-icons/ci";
 import { RiMenu3Line } from "react-icons/ri";
 import { NavLink } from 'react-router-dom';
 import CategoryNavMenu from './CategoryNavMenu';
+import logo from '../../../assets/lacivert-logo.png';
 
 const Header = ({ cartItemCount }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -31,7 +32,7 @@ const Header = ({ cartItemCount }) => {
                 </div>
                 <div className='logo'>
                     <NavLink to="/">
-                        <img src="../../../../public/images/lacivert-logo.png" alt="Logo" />
+                        <img src={logo} alt="Logo" />
                     </NavLink>
                 </div>
                 <div className='navbar'>
