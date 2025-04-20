@@ -48,6 +48,11 @@ const UpdateComment = ({ comment, onUpdate }) => {
     setIsEditing(false);
   };
 
+  // Yorum boşsa düzenleme butonunu engelleme
+  if (!comment) {
+    return null;
+  }
+
   return (
     <div className="update-comment">
       {!isEditing ? (
@@ -58,6 +63,7 @@ const UpdateComment = ({ comment, onUpdate }) => {
             value={editedComment}
             onChange={handleChange}
             maxLength={200}
+            placeholder="Yorumunuzu buraya yazın..."
           />
           <div className="char-counter">
             {editCharCount}/200
