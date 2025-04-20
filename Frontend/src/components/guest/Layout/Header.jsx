@@ -7,7 +7,7 @@ import { CiLogin } from "react-icons/ci";
 import { RiMenu3Line } from "react-icons/ri";
 import { NavLink } from 'react-router-dom';
 import CategoryNavMenu from './CategoryNavMenu';
-import logo from '../../../assets/lacivert-logo.png';
+import logo from './lacivert-logo.png';
 
 const Header = ({ cartItemCount }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
