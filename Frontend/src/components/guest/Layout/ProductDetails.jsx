@@ -66,7 +66,7 @@ function ProductDetails() {
   };
   const { id } = useParams();  
   const product = ProductList.find(product => product.id === parseInt(id));
-  console.log(product)
+
   return (
     <div className="productPage">
       <div className="productInfo">
