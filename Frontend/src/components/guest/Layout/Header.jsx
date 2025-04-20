@@ -1,27 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { VscAccount } from "react-icons/vsc";
 import { CiSearch } from "react-icons/ci";
 import { CiLogin } from "react-icons/ci";
+import { RiMenu3Line } from "react-icons/ri";
 import { NavLink } from 'react-router-dom';
+import CategoryNavMenu from './CategoryNavMenu';
 
-const Header = () => {
+const Header = ({ cartItemCount }) => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const menuItems = [
+        { path: '/', label: 'ANASAYFA' },
+        { path: '/kadin', label: 'KADIN' },
+        { path: '/erkek', label: 'ERKEK' },
+        { path: '/cocuk', label: 'ÇOCUK' },
+    ];
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
     return (
         <div className='header'>
             <div className='items'>
                 <div className='categories'>
                     <NavLink to="/admin">ADMİN</NavLink>
-                    <NavLink to="/kadin">KADIN</NavLink>
-                    <NavLink to="/erkek">ERKEK</NavLink>
-                    <NavLink to="/cocuk">ÇOCUK</NavLink>
-                    {/*<NavLink to="/admin">JEAN</NavLink>
-                    <NavLink to="/admin">OUTLET</NavLink>*/}                   
+                    <CategoryNavMenu />
                 </div>
                 <div className='logo'>
                     <NavLink to="/">
-                        <img src="../../../../public/images/lacivert-logo.png" alt="Logo"/>
-                    </NavLink>                 
+                        <img src="../../../../public/images/lacivert-logo.png" alt="Logo" />
+                    </NavLink>
                 </div>
                 <div className='navbar'>
                     <div className='items'>
@@ -34,7 +45,7 @@ const Header = () => {
                             </NavLink>
                         </div>
                         <NavLink to="/favori">
-                            <div className="favorite">
+                            <div className="favorites-icon">
                                 <IoMdHeartEmpty />
                             </div>
                         </NavLink>
@@ -51,12 +62,33 @@ const Header = () => {
                         <NavLink to="/cart">
                             <div className="shopping-bag">
                                 <HiOutlineShoppingBag />
-                                <span className="count">0</span>
+                                {cartItemCount > 0 && (
+                                    <span className="count">{cartItemCount}</span>
+                                )}
                             </div>
                         </NavLink>
                     </div>
                 </div>
+                <button className="hamburger-menu" onClick={toggleMenu}>
+                    <RiMenu3Line />
+                </button>
             </div>
+            {isMenuOpen && (
+                <div className="mobile-menu">
+                    <div className="mobile-menu-content">
+                        {menuItems.map((item, index) => (
+                            <NavLink
+                                key={index}
+                                to={item.path}
+                                className="mobile-menu-item"
+                                onClick={toggleMenu}
+                            >
+                                {item.label}
+                            </NavLink>
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

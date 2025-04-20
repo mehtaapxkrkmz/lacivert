@@ -1,0 +1,109 @@
+.category-nav-menu {
+    .main-categories {
+        display: flex;
+        gap: 20px;
+        position: relative;
+
+        @media (max-width: 768px) {
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+    }
+
+    .category-container {
+        position: relative;
+
+        @media (max-width: 768px) {
+            width: 100%;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 10px;
+
+            @media (max-width: 768px) {
+                display: block;
+                width: 100%;
+                text-align: center;
+            }
+        }
+    }
+
+    .subcategory-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        min-width: 600px;
+        z-index: 1000;
+        padding: 20px;
+        border-radius: 4px;
+
+        @media (max-width: 992px) {
+            min-width: 450px;
+        }
+
+        @media (max-width: 768px) {
+            position: static;
+            min-width: 100%;
+            box-shadow: none;
+            padding: 10px;
+        }
+    }
+
+    .subcategory-columns {
+        display: flex;
+        gap: 30px;
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+            gap: 20px;
+        }
+    }
+
+    .subcategory-column {
+        flex: 1;
+
+        @media (max-width: 768px) {
+            padding: 0 10px;
+        }
+
+        h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #333;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 8px;
+
+            @media (max-width: 576px) {
+                font-size: 14px;
+            }
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            li {
+                padding: 6px 0;
+                cursor: pointer;
+                color: #666;
+                font-size: 14px;
+                transition: color 0.2s;
+
+                &:hover {
+                    color: #000;
+                }
+
+                @media (max-width: 576px) {
+                    font-size: 13px;
+                }
+            }
+        }
+    }
+}

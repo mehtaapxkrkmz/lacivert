@@ -21,17 +21,10 @@ const AppContent = () => {
   const location = useLocation();
 
   // admin ve /admin altındaki sayfalarda navbar gizlenecek
-  const hideNav = location.pathname.startsWith("/admin");
+  //const hideNav = location.pathname.startsWith("/admin");
 
   return (
     <>
-      {/*{!hideNav && (
-        <nav>
-          <Link to="/admin">Admin</Link>
-          ----------
-          <Link to="/test">Test</Link>
-        </nav>
-      )}*/}
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} /> {/* Ana sayfa */}

@@ -1,59 +1,269 @@
 .search-page {
+    padding: 20px;
     width: 100%;
     min-height: 100vh;
-    /* height yerine min-height kullanmak daha iyi */
-    display: flex;
-    flex-direction: column;
-    background-color: azure;
-    padding: 20px;
-    /* Genel padding ekledim */
+    background-color: white;
 
     .search-container {
-        height: 50px;
-        /* Biraz daha yüksek */
-        width: 100%;
-        /* %90 yerine %100 */
-        max-width: 1000px;
-        /* Maksimum genişlik ekledim */
         display: flex;
         align-items: center;
-        margin: 20px auto;
-        /* Üst/alt margin ve otomatik yatay hizalama */
-        background-color: white;
-        border-bottom: 1px solid #000;
-        /* Sadece alt border yerine tam border */
-        color: gray;
+        max-width: 800px;
+        margin: 30px auto;
+        position: relative;
         padding: 0 15px;
-        /* İç padding */
-        gap: 10px;
+
+        @media (max-width: 768px) {
+            max-width: 100%;
+            margin: 20px auto;
+        }
 
         .search-icon {
-            width: 24px;
-            /* Sabit genişlik */
-            height: 24px;
-            /* Sabit yükseklik */
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            /* Biraz küçülttüm */
-            margin-right: 12px;
-            color: #555;          
+            position: absolute;
+            left: 25px;
+            font-size: 20px;
+            color: #666;
+            cursor: pointer;
+
+            @media (max-width: 576px) {
+                left: 20px;
+            }
         }
 
         input {
-            flex: 1;
-            height: 100%;
-            border: none;
-            font-size: 1rem;
-            background: white;
-            padding: 0 10px;
-            color: #1a1a1a;
+            width: 100%;
+            height: 50px;
+            padding: 15px 15px 15px 45px;
+            border-bottom: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: white;
+            color: black;
+
+            @media (max-width: 576px) {
+                font-size: 14px;
+                height: 45px;
+            }
 
             &:focus {
                 outline: none;
-                border: none;
+                border-color: #999;
+            }
+        }
+    }
+
+    .categories-section {
+        display: grid;
+        gap: 30px;
+        margin-top: 30px;
+
+        @media (max-width: 768px) {
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .main-category-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+            padding-right: 40px;
+            flex-wrap: wrap;
+
+            @media (max-width: 576px) {
+                padding-right: 20px;
+                gap: 8px;
+            }
+
+            button {
+                background-color: white;
+                color: black;
+                border: 2px solid #eee;
+                padding: 10px 15px;
+                text-align: left;
+                cursor: pointer;
+
+                @media (max-width: 576px) {
+                    padding: 8px 12px;
+                    font-size: 14px;
+                }
+
+                &:hover {
+                    background-color: #fafafa;
+                }
+
+                &:focus {
+                    border: 2px solid #ddd;
+                    outline: none;
+                }
+            }
+        }
+
+        .search-subcategories {
+            padding: 30px;
+            padding-top: 0px;
+            border-bottom: 1px solid #ddd;
+
+            @media (max-width: 768px) {
+                padding: 15px;
+            }
+
+            .subcategory-sections {
+                flex: 0 0 300px; // Fixed width for categories section
+                padding-right: 20px;
+
+                .subcategory-group {
+                    font-size: 18px;
+                    font-weight: 500;
+                    margin-bottom: 20px;
+                    color: #333;
+                }
+
+                .subcategory-buttons {
+                    display: grid;
+                    grid-template-columns: repeat(4, 1fr);
+                    gap: 10px;
+
+                    @media (max-width: 992px) {
+                        grid-template-columns: repeat(3, 1fr);
+                    }
+
+                    @media (max-width: 768px) {
+                        grid-template-columns: repeat(2, 1fr);
+                    }
+
+                    @media (max-width: 576px) {
+                        grid-template-columns: repeat(1, 1fr);
+                    }
+
+                    .subcategory-btn {
+                        background-color: white;
+                        color: black;
+                        border: 1px solid #eee;
+                        padding: 10px 15px;
+                        text-align: left;
+                        cursor: pointer;
+                        transition: background-color 0.2s ease;
+                        border-radius: 4px;
+                        font-size: 14px;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+
+                        &:hover {
+                            background-color: #fafafa;
+                        }
+                    }
+                }
+            }
+        }
+
+        .search-results {
+            flex: 1;
+            padding-left: 20px;
+            margin: 10px 100px;
+
+            @media (max-width: 992px) {
+                margin: 10px 50px;
+            }
+
+            @media (max-width: 768px) {
+                margin: 10px 20px;
+            }
+
+            @media (max-width: 576px) {
+                margin: 10px;
+            }
+
+            .loading-state {
+                text-align: center;
+                padding: 20px;
+                color: #666;
+                margin-top: 100px;
+
+                .products-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                    gap: 20px;
+
+                    @media (max-width: 768px) {
+                        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                        gap: 15px;
+                    }
+
+                    @media (max-width: 576px) {
+                        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                        gap: 10px;
+                    }
+
+                    .product-card {
+                        position: relative;
+                        z-index: 1;
+                        background-color: white;
+                        padding: 10px;
+                        border-radius: 4px;
+                        color: black;
+                        margin-bottom: 20px;
+
+                        h3 {
+                            font-size: 16px;
+                            font-weight: 500;
+                            margin-bottom: 10px;
+                            color: black;
+                            background-color: white;
+                        }
+
+                        .price {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            margin-top: 10px;
+                            color: black;
+                            background-color: white;
+
+                            .old-price {
+                                text-decoration: line-through;
+                                color: #666;
+                                padding-right: 10px;
+                                color: grey;
+                                background-color: white;
+                            }
+
+                            .new-price {
+                                color: #333;
+                                padding-left: 10px;
+                                color: black;
+                                background-color: white;
+                            }
+                        }
+
+                        .category {
+                            font-size: 14px;
+                            color: #666;
+                            margin-top: 5px;
+                            background-color: white;
+                            color: black;
+                        }
+                    }
+                }
+            }
+
+            .no-results {
+                text-align: center;
+                padding: 20px;
+                color: #666;
+                background-color: white;
+
+                h2 {
+                    margin-bottom: 10px;
+                    color: #666;
+                    background-color: white;
+                }
+
+                p {
+                    color: #666;
+                    background-color: white;
+                }
             }
         }
     }
