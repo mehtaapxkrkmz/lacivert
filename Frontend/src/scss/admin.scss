@@ -4,7 +4,8 @@
     background-color: #d1d5db;
     min-height: 100vh;
     width: 100%;
-
+    position: relative;
+    
     @media (min-width: 768px) {
         flex-direction: row;
     }
@@ -17,6 +18,11 @@
         width: 100%;
         position: relative;
         z-index: 10;
+        position: relative;
+        
+        
+        
+        
 
         @media (min-width: 768px) {
             width: 200px;
