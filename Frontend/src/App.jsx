@@ -7,7 +7,7 @@ import Login from './components/guest/Login'
 import Register from './components/guest/Register'
 import Profileupdate from './components/guest/Profileupdate'
 import Search from './components/guest/Layout/SearchPage'
-import Products from './components/guest/Layout/Products'
+
 import Home from './components/guest/Layout/Home'
 import Favori from './components/guest/Favori'
 import Layout from './components/guest/Layout/Layout'
@@ -22,7 +22,17 @@ const AppContent = () => {
 
   // admin ve /admin altındaki sayfalarda navbar gizlenecek
   const hideNav = location.pathname.startsWith("/admin");
+  const [favorites, setFavorites] = useState([]);
 
+  const toggleFavorite = (productId) => {
+    const isFavorite = favorites.includes(productId);
+    const updatedFavorites = isFavorite
+      ? favorites.filter((id) => id !== productId)
+      : [...favorites, productId];
+  
+    setFavorites(updatedFavorites);
+  }
+  
   return (
     <>
       {/*{!hideNav && (
@@ -42,9 +52,13 @@ const AppContent = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profileupdate" element={<Profileupdate />} />
-          <Route path='/favori' element={<Favori />} />
+        
           <Route path='/search' element={<Search />} />
           <Route path='/cart' element={<CartPage />} />
+          <Route
+  path="/favori"
+  element={<Favori favorites={favorites} toggleFavorite={toggleFavorite} />}
+/>
         </Route>
         <Route path="/admin/*" element={<Admin />} />
       </Routes>

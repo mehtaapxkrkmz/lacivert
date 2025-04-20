@@ -1,54 +1,35 @@
-.product {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    margin: 0;
+.favorites-page {
     padding: 20px;
+  }
   
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      justify-content: center;
-    }
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+  }
   
-    .product {
-      position: relative;
-      background: #fff;
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: center;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
+  .product-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+  }
   
-      img {
-        width: 60%;
-        height: auto;
-        border-radius: 4px;
-      }
+  .product-card img {
+    width: 100%;
+    height: auto;
+  }
   
-      .heart-icon {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        font-size: 100px;
-        color: #ccc;
-        cursor: pointer;
-        transition: color 0.3s, transform 0.3s;
+  .product-info {
+    margin-top: 10px;
+  }
   
-        &.favorited {
-          color: red;
-          animation: pulse 0.4s ease;
-        }
-      }
+  .heart-icon {
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: red;
+  }
   
-      h3 {
-        margin-top: 10px;
-      }
-    }
-  
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(2); }
-      100% { transform: scale(1); }
-    }
+  .heart-icon.favorited {
+    color: #ff0000;
   }
