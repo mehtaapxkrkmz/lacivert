@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import '../../../scss/Home.scss'
 
-function Product({ id, name, photos, oldPrice, newPrice, isDiscounted }) {
+function Product({ id, name, photos, oldPrice, newPrice, isDiscounted ,isFavorite,toggleFavorite}) {
   const navigate = useNavigate()
   const [currentImage, setCurrentImage] = useState(photos[0]) // Initialize with the first photo
 
@@ -43,6 +44,16 @@ function Product({ id, name, photos, oldPrice, newPrice, isDiscounted }) {
           <span>İndirimli Ürün</span>
         </div>
       )}
+      <span
+  className={`heart-icon ${isFavorite ? 'favorited' : ''}`}
+  onClick={(e) => {
+    e.stopPropagation(); // Ürün detayına gitmesin
+    toggleFavorite(id); // Favori durumunu değiştir
+  }}
+>
+  &#9829;
+</span>
+
       <div className='name'>{name}</div>
       <div className="price">
         {isDiscounted && (

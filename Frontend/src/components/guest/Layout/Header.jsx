@@ -33,8 +33,8 @@ const Header = () => {
                                 <button type="submit"><CiSearch /></button>
                             </NavLink>
                         </div>
-                        <NavLink to="/admin">
-                            <div className="favorites">
+                        <NavLink to="/favori">
+                            <div className="favorite">
                                 <IoMdHeartEmpty />
                             </div>
                         </NavLink>
