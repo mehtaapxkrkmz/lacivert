@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import '/src/scss/favori.scss'; // SCSS dosyasının doğru yolunu kontrol et
 
 const products = [
-  { id: 1, name: "Ürün 1", img: "https://sky-static.mavi.com/mnresize/820/1162/0612473-88067_image_1.jpg" },
-  { id: 2, name: "Ürün 2", img: "https://sky-static.mavi.com/mnresize/820/1162/0S10303-89353_image_1.jpg" },
-  { id: 3, name: "Ürün 3", img: "https://sky-static.mavi.com/mnresize/820/1162/1110621-70204_image_1.jpg" },
-  { id: 4, name: "Ürün 4", img: "https://sky-static.mavi.com/mnresize/820/1162/1613056-70057_image_1.jpg" },
+  { id: 1, name: "Kahverengi TShirt", img: "https://sky-static.mavi.com/mnresize/820/1162/0612473-88067_image_1.jpg" },
+  { id: 2, name: "Polo Yaka Mavi Patch Logo Lacivert",img: "https://sky-static.mavi.com/mnresize/820/1162/0S10303-89353_image_1.jpg" },
+  { id: 3, name: "Yaka Detaylı Haki Cekete", img: "https://sky-static.mavi.com/mnresize/820/1162/1110621-70204_image_1.jpg" },
+  { id: 4, name: "Domates Desenli TShirt", img: "https://sky-static.mavi.com/mnresize/820/1162/1613056-70057_image_1.jpg" },
 ];
 
 const Favori = () => {
