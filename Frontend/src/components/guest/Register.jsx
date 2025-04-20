@@ -24,7 +24,7 @@ function Register() {
   return (
     <div className="register-page"> {/* En dıştaki div'in className'i "register-page" */}
       <div className="register-container">
-        <h1>Mavi'ye Kayıt Ol</h1>
+        <h1>LACİVERT'E KAYIT OL</h1>
         <form onSubmit={handleSubmit}>
           <label htmlFor="firstname">Ad</label>
           <input type="text" id="firstname" name="firstname" placeholder="Adınızı girin" required />

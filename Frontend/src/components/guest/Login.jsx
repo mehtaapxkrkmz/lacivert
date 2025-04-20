@@ -15,7 +15,7 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      <h1>Mavi'ye Giriş Yap</h1>
+      <h1>LACİVERT'E GİRİŞ YAP</h1>
       <form action="/login" method="POST">
         <label htmlFor="email">E-posta</label>
         <input type="email" id="email" name="email" placeholder="E-postanızı girin" required />
