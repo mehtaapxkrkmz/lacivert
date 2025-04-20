@@ -1,6 +1,5 @@
 import React from 'react'
 import { IoHome } from "react-icons/io5";
-import { FaChartPie } from "react-icons/fa";
 import { FaTags } from "react-icons/fa6";
 import { Link, useLocation } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';

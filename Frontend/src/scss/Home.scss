@@ -5,13 +5,33 @@
     width: 100%;
     background-color: #f0f0f0;
     flex-direction: column; // Alt alta sıralamak için eklendi
+    overflow-x: auto; // Yatay kaydırmayı gizlemek için eklendi
   
     .home-content {
       display: flex; // grid yerine flex
       flex-direction: column; // Alt alta içerikler
       align-items: center;
       width: 100%;
-    }
+      img {
+        max-width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
+    
+      // Mobil görünüm için
+      // @media (max-width: 768px) {
+      //   flex-direction: column;
+      //   align-items: center;
+      
+      //   img {
+      //     max-width: none;
+      //     width: 200%; /* Yakınlaştırma etkisi */
+      //     height: auto;
+      //     object-fit: cover;
+      //     object-position: left ; /* Sol tarafı göster */
+      //   }
+      // }
+      
   
     .products {
       display: grid;
@@ -119,4 +139,4 @@
     }
     
   }
-  
+}
