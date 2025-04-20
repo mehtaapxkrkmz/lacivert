@@ -3,7 +3,7 @@
 const ProductList = [
     {
       id: 1,
-      name: "Yaka Detaylı Haki Cekete",
+      name: "Yaka Detaylı Haki Ceket",
       photos: [
         "https://sky-static.mavi.com/mnresize/820/1162/1110621-70204_image_1.jpg",
         "https://sky-static.mavi.com/mnresize/820/1162/1110621-70204_image_3.jpg",

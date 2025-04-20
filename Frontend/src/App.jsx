@@ -20,8 +20,6 @@ import ProductDetails from '../src/components/guest/Layout/ProductDetails'
 const AppContent = () => {
   const location = useLocation();
 
-  // admin ve /admin altındaki sayfalarda navbar gizlenecek
-  const hideNav = location.pathname.startsWith("/admin");
   const [favorites, setFavorites] = useState([]);
 
   const toggleFavorite = (productId) => {
@@ -35,13 +33,6 @@ const AppContent = () => {
   
   return (
     <>
-      {/*{!hideNav && (
-        <nav>
-          <Link to="/admin">Admin</Link>
-          ----------
-          <Link to="/test">Test</Link>
-        </nav>
-      )}*/}
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} /> {/* Ana sayfa */}

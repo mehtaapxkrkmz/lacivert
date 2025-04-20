@@ -28,24 +28,24 @@ const ProductFilter = ({ category }) => {
 
     // Filter dropdowns configuration
     const filterDropdowns = [
-        {id: 'kategori', label: 'Kategori'},
-        {id: 'tema', label: 'Tema'},
-        {id: 'fitKalip', label: 'Fit/Kalıp'},
-        {id: 'renk', label: 'Renk'},
-        {id: 'beden', label: 'Beden'},
-        {id: 'bel', label: 'Bel'},
-        {id: 'paça', label: 'Paça'},
-        {id: 'boy', label: 'Boy'},
+        { id: 'kategori', label: 'Kategori' },
+        { id: 'tema', label: 'Tema' },
+        { id: 'fitKalip', label: 'Fit/Kalıp' },
+        { id: 'renk', label: 'Renk' },
+        { id: 'beden', label: 'Beden' },
+        { id: 'bel', label: 'Bel' },
+        { id: 'paça', label: 'Paça' },
+        { id: 'boy', label: 'Boy' },
     ];
 
     const additionalFilters = [
-        {id: 'kapüşon', label: 'Kapüşon'},
-        {id: 'yaka', label: 'Yaka'},
-        {id: 'fiyat', label: 'Fiyat'},
-        {id: 'dugme', label: 'Düğme/Fermuar'},
-        {id: 'kol', label: 'Kol'},
+        { id: 'kapüşon', label: 'Kapüşon' },
+        { id: 'yaka', label: 'Yaka' },
+        { id: 'fiyat', label: 'Fiyat' },
+        { id: 'dugme', label: 'Düğme/Fermuar' },
+        { id: 'kol', label: 'Kol' },
     ];
-    const sortFilter = [{id: 'siralama', label: 'Sırala'}];
+    const sortFilter = [{ id: 'siralama', label: 'Sırala' }];
 
     // Toggle dropdown visibility
     const toggleDropdown = (filterId) => {
@@ -129,7 +129,7 @@ const ProductFilter = ({ category }) => {
                 ))}
                 {sortFilter.map((filter) => (
                     <div key={filter.id} className="filter-dropdown"
-                         style={{marginLeft: 'auto', marginRight: '70px'}}>
+                        style={{ marginLeft: 'auto', marginRight: '70px' }}>
                         <button
                             className="dropdown-toggle"
                             onClick={() => toggleDropdown(filter.id)}
@@ -188,7 +188,7 @@ const ProductFilter = ({ category }) => {
             </div>
 
             <div className="filter-divider"></div>
-            <Products/>
+            <Products />
         </div>
     );
 };

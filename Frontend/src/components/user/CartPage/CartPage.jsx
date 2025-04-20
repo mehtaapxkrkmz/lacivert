@@ -7,7 +7,6 @@ import '../../../scss/Cart.scss';
 const CartPage = () => {
     const [cart, setCart] = useState([]); // Sepetin içeriğini tutan state
 
-
     // Sayfa yüklendiğinde sepete bazı ürünleri varsayılan olarak ekle
     useEffect(() => {
         const initialCart = ProductList

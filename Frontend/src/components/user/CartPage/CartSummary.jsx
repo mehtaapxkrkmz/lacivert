@@ -9,7 +9,7 @@ const CartSummary = ({ total }) => {
                     <tbody>
                         <tr>
                             <td>Sipariş Toplamı</td>
-                            <td>Toplam: {total.toFixed(2)} TL</td>
+                            <td>{total.toFixed(2)} TL</td>
                         </tr>              
                         <tr>
                             <td colSpan={2}><button>Satın Al</button></td>

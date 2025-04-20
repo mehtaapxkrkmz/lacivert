@@ -1,38 +1,39 @@
 .home {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: #f0f0f0;
+  flex-direction: column; // Alt alta sıralamak için eklendi
+  overflow-x: auto; // Yatay kaydırmayı gizlemek için eklendi
+
+  .home-content {
+    display: flex; // grid yerine flex
+    flex-direction: column; // Alt alta içerikler
     align-items: center;
     width: 100%;
-    background-color: #f0f0f0;
-    flex-direction: column; // Alt alta sıralamak için eklendi
-    overflow-x: auto; // Yatay kaydırmayı gizlemek için eklendi
-  
-    .home-content {
-      display: flex; // grid yerine flex
-      flex-direction: column; // Alt alta içerikler
-      align-items: center;
-      width: 100%;
-      img {
-        max-width: 100%;
-        height: auto;
-        object-fit: cover;
-      }
-    
-      // Mobil görünüm için
-      // @media (max-width: 768px) {
-      //   flex-direction: column;
-      //   align-items: center;
-      
-      //   img {
-      //     max-width: none;
-      //     width: 200%; /* Yakınlaştırma etkisi */
-      //     height: auto;
-      //     object-fit: cover;
-      //     object-position: left ; /* Sol tarafı göster */
-      //   }
-      // }
-      
-  
+
+    img {
+      max-width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    // Mobil görünüm için
+    // @media (max-width: 768px) {
+    //   flex-direction: column;
+    //   align-items: center;
+
+    //   img {
+    //     max-width: none;
+    //     width: 200%; /* Yakınlaştırma etkisi */
+    //     height: auto;
+    //     object-fit: cover;
+    //     object-position: left ; /* Sol tarafı göster */
+    //   }
+    // }
+
+
     .products {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
@@ -41,7 +42,7 @@
       background-color: #f9f9f9;
       width: 100%;
       color: #333;
-    
+
       .product {
         border: 1px solid #eee;
         padding: 15px;
@@ -51,6 +52,7 @@
         background-color: #fff;
         cursor: pointer;
         position: relative;
+
         .heart-icon {
           font-size: 260px;
           color: gray;
@@ -61,23 +63,23 @@
           z-index: 2;
           transition: color 0.3s ease;
         }
-        
+
         .heart-icon.favorited {
           color: red;
         }
-        
+
         &:hover {
           box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
           transform: scale(1.02);
         }
-    
+
         img {
           width: 100%;
           height: auto;
           border-radius: 4px;
           object-fit: cover;
         }
-    
+
         .disCounted {
           background-color: red;
           max-width: 30%;
@@ -91,27 +93,27 @@
           font-weight: bold;
           z-index: 2;
         }
-    
+
         .name {
           margin: 12px 0 6px;
           font-size: 18px;
           color: #000000;
         }
-    
+
         .price {
           font-size: 15px;
-    
+
           .old-price {
             text-decoration: line-through;
             color: #aaa;
             margin-right: 8px;
           }
-    
+
           .new-price {
             color: #000;
             font-weight: bold;
           }
-    
+
           .discount {
             color: red;
             margin-left: 8px;
@@ -119,31 +121,31 @@
           }
         }
       }
-    
+
       // Responsive media queries
       @media (max-width: 992px) {
         grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
       }
-    
+
       @media (max-width: 768px) {
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       }
-    
+
       @media (max-width: 576px) {
         grid-template-columns: 1fr;
         padding: 10px;
-    
+
         .product {
           padding: 10px;
-    
+
           .name {
             font-size: 16px;
           }
-    
+
           .price {
             font-size: 14px;
           }
-    
+
           .disCounted {
             font-size: 12px;
             padding: 0.3rem 0.8rem;
@@ -151,6 +153,6 @@
         }
       }
     }
-    
+
   }
 }
