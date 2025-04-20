@@ -6,6 +6,8 @@ import Rating from '../../user/comment/Rating';
 import DeleteComment from '../../user/comment/DeleteComment';  
 import UpdateComment from '../../user/comment/UpdateComment';  
 import Select from 'react-select';
+import ProductList from '../../../../public/ProductList';
+import { useParams } from 'react-router-dom';  
 
 // Accordion başlık ve içerikleri
 const accordionData = [
@@ -35,7 +37,8 @@ const accordionData = [
   }
 ];
 
-function ProductDetails({id }) {
+
+function ProductDetails() {
   const customSelectStyles = {
     control: (provided, state) => ({
       ...provided,
@@ -61,23 +64,25 @@ function ProductDetails({id }) {
   const handleAccordion = (idx) => {
     setOpenAccordion(openAccordion === idx ? null : idx);
   };
-
+  const { id } = useParams();  
+  const product = ProductList.find(product => product.id === parseInt(id));
+  console.log(product)
   return (
     <div className="productPage">
       <div className="productInfo">
         <div className="productImages">
-          <img src="https://sky-static.mavi.com/mnresize/820/1162/1110621-70204_image_1.jpg" alt="" />
-          <img src="https://sky-static.mavi.com/mnresize/820/1162/1110621-70204_image_3.jpg" alt="" />
-          <img src="https://sky-static.mavi.com/mnresize/820/1162/1110621-70204_image_6.jpg" alt="" />
-          <img src="https://sky-static.mavi.com/mnresize/820/1162/1110621-70204_image_7.jpg" alt="" />
+            {product.photos && product.photos.map((photo, index) => (
+              <img key={index} src={photo} alt={`Product Image ${index + 1}`} />
+            ))}
         </div>
+
         <div className="productDetails">
-          <h2>Yaka Detaylı Haki Ceket</h2>
+          <h2>{product.name}</h2>
           <p className="price">
-              <span className="original-price">1.299,99 TL</span>
-              <span className="discounted-price">909,99 TL</span>   
+              <span className="original-price">{product.oldPrice} TL</span>
+              <span className="discounted-price">{product.newPrice}</span>   
           </p>
-          <p className="product-code">Ürün Kodu: 0510303-89353</p>
+          <p className="product-code">Ürün Kodu: {product.id}</p>
           <br />
           {/* form yapısı */}
           <form className='order' action="">
