@@ -38,17 +38,20 @@
   
       .products {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(800px, 1fr)); // kutu genişliği artırıldı
         gap: 30px;
         padding: 20px;
-        background-color: #ffffff;
+        background-color: #f9f9f9;
         width: 100%;
-        color: #333;
+        justify-content: start;
+        max-width: unset;
+        margin: 0;
+        color: #000;
       
         .product {
           border: 1px solid #eee;
-          padding: 15px;
-          border-radius: 8px;
+          padding: 20px; // kutu içi biraz daha ferah
+          border-radius: 10px;
           text-align: left;
           transition: box-shadow 0.3s ease, transform 0.3s ease;
           background-color: #fff;
@@ -56,39 +59,48 @@
           position: relative;
       
           &:hover {
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transform: scale(1.03); // biraz daha etkili büyüme efekti
+          }
+      
+          .heart-icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 30px;
+            color: #bbb;
+            cursor: pointer;
+            transition: color 0.3s ease;
+      
+            &.favorited {
+              color: red;
+            }
+      
+            &:hover {
+              color: #ff6666;
+            }
           }
       
           img {
-            width: 100%;
-            height: auto;
-            border-radius: 4px;
+            width: 100%; // taşıma yapmasın
+            height: 400px; // daha büyük bir görsel
             object-fit: cover;
+            border-radius: 6px;
           }
       
-          .disCounted {
-            background-color: red;
-            max-width: 30%;
-            color: white;
-            padding: 0.4rem 1rem;
-            border-radius: 0 0 4px 0;
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            font-size: 13px;
-            font-weight: bold;
-            z-index: 2;
+          h3 {
+            margin: 16px 0 8px;
+            font-size: 20px;
           }
       
-          .name {
-            margin: 12px 0 6px;
-            font-size: 18px;
-            color: #000000;
+          .desc {
+            color: #555;
+            font-size: 15px;
+            margin-bottom: 10px;
           }
       
           .price {
-            font-size: 15px;
+            font-size: 16px;
       
             .old-price {
               text-decoration: line-through;
@@ -105,37 +117,6 @@
               color: red;
               margin-left: 8px;
               font-weight: bold;
-            }
-          }
-        }
-      
-        // Responsive media queries
-        @media (max-width: 992px) {
-          grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-        }
-      
-        @media (max-width: 768px) {
-          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        }
-      
-        @media (max-width: 576px) {
-          grid-template-columns: 1fr;
-          padding: 10px;
-      
-          .product {
-            padding: 10px;
-      
-            .name {
-              font-size: 16px;
-            }
-      
-            .price {
-              font-size: 14px;
-            }
-      
-            .disCounted {
-              font-size: 12px;
-              padding: 0.3rem 0.8rem;
             }
           }
         }
