@@ -30,7 +30,7 @@ const Header = ({ cartItemCount }) => {
                     <NavLink to="/admin">ADMİN</NavLink>
                     <CategoryNavMenu />
                 </div>
-                <div className='logo'>
+                <div className='logoimg'>
                     <NavLink to="/">
                         <img src={logoimg} alt="Logo" />
                     </NavLink>
