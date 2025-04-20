@@ -22,7 +22,7 @@ function Products() {
 
   return (
     <div className="products">
-      <h2 style={{ textAlign: "center" }}>Favori Ürünler</h2>
+     <h2 style={{ textAlign: "center" }}> Ürünler</h2>
       <div className="product-grid">
         {ProductList.map((product) => (
           <Product
