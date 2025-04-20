@@ -12,9 +12,9 @@ const Header = () => {
             <div className='items'>
                 <div className='categories'>
                     <NavLink to="/admin">ADMİN</NavLink>
-                    <NavLink to="/admin">KADIN</NavLink>
-                    <NavLink to="/admin">ERKEK</NavLink>
-                    <NavLink to="/admin">ÇOCUK</NavLink>
+                    <NavLink to="/products/women">KADIN</NavLink>
+                    <NavLink to="/products/men">ERKEK</NavLink>
+                    <NavLink to="/products/kids">ÇOCUK</NavLink>
                     {/*<NavLink to="/admin">JEAN</NavLink>
                     <NavLink to="/admin">OUTLET</NavLink>*/}                   
                 </div>
@@ -26,10 +26,10 @@ const Header = () => {
                 <div className='navbar'>
                     <div className='items'>
                         <div className="search">
-                            <NavLink to="/admin">
+                            <NavLink to="/search">
                                 <input type="text" placeholder="   Arama Yap" />
                             </NavLink>
-                            <NavLink to="/admin">
+                            <NavLink to="/search">
                                 <button type="submit"><CiSearch /></button>
                             </NavLink>
                         </div>
@@ -48,7 +48,7 @@ const Header = () => {
                                 <CiLogin className="CiLogin" />
                             </div>
                         </NavLink>
-                        <NavLink to="/admin">
+                        <NavLink to="/cart">
                             <div className="shopping-bag">
                                 <HiOutlineShoppingBag />
                                 <span className="count">0</span>

@@ -2,9 +2,12 @@ import { useState } from 'react'
 import './App.css'
 import React from 'react'
 import Admin from './components/admin/Admin'
+import CartPage from './components/user/CartPage/CartPage'
 import Login from './components/guest/Login'
 import Register from './components/guest/Register'
 import Profileupdate from './components/guest/Profileupdate'
+import Search from './components/guest/Layout/SearchPage'
+import Products from './components/guest/Layout/Products'
 import Home from './components/guest/Layout/Home'
 import Layout from './components/guest/Layout/Layout'
 
@@ -29,13 +32,16 @@ const AppContent = () => {
       )}*/}
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} /> {/* Ana sayfa */}         
-        </Route>
-        <Route path="/product/:id" element={<ProductDetails />} /> 
-        <Route path="/admin/*" element={<Admin />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/profileupdate" element={<Profileupdate />} />
+          <Route index element={<Home />} /> {/* Ana sayfa */} 
+          <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/cart" element={<CartPage />} />  
+          <Route path="/profileupdate" element={<Profileupdate />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />  
+          <Route path="/products/:gender" element={<Products />} /> 
+          <Route path="/search" element={<Search />} />
+        </Route> 
+        <Route path="/admin/*" element={<Admin />} />         
       </Routes>
     </>
   );

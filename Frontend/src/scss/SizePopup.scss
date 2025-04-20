@@ -1,0 +1,89 @@
+.add-to-cart-btn {
+    padding: 12px 24px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 15px;
+    width: 100%;
+  
+    &:hover {
+      background-color: #0056b3;
+    }
+  
+    &:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+  }
+  
+  .size-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .size-popup {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  
+    h3 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+  }
+  
+  .size-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .size-btn {
+    padding: 10px;
+    border: 1px solid #ddd;
+    background: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+  
+    &:hover {
+      border-color: #007bff;
+    }
+  
+    &.selected {
+      background-color: #007bff;
+      color: white;
+      border-color: #007bff;
+    }
+  }
+  
+  .confirm-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 15px;
+  
+    &:hover {
+      background-color: #e0e0e0;
+    }
+  }

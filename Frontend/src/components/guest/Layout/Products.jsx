@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Product from './Product'
-import ProductList from '../../../../public/ProductList.js'
+import ProductList from '../../../data/ProductList'
 
 function Products() {
+
+
   return (
     <div className="products">
       {ProductList.map((product) => (
@@ -21,9 +23,6 @@ function Products() {
           comments={product.comments}
         />
       ))}
-
-
-     
     </div>
   )
 }

@@ -1,0 +1,60 @@
+.search-page {
+    width: 100%;
+    min-height: 100vh;
+    /* height yerine min-height kullanmak daha iyi */
+    display: flex;
+    flex-direction: column;
+    background-color: azure;
+    padding: 20px;
+    /* Genel padding ekledim */
+
+    .search-container {
+        height: 50px;
+        /* Biraz daha yüksek */
+        width: 100%;
+        /* %90 yerine %100 */
+        max-width: 1000px;
+        /* Maksimum genişlik ekledim */
+        display: flex;
+        align-items: center;
+        margin: 20px auto;
+        /* Üst/alt margin ve otomatik yatay hizalama */
+        background-color: white;
+        border-bottom: 1px solid #000;
+        /* Sadece alt border yerine tam border */
+        color: gray;
+        padding: 0 15px;
+        /* İç padding */
+        gap: 10px;
+
+        .search-icon {
+            width: 24px;
+            /* Sabit genişlik */
+            height: 24px;
+            /* Sabit yükseklik */
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            /* Biraz küçülttüm */
+            margin-right: 12px;
+            color: #555;          
+        }
+
+        input {
+            flex: 1;
+            height: 100%;
+            border: none;
+            font-size: 1rem;
+            background: white;
+            padding: 0 10px;
+            color: #1a1a1a;
+
+            &:focus {
+                outline: none;
+                border: none;
+            }
+        }
+    }
+}

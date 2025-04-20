@@ -1,0 +1,221 @@
+.cart-page {
+    //sayfa genel stil
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #fcfcfc;
+
+    .cart-container {
+        //ürün varsa sayfa içeriği
+        min-height: 100vh;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        align-items: center;
+        margin: 10px;
+        margin-top: 20px;
+        background-color: blueviolet;
+        color: black;
+
+        .left {
+            //ürün bilgileri
+            min-height: 100vh;
+            display: flex;
+            flex: 3;
+            flex-direction: column;
+            align-items: flex-start;
+            padding-top: 50px;
+            padding-bottom: 30px;
+            padding-left: 10px;
+            padding-right: 10px;
+            background-color: white;
+            color: black;
+
+            h3 {
+                margin-bottom: 30px;
+            }
+
+            .cart-table {
+                table-layout: fixed;
+                width: 100%;              
+                background-color: white;
+                color: black;
+                text-align: left;
+
+                th[colspan="2"] {
+                    text-align: center;
+                }
+
+                thead {
+                    height: 60px;
+                    border-bottom: 1px solid lightgray;
+                    border-top: 1px solid lightgray;
+                }
+
+                .cart-item {
+                    height: 60px;
+                    border-bottom: 1px solid lightgray;
+                    border-top: 1px solid lightgray;
+
+                    &:hover {
+                        background-color: #fcfcfc;
+                    }
+
+                    .name {
+                        &:hover {
+                            cursor: pointer;
+                        }
+                    }
+
+                    td {                    
+                        vertical-align: middle; /* Dikey ortalama */
+                        padding: 12px 8px; /* İç boşluk */
+                        padding-top: 30px;
+                        padding-bottom: 30px;
+
+                        img{
+                            &:hover {
+                                cursor: pointer;
+                            }
+                        }                      
+
+                        input {
+                            
+                            width: 70px;
+                            height: 30px;
+                            border: 1px solid #000;
+                            border-radius: 5px;
+
+                            &:focus {
+                                outline: none;
+                                background-color: #fcfcfc;
+                            }
+
+                            &:hover {
+                                background-color: #fcfcfc;
+                                cursor: pointer;
+                            }
+                        }
+
+                        button {
+                            background-color: white;
+                            color: black;
+                            text-decoration: underline;
+                            cursor: pointer;
+                            border: none;
+
+                            &:hover {
+                                border: none;
+
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            .remove-all-button {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-top: 30px;
+                padding: 10px;
+                border-radius: 5px;
+                border: 1px solid #000;
+                background-color: #fafafa;
+                color: black;
+
+                &:hover {
+                    background-color: #f0f0f0;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .right {
+            
+            min-height: 100%;
+            display: flex;
+            flex: 1;
+            align-items: flex-start;
+            padding-top: 50px;
+            padding-bottom: 30px;
+            padding-left: 10px;
+            padding-right: 10px;
+            background-color: white;
+            color: black;
+            
+            .cart-summary {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                margin-left: 20px;
+                margin-right: 20px;
+
+                h1 {
+                    margin-bottom: 55px;
+                }
+
+                .table {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 100%;
+                    height: 100%;
+                    padding: 10px;
+                    background-color: #f0f0f0;
+
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-bottom: 20px;
+                        background-color: none;
+    
+                        
+                        td {
+                            justify-content: space-around;
+                            width: 50%;
+                            height: 60px;
+                            padding-left: 10px;
+                            padding-right: 10px;
+                            
+                            button {
+                                width: 100%;
+                                height: 75%;
+                                border: none;
+                                background-color: #000;
+                                color: #fff;
+                            }
+                        }
+    
+                        
+                    } 
+                }
+
+                                            
+            }
+        }
+    }
+
+    .cart-empty-warning {
+        //ürün yoksa sayfa içeriği
+        width: 100%;
+        background-color: #fafafa;
+
+        .content {
+            display: flex;
+            align-items: left;
+            justify-content: left;
+            width: 100%;
+            background-color: white;
+           
+            .message {
+                color: black;
+                padding-left: 50px;
+                padding-top: 50px;
+                padding-bottom: 30px;
+            }
+        }
+    }
+}
