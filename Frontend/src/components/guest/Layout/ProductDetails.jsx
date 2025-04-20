@@ -84,6 +84,10 @@ function ProductDetails() {
           </p>
           <p className="product-code">Ürün Kodu: {product.id}</p>
           <br />
+          <div className="product-description">
+            <h3>Açıklama</h3>
+            <p>{product.productFeatures}</p>
+          </div>
           {/* form yapısı */}
           <form className='order' action="">
             <Select

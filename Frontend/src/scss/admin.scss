@@ -26,17 +26,20 @@
             overflow-y: auto;
         }
 
-        h2 {
-            margin-bottom: 1rem;
-            text-align: center;
-            font-size: 1.125rem;
-            font-weight: 600;
-            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-            
-
-            @media (min-width: 768px) {
-                font-size: 1.25rem;
-                margin-bottom: 1.25rem;
+        a{
+            h2 {
+                margin-bottom: 1rem;
+                text-align: center;
+                font-size: 1.125rem;
+                font-weight: 600;
+                font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+                color:white;
+                
+    
+                @media (min-width: 768px) {
+                    font-size: 1.25rem;
+                    margin-bottom: 1.25rem;
+                }
             }
         }
     

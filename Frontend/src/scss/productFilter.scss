@@ -14,8 +14,8 @@
       padding: 20px;
       background-color: #ffffff;
       width: 100%;
-      color : #333;
-  
+      color: #333;
+    
       .product {
         border: 1px solid #eee;
         padding: 15px;
@@ -25,24 +25,24 @@
         background-color: #fff;
         cursor: pointer;
         position: relative;
-  
+    
         &:hover {
           box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
           transform: scale(1.02);
         }
-  
+    
         img {
           width: 100%;
           height: auto;
           border-radius: 4px;
           object-fit: cover;
         }
-        .disCounted{
+    
+        .disCounted {
           background-color: red;
-          max-width: 20%;
+          max-width: 30%;
           color: white;
-          padding: 0.3rem;
-          padding-left: 0.6rem;
+          padding: 0.4rem 1rem;
           border-radius: 0 0 4px 0;
           position: absolute;
           top: 1rem;
@@ -50,33 +50,64 @@
           font-size: 13px;
           font-weight: bold;
           z-index: 2;
-          span{
-            background-color: red;
-          }
         }
-  
-        .name{
+    
+        .name {
           margin: 12px 0 6px;
           font-size: 18px;
-          color : #000000;
+          color: #000000;
         }
-  
-
+    
         .price {
           font-size: 15px;
-  
+    
           .old-price {
             text-decoration: line-through;
             color: #aaa;
             margin-right: 8px;
           }
-  
+    
           .new-price {
             color: #000;
             font-weight: bold;
           }
-  
-          
+    
+          .discount {
+            color: red;
+            margin-left: 8px;
+            font-weight: bold;
+          }
+        }
+      }
+    
+      // Responsive media queries
+      @media (max-width: 992px) {
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      }
+    
+      @media (max-width: 768px) {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      }
+    
+      @media (max-width: 576px) {
+        grid-template-columns: 1fr;
+        padding: 10px;
+    
+        .product {
+          padding: 10px;
+    
+          .name {
+            font-size: 16px;
+          }
+    
+          .price {
+            font-size: 14px;
+          }
+    
+          .disCounted {
+            font-size: 12px;
+            padding: 0.3rem 0.8rem;
+          }
         }
       }
     }
