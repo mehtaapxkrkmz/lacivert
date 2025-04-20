@@ -12,9 +12,9 @@ const Header = () => {
             <div className='items'>
                 <div className='categories'>
                     <NavLink to="/admin">ADMİN</NavLink>
-                    <NavLink to="/products/women">KADIN</NavLink>
-                    <NavLink to="/products/men">ERKEK</NavLink>
-                    <NavLink to="/products/kids">ÇOCUK</NavLink>
+                    <NavLink to="/kadin">KADIN</NavLink>
+                    <NavLink to="/erkek">ERKEK</NavLink>
+                    <NavLink to="/cocuk">ÇOCUK</NavLink>
                     {/*<NavLink to="/admin">JEAN</NavLink>
                     <NavLink to="/admin">OUTLET</NavLink>*/}                   
                 </div>
@@ -33,8 +33,8 @@ const Header = () => {
                                 <button type="submit"><CiSearch /></button>
                             </NavLink>
                         </div>
-                        <NavLink to="/admin">
-                            <div className="favorites">
+                        <NavLink to="/favori">
+                            <div className="favorite">
                                 <IoMdHeartEmpty />
                             </div>
                         </NavLink>

@@ -26,16 +26,20 @@
             overflow-y: auto;
         }
 
-        h2 {
-            margin-bottom: 1rem;
-            text-align: center;
-            font-size: 1.125rem;
-            font-weight: 600;
-            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-
-            @media (min-width: 768px) {
-                font-size: 1.25rem;
-                margin-bottom: 1.25rem;
+        a{
+            h2 {
+                margin-bottom: 1rem;
+                text-align: center;
+                font-size: 1.125rem;
+                font-weight: 600;
+                font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+                color:white;
+                
+    
+                @media (min-width: 768px) {
+                    font-size: 1.25rem;
+                    margin-bottom: 1.25rem;
+                }
             }
         }
     
@@ -809,6 +813,36 @@
     padding: 1.5rem;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    
+    .sizes{
+        display: flex;
+        flex-direction: column;
+        .size{
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            .tag{
+                flex:1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .input-size{
+                flex:5;
+            }
+        }
+    }
+    .category{
+       select{
+        width: 100%; /* Genişliği tam yapar */
+        max-width: 400px; /* İsteğe bağlı: maksimum genişlik */
+        padding: 8px;
+        font-size: 16px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+       }
+    }
 
     label {
       display: block;
@@ -1018,6 +1052,38 @@
             padding: 1.5rem;
         }
 
+        .sizes{
+            display: flex;
+            flex-direction: column;
+            .size{
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                margin-bottom: 0.5rem;
+                .tag{
+                    flex:1;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                .input-size{
+                    flex:5;
+                }
+            }
+        }
+        .category{
+           select{
+            width: 100%; /* Genişliği tam yapar */
+            max-width: 400px; /* İsteğe bağlı: maksimum genişlik */
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+           }
+        }
+        .newPrice{
+            margin-top: 1rem;
+        }
         label {
             display: block;
             margin-bottom: 0.5rem;
@@ -1029,7 +1095,7 @@
                 font-size: 1rem;
             }
         }
-
+       
         input[type="text"],
         input[type="number"],
         textarea {

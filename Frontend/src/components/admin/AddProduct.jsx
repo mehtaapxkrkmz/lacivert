@@ -136,34 +136,43 @@ function AddProduct() {
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="stock">Stok</label>
-            <input
-              type="number"
-              id="stock"
-              name="stock"
-              value={product.stock}
-              onChange={handleChange}
-              required
-              min="0"
-            />
-          </div>
         </div>
 
         <div className="form-group">
-          <label htmlFor="category">Kategori</label>
-          <select
-            id="category"
-            name="category"
-            value={product.category}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Kategori Seçin</option>
-            <option value="Giyim">Giyim</option>
-            <option value="Ayakkabı">Ayakkabı</option>
-            <option value="Aksesuar">Aksesuar</option>
-          </select>
+          <div className="category">
+            <label htmlFor="category">Kategori Seçin</label>
+            <select
+              id="category"
+              name="category"
+              value={product.category}
+              onChange={handleChange}
+              required
+            >
+              <option value="woman">Kadın</option>
+              <option value="man">Erkek</option>
+              <option value="child">Aksesuar</option>
+            </select>
+          </div>
+        </div>
+        
+        <div className="form-group">
+          <div className="sizes">
+            <div className="size">
+              <span className='tag'>S</span>
+              <input type="number" min="0" step="1" className='input-size' required/>
+            </div>
+            <div className="size">
+              <span className='tag'>M</span>
+              <input type="number" min="0" step="1" className='input-size' required/>
+            </div>
+            <div className="size">
+              <span className='tag'>L</span>
+              <input type="number" min="0" step="1" className='input-size' required/>
+            </div>
+           
+          </div>
+          
+           
         </div>
 
         <div className="form-group">
