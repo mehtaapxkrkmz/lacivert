@@ -1,3 +1,16 @@
+#etiket{
+  background-color: red;
+  max-width: 30%;
+  color: white;
+  padding: 0.4rem ;
+  border-radius: 0 0 4px 0;
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 13px;
+  font-weight: bold;
+  z-index: 29;
+}
 .product-filter{
     width: 100%;
     max-width: 1200px;

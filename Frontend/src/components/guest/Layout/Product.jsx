@@ -9,7 +9,7 @@ function Product({ id, name, photos, oldPrice, newPrice, isDiscounted ,isFavorit
   const handleProductClick = () => {
     navigate(`/product/${id}`); // Use the id to navigate to the product details page
   }
-  console.log(isDiscounted);
+ 
 
   const handleMouseMove = (e) => {
     const imageWidth = e.target.offsetWidth
