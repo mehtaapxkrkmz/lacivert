@@ -1,85 +1,85 @@
-.products {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(800px, 1fr)); // kutu genişliği artırıldı
-  gap: 30px;
-  padding: 20px;
-  background-color: #f9f9f9;
-  width: 100%;
-  justify-content: start;
-  max-width: unset;
-  margin: 0;
-  color: #000;
+// .products {
+//   display: grid;
+//   grid-template-columns: repeat(auto-fill, minmax(800px, 1fr)); // kutu genişliği artırıldı
+//   gap: 30px;
+//   padding: 20px;
+//   background-color: #f9f9f9;
+//   width: 100%;
+//   justify-content: start;
+//   max-width: unset;
+//   margin: 0;
+//   color: #000;
 
-  .product {
-    border: 1px solid #eee;
-    padding: 20px; // kutu içi biraz daha ferah
-    border-radius: 10px;
-    text-align: left;
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
-    background-color: #fff;
-    cursor: pointer;
-    position: relative;
+//   .product {
+//     border: 1px solid #eee;
+//     padding: 20px; // kutu içi biraz daha ferah
+//     border-radius: 10px;
+//     text-align: left;
+//     transition: box-shadow 0.3s ease, transform 0.3s ease;
+//     background-color: #fff;
+//     cursor: pointer;
+//     position: relative;
 
-    &:hover {
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      transform: scale(1.03); // biraz daha etkili büyüme efekti
-    }
+//     &:hover {
+//       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+//       transform: scale(1.03); // biraz daha etkili büyüme efekti
+//     }
 
-    .heart-icon {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      font-size: 30px;
-      color: #bbb;
-      cursor: pointer;
-      transition: color 0.3s ease;
+//     .heart-icon {
+//       position: absolute;
+//       top: 15px;
+//       right: 15px;
+//       font-size: 30px;
+//       color: #bbb;
+//       cursor: pointer;
+//       transition: color 0.3s ease;
 
-      &.favorited {
-        color: red;
-      }
+//       &.favorited {
+//         color: red;
+//       }
 
-      &:hover {
-        color: #ff6666;
-      }
-    }
+//       &:hover {
+//         color: #ff6666;
+//       }
+//     }
 
-    img {
-      width: 100%; // taşıma yapmasın
-      height: 400px; // daha büyük bir görsel
-      object-fit: cover;
-      border-radius: 6px;
-    }
+//     img {
+//       width: 100%; // taşıma yapmasın
+//       height: 400px; // daha büyük bir görsel
+//       object-fit: cover;
+//       border-radius: 6px;
+//     }
 
-    h3 {
-      margin: 16px 0 8px;
-      font-size: 20px;
-    }
+//     h3 {
+//       margin: 16px 0 8px;
+//       font-size: 20px;
+//     }
 
-    .desc {
-      color: #555;
-      font-size: 15px;
-      margin-bottom: 10px;
-    }
+//     .desc {
+//       color: #555;
+//       font-size: 15px;
+//       margin-bottom: 10px;
+//     }
 
-    .price {
-      font-size: 16px;
+//     .price {
+//       font-size: 16px;
 
-      .old-price {
-        text-decoration: line-through;
-        color: #aaa;
-        margin-right: 8px;
-      }
+//       .old-price {
+//         text-decoration: line-through;
+//         color: #aaa;
+//         margin-right: 8px;
+//       }
 
-      .new-price {
-        color: #000;
-        font-weight: bold;
-      }
+//       .new-price {
+//         color: #000;
+//         font-weight: bold;
+//       }
 
-      .discount {
-        color: red;
-        margin-left: 8px;
-        font-weight: bold;
-      }
-    }
-  }
-}
+//       .discount {
+//         color: red;
+//         margin-left: 8px;
+//         font-weight: bold;
+//       }
+//     }
+//   }
+// }

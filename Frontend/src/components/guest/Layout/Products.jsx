@@ -23,8 +23,7 @@ function Products() {
   return (
     <div className="products">
      
-      <div className="product-grid">
-        {ProductList.map((product) => (
+     {ProductList.map((product) => (
           <Product
             key={product.id}
             id={product.id}
@@ -41,7 +40,6 @@ function Products() {
             toggleFavorite={toggleFavorite}
           />
         ))}
-      </div>
     </div>
   )
 }
