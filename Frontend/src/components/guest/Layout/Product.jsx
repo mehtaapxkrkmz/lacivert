@@ -40,8 +40,9 @@ function Product({ id, name, photos, oldPrice, newPrice, isDiscounted ,isFavorit
         onMouseMove={handleMouseMove} 
         onMouseLeave={handleMouseLeave} 
       />
+     
       {isDiscounted && (
-        <div className="disCounted">
+        <div className="etiket11">
           <span id='etiket'>İndirimli Ürün</span>
         </div>
       )}

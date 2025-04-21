@@ -1,3 +1,4 @@
+
 .products {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); // kutu genişliği artırıldı
@@ -92,10 +93,12 @@
         font-weight: bold;
       }
 
-      .discount {
-        color: red;
-        margin-left: 8px;
-        font-weight: bold;
+      .disCounted {
+        background-color: #000;
+        transform: translateX(50);
+        span{
+          background-color: #000;
+        }
       }
     }
   }
