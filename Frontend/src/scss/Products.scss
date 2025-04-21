@@ -1,15 +1,21 @@
 .products {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(800px, 1fr)); // kutu genişliği artırıldı
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); // kutu genişliği artırıldı
   gap: 30px;
   padding: 20px;
   background-color: #f9f9f9;
   width: 100%;
-  justify-content: start;
-  max-width: unset;
-  margin: 0;
-  color: #000;
-
+  
+  //justify-content: start;
+  //max-width: unset;
+  //margin: 0 auto;
+  //color: #000;
+  .product-grid {
+     display: grid;
+    grid-template-columns:repeat(auto-fill, minmax(400px, 1fr));// Genişliği ihtiyaca göre ayarla
+    gap: 20px;
+    padding: 20px;
+  }
   .product {
     border: 1px solid #eee;
     padding: 20px; // kutu içi biraz daha ferah
@@ -19,17 +25,18 @@
     background-color: #fff;
     cursor: pointer;
     position: relative;
+    
 
     &:hover {
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
       transform: scale(1.03); // biraz daha etkili büyüme efekti
     }
-
+   
     .heart-icon {
       position: absolute;
       top: 15px;
       right: 15px;
-      font-size: 30px;
+      font-size: 40px;
       color: #bbb;
       cursor: pointer;
       transition: color 0.3s ease;
@@ -45,7 +52,7 @@
 
     img {
       width: 100%; // taşıma yapmasın
-      height: 400px; // daha büyük bir görsel
+      height: auto; // daha büyük bir görsel
       object-fit: cover;
       border-radius: 6px;
     }

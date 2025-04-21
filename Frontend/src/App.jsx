@@ -7,7 +7,7 @@ import Login from './components/guest/Login'
 import Register from './components/guest/Register'
 import Profileupdate from './components/guest/Profileupdate'
 import Search from './components/guest/Layout/SearchPage'
-
+import Products from './components/guest/Layout/Products'
 import Home from './components/guest/Layout/Home'
 import Favori from './components/guest/Favori'
 import Layout from './components/guest/Layout/Layout'
@@ -19,7 +19,7 @@ import ProductDetails from '../src/components/guest/Layout/ProductDetails'
 
 const AppContent = () => {
   const location = useLocation();
-
+  
   const [favorites, setFavorites] = useState([]);
 
   const toggleFavorite = (productId) => {
@@ -43,7 +43,8 @@ const AppContent = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profileupdate" element={<Profileupdate />} />
-        
+         
+         
           <Route path='/search' element={<Search />} />
           <Route path='/cart' element={<CartPage />} />
           <Route
