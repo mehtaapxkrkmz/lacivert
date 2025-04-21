@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import Header from '../Layout/Header';
 import Footer from '../Layout/Footer';
 import ProductList from '../../../data/ProductList';
+
 import '../../../scss/Layout.scss';
 
 const Layout = () => {
