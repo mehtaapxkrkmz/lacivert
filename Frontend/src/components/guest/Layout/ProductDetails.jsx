@@ -137,11 +137,7 @@ function ProductDetails() {
       </div>
       {/* Yorum ve Puanlama Bileşenleri */}
       <div className="comment-section">
-        <h2>Yorumlar ve Puanlama</h2>
-        <Rating productId={id} />
         <AddComment productId={id} />
-        <DeleteComment productId={id} />
-        <UpdateComment productId={id} />
       </div>
     </div>
   )

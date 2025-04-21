@@ -6,18 +6,18 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start; /* Yıldızları sola hizala */
   width: 100%;
-  max-width: 300px;
-  margin: 0 auto;
-  text-align: center;
+  max-width: 100%; /* Yorum kutusuyla aynı genişlikte */
+  margin: 0; 
+  text-align: left; 
 
   .stars {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start; /* Yıldızları sola hizala */
     font-size: 2rem;
     margin-bottom: 1rem;
-    gap: 0.3rem; // yıldızlar arası boşluk
+    gap: 0.3rem; /* yıldızlar arası boşluk */
   }
 
   .star {
@@ -28,22 +28,6 @@
     &.filled,
     &:hover {
       color: gold;
-    }
-  }
-
-  .submit-rating {
-    margin-top: 0.5rem;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    background-color: #0077cc;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-
-    &:hover {
-      background-color: #005fa3;
     }
   }
 

@@ -1,79 +1,81 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '/src/scss/comment/updateComment.scss';
 
-const UpdateComment = ({ comment, onUpdate }) => {
-  const [editedComment, setEditedComment] = useState(comment || '');
-  const [editCharCount, setEditCharCount] = useState((comment || '').length);
+const UpdateComment = ({ onUpdate }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [initialComment, setInitialComment] = useState(comment || '');
+  const [editedText, setEditedText] = useState('');
+  const [originalText, setOriginalText] = useState('');
+  const [charCount, setCharCount] = useState(0);
+  const [feedbackMessage, setFeedbackMessage] = useState('');
 
-  useEffect(() => {
-    setEditedComment(comment || '');
-    setEditCharCount((comment || '').length);
-    setInitialComment(comment || '');
-  }, [comment]);
-
-  const handleEditToggle = () => {
-    setIsEditing(!isEditing);
+  const handleStartEdit = (text) => {
+    setOriginalText(text);
+    setEditedText(text);
+    setCharCount(text.length);
+    setIsEditing(true);
   };
 
-  const handleChange = (e) => {
-    const updatedText = e.target.value;
-    setEditedComment(updatedText);
-    setEditCharCount(updatedText.length);
+  const handleTextChange = (e) => {
+    const text = e.target.value;
+    setEditedText(text);
+    setCharCount(text.length);
   };
 
-  const handleUpdateSubmit = () => {
-    if (editedComment.trim() === '') {
-      alert("Yorum boş olamaz.");
+  const handleUpdate = () => {
+    if (editedText.trim() === '') {
+      setFeedbackMessage('Yorum boş olamaz!');
+      setTimeout(() => setFeedbackMessage(''), 3000);
       return;
     }
 
-    if (editedComment === initialComment) {
-      alert("Yorumda herhangi bir değişiklik yapılmamış.");
-      return;
+    try {
+      onUpdate(editedText);
+      setIsEditing(false);
+      setFeedbackMessage('Yorumunuz başarıyla güncellendi.');
+    } catch (error) {
+      setFeedbackMessage('Yorumunuz güncellenemedi. Lütfen tekrar deneyin.');
     }
-
-    onUpdate(editedComment);
-    setIsEditing(false);
+    
+    setTimeout(() => setFeedbackMessage(''), 3000);
   };
 
   const handleCancel = () => {
-    if (editedComment !== initialComment) {
-      const confirmCancel = window.confirm("Değişiklikler kaybolacak. İptal etmek istediğinizden emin misiniz?");
-      if (!confirmCancel) return;
-    }
-    setEditedComment(initialComment);
-    setEditCharCount(initialComment.length);
     setIsEditing(false);
+    setFeedbackMessage('Yorum güncelleme işlemi iptal edildi.');
+    setTimeout(() => setFeedbackMessage(''), 3000);
   };
-
-  // Yorum boşsa düzenleme butonunu engelleme
-  if (!comment) {
-    return null;
-  }
 
   return (
     <div className="update-comment">
-      {!isEditing ? (
-        <button onClick={handleEditToggle}>Yorumu Düzenle</button>
-      ) : (
-        <div className="edit-form">
-          <textarea
-            value={editedComment}
-            onChange={handleChange}
-            maxLength={200}
-            placeholder="Yorumunuzu buraya yazın..."
-          />
-          <div className="char-counter">
-            {editCharCount}/200
+      <button
+        className="update-button"
+        onClick={() => handleStartEdit(originalText)}
+      >
+        Yorumu Düzenle
+      </button>
+
+      {isEditing && (
+        <>
+          <div className="update-overlay" onClick={handleCancel}></div>
+          <div className="edit-dialog">
+            <textarea
+              value={editedText}
+              onChange={handleTextChange}
+              className="edit-textarea"
+              maxLength={200}
+            />
+            <div className="dialog-footer">
+              <div className="char-counter">{charCount}/200</div>
+              <div className="button-group">
+                <button className="save" onClick={handleUpdate}>Kaydet</button>
+                <button className="cancel" onClick={handleCancel}>İptal</button>
+              </div>
+            </div>
           </div>
-          <div className="edit-buttons">
-            <button onClick={handleUpdateSubmit}>Güncelle</button>
-            <button className="cancel" onClick={handleCancel}>İptal</button>
-          </div>
-        </div>
+        </>
       )}
+
+      {feedbackMessage && <p className="feedback-message">{feedbackMessage}</p>}
     </div>
   );
 };

@@ -1,42 +1,48 @@
 import React, { useState } from 'react';
-import '/src/scss/comment/deleteComment.scss'; // SCSS dosyasını eklemeyi unutma
+import '/src/scss/comment/deleteComment.scss';
 
-const DeleteComment = ({ comment, index, onDelete }) => {
+const DeleteComment = ({ comment, onDelete }) => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [feedbackMessage, setFeedbackMessage] = useState('');
 
   const handleDelete = () => {
     try {
-      onDelete(index); // Silme işlemi, üst bileşenden gelen onDelete fonksiyonu çağrılır
+      onDelete();
       setFeedbackMessage('Yorumunuz başarıyla silindi.');
     } catch (error) {
       setFeedbackMessage('Yorumunuz silinemedi. Lütfen tekrar deneyin.');
     }
-    setShowConfirm(false); // Onay penceresini kapat
-    setTimeout(() => setFeedbackMessage(''), 3000); // Mesajı 3 saniye sonra sil
+    setShowConfirm(false);
+    setTimeout(() => setFeedbackMessage(''), 3000);
   };
 
   const cancelDelete = () => {
-    setShowConfirm(false); // Onay penceresini kapat
+    setShowConfirm(false);
     setFeedbackMessage('Yorum silme işlemi iptal edildi.');
-    setTimeout(() => setFeedbackMessage(''), 3000); // Mesajı 3 saniye sonra sil
+    setTimeout(() => setFeedbackMessage(''), 3000);
   };
 
   return (
     <div className="delete-comment">
-      <div className="comment-text" onClick={() => setShowConfirm(true)}>
-        {comment}
-      </div>
+      {/* Delete button in the bottom right */}
+      <button 
+        className="delete-button" 
+        onClick={() => setShowConfirm(true)}
+      >
+        Yorumu Sil
+      </button>
 
       {showConfirm && (
         <div className="confirm-dialog">
           <p>Yorumunuzu silmek istediğinizden emin misiniz?</p>
-          <button className="yes" onClick={handleDelete}>Evet</button>
-          <button className="no" onClick={cancelDelete}>Hayır</button>
+          <div className="button-group">
+            <button className="yes" onClick={handleDelete}>Evet</button>
+            <button className="no" onClick={cancelDelete}>Hayır</button>
+          </div>
         </div>
       )}
 
-      {feedbackMessage && <p className="feedback-message">{feedbackMessage}</p>} {/* Kullanıcıya geri bildirim mesajı */}
+      {feedbackMessage && <p className="feedback-message">{feedbackMessage}</p>}
     </div>
   );
 };

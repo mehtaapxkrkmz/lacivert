@@ -2,20 +2,22 @@ import React, { useState } from 'react';
 import '/src/scss/comment/addComment.scss';
 import DeleteComment from './DeleteComment';
 import UpdateComment from './UpdateComment';
+import Rating from './Rating';
 
 const AddComment = ({ productId }) => {
   const [comments, setComments] = useState([
     { id: 1, text: "Harika bir ürün!", rating: 5 },
-    { id: 2, text: "Fiyatı çok uygun.", rating: 4 },
+    { id: 2, text: "Fiyatı çok uygun.", rating: 4 }
   ]);
-  
+
   const [newComment, setNewComment] = useState('');
   const [charCount, setCharCount] = useState(0);
-  
+  const [newRating, setNewRating] = useState(0);
+
   const handleDelete = (commentId) => {
     setComments(comments.filter(comment => comment.id !== commentId));
   };
-  
+
   const handleUpdate = (updatedText, commentId) => {
     setComments(
       comments.map(comment =>
@@ -23,69 +25,86 @@ const AddComment = ({ productId }) => {
       )
     );
   };
-  
+
   const handleAddComment = (e) => {
     e.preventDefault();
-    if (newComment.trim() === "") {
-      alert("Yorum boş olamaz!");
-      return;
-    }
-    
+
     const newCommentObj = {
       id: comments.length + 1,
       text: newComment,
-      rating: 0,
+      rating: newRating,
+      date: new Date().toLocaleDateString('tr-TR')
     };
-    setComments([...comments, newCommentObj]);
+    setComments([newCommentObj, ...comments]);
     setNewComment("");
     setCharCount(0);
+    setNewRating(0);
   };
-  
+
   const handleTextChange = (e) => {
     const text = e.target.value;
     setNewComment(text);
     setCharCount(text.length);
   };
-  
+
+  const handleRatingSubmit = (rating) => {
+    setNewRating(rating);
+  };
+
   return (
     <div className="add-comment">
-      <h2>Yorumlar</h2>
-      
+      <h2 className="comment-title">Yorumlar</h2>
+
       {/* Yorum ekleme formu */}
-      <form onSubmit={handleAddComment}>
+      <form onSubmit={handleAddComment} className="comment-form">
+        <Rating productId={productId} onRatingSubmit={handleRatingSubmit} />
         <textarea
           value={newComment}
           onChange={handleTextChange}
           placeholder="Yorumunuzu buraya yazın..."
           maxLength={200}
+          className="comment-textarea"
         />
-        <div className="char-counter">
-          {charCount}/200
+        <div className="form-footer">
+          <div className="char-counter">
+            {charCount}/200
+          </div>
+          <button type="submit" className="submit-button">Yorum Ekle</button>
         </div>
-        <button type="submit">Yorum Ekle</button>
       </form>
-      
+
       {/* Yorumlar listesi */}
-      <ul>
-        {comments.map((item) => (
-          <li key={item.id}>
-            <p>{item.text}</p>
-            {item.rating > 0 && (
-              <p className="rating">Verilen Puan: {item.rating} ★</p>
-            )}
-            <div className="comment-actions">
-              <UpdateComment
-                comment={item.text}
-                onUpdate={(updatedText) => handleUpdate(updatedText, item.id)}
-              />
-              <DeleteComment
-                comment={item.text}
-                onDelete={() => handleDelete(item.id)}
-              />
-            </div>
-          </li>
-        ))}
-      </ul>
+      {comments.length > 0 ? (
+        <ul className="comments-list">
+          {comments.map((item) => (
+            <li key={item.id} className="comment-item">
+              <div className="comment-content">
+                <p className="comment-text">{item.text}</p>
+                {item.rating > 0 && (
+                  <div className="rating-box">
+                    <span className="rating">
+                      <strong>Verilen Puan: {item.rating} ★</strong>
+                    </span>
+                  </div>
+                )}
+                {item.date && (
+                  <p className="comment-date">{item.date}</p>
+                )}
+              </div>
+              <div className="comment-actions">
+                <UpdateComment
+                  onUpdate={(updatedText) => handleUpdate(updatedText, item.id)}
+                />
+                <DeleteComment
+                  onDelete={() => handleDelete(item.id)}
+                />
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="no-comments">Henüz yorum yapılmamış. İlk yorumu siz yapın!</p>
+      )}
     </div>
   );
 };
