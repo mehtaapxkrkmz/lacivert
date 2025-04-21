@@ -5,7 +5,17 @@
   padding: 20px;
   background-color: #f9f9f9;
   width: 100%;
-  
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); // Tablet için
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); // Küçük tablet/mobil
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr; // Tek sütun (mobil)
+  }
   //justify-content: start;
   //max-width: unset;
   //margin: 0 auto;
