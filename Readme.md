@@ -2,7 +2,7 @@
 
 **Proje Tanımı:** 
 
-lacivert E-Ticaret Platformu, kullanıcıların giyim ve moda ürünlerini kolayca keşfedip satın almasını sağlayan modern bir online alışveriş sitesidir. Gelişmiş kategori ve filtreleme seçenekleri, kullanıcı dostu arayüzü ve indirimli ürünleri öne çıkaran yapısıyla alışveriş deneyimini daha keyifli hale getiriyoruz. Kullanıcılar favori ürünlerini ekleyebilir, ürünleri puanlayıp yorum yapabilir, ayrıca mağazada bulunabilirlik durumunu harita üzerinden görüntüleyebilirler. Admin paneli sayesinde, ürün ve kampanya yönetimi kolayca yapılabilirken, kullanıcı seviyesine göre indirimler de tanımlanabilmektedir. lacivert olarak;  güvenli, hızlı ve keyifli bir alışveriş deneyimi sunmayı hedefliyoruz.
+lacivert E-Ticaret Platformu, kullanıcıların giyim ve moda ürünlerini kolayca keşfedip satın almasını sağlayan modern bir online alışveriş sitesidir. Gelişmiş kategori ve filtreleme seçenekleri, kullanıcı dostu arayüzü ve indirimli ürünleri öne çıkaran yapısıyla alışveriş deneyimini daha keyifli hale getiriyoruz. Kullanıcılar favori ürünlerini ekleyebilir, ürünleri puanlayıp yorum yapabilir. Admin paneli sayesinde, ürün ve kampanya yönetimi kolayca yapılabilirken, kullanıcı seviyesine göre indirimler de tanımlanabilmektedir. lacivert olarak;  güvenli, hızlı ve keyifli bir alışveriş deneyimi sunmayı hedefliyoruz.
 
 **Proje Kategorisi:** E-Ticaret 
 

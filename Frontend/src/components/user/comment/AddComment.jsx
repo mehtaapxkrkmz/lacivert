@@ -13,6 +13,7 @@ const AddComment = ({ productId }) => {
   const [newComment, setNewComment] = useState('');
   const [charCount, setCharCount] = useState(0);
   const [newRating, setNewRating] = useState(0);
+  const [errorMessage, setErrorMessage] = useState(''); // Hata mesajı için state
 
   const handleDelete = (commentId) => {
     setComments(comments.filter(comment => comment.id !== commentId));
@@ -28,6 +29,12 @@ const AddComment = ({ productId }) => {
 
   const handleAddComment = (e) => {
     e.preventDefault();
+
+    if (newComment.trim() === '') {
+      setErrorMessage('Yorum alanı boş olamaz!'); // Hata mesajını ayarla
+      setTimeout(() => setErrorMessage(''), 3000); // 3 saniye sonra mesajı temizle
+      return; // Fonksiyonu durdur
+    }
 
     const newCommentObj = {
       id: comments.length + 1,
@@ -72,6 +79,8 @@ const AddComment = ({ productId }) => {
           <button type="submit" className="submit-button">Yorum Ekle</button>
         </div>
       </form>
+
+      {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Hata mesajını göster */}
 
       {/* Yorumlar listesi */}
       {comments.length > 0 ? (
