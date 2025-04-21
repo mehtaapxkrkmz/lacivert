@@ -19,6 +19,7 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 16px;
+      padding-left: 1rem;
 
       img {
         width: 100%;
@@ -149,10 +150,13 @@
   @media (max-width: 992px) {
     .productInfo {
       flex-direction: column;
+      
+      
 
       .productImages {
         grid-template-columns: 1fr 1fr;
         gap: 0;
+        padding-left: 0px;
       }
 
       .productDetails {
