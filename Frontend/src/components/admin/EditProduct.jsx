@@ -1,93 +1,126 @@
-// src/components/admin/EditProduct.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import ProductList from '../../../public/ProductList';
+import axios from 'axios';
 
 function EditProduct() {
   const { id } = useParams();
-  
   const navigate = useNavigate();
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
 
   const [product, setProduct] = useState({
     name: '',
-    photos: [''],
-    productFeatures: '',
-    oldPrice: '',
-    newPrice: '',
-    isDiscounted: false,
+    images: [],
+    description: '',
+    price: '',
     category: '',
-    sizes: { S: '', M: '', L: '' }, // Bedenler burada
+    score: 0,
+    sizes: { S: 0, M: 0, L: 0 },
   });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(null);
 
   useEffect(() => {
-    const prod = ProductList.find(p => p.id === parseInt(id, 10));
-    if (!prod) {
-      navigate('/admin/products');
-      return;
+    async function fetchProduct() {
+      try {
+        const { data } = await axios.get(`${backendURL}/admin/products/${id}`);
+        setProduct(data);
+      } catch (err) {
+        setError('Ürün yüklenirken hata oluştu.');
+        setTimeout(() => navigate('/admin/products'), 3000);
+      } finally {
+        setLoading(false);
+      }
     }
-    setProduct({
-      name: prod.name || '',
-      photos: prod.photos.length ? [...prod.photos] : [''],
-      productFeatures: prod.productFeatures || '',
-      oldPrice: prod.oldPrice?.toString() || '',
-      newPrice: prod.newPrice?.toString() || '',
-      isDiscounted: prod.isDiscounted || false,
-      category: prod.category || '',
-      sizes: prod.sizes || { S: '', M: '', L: '' },
-    });
-  }, [id, navigate]);
+    fetchProduct();
+  }, [id, navigate, backendURL]);
 
-  const handleChange = e => {
-    const { name, value, type, checked } = e.target;
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+
     if (['S', 'M', 'L'].includes(name)) {
       setProduct(prev => ({
         ...prev,
-        sizes: {
-          ...prev.sizes,
-          [name]: value,
-        },
+        sizes: { ...prev.sizes, [name]: Number(value) }
       }));
+    } else if (name === 'score') {
+      const numValue = Math.min(Math.max(Number(value), 0), 5);
+      setProduct(prev => ({ ...prev, score: numValue }));
+    } else if (name === 'price') {
+      setProduct(prev => ({ ...prev, price: value }));
     } else {
-      setProduct(prev => ({
-        ...prev,
-        [name]: type === 'checkbox' ? checked : value,
-      }));
+      setProduct(prev => ({ ...prev, [name]: value }));
     }
   };
 
-  const handleImageChange = (e, idx) => {
+  const handleImageClick = (index) => {
+    setSelectedImageIndex(index);
+    document.getElementById('imageInput').click();
+  };
+
+  const handleImageChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setProduct(prev => {
-        const photos = [...prev.photos];
-        photos[idx] = reader.result;
-        return { ...prev, photos };
-      });
-    };
-    reader.readAsDataURL(file);
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const response = await axios.put(
+        `${backendURL}/admin/products/${id}/image/${selectedImageIndex}`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+
+      setProduct(prev => ({
+        ...prev,
+        images: response.data.images
+      }));
+
+      setSelectedImageIndex(null);
+    } catch (err) {
+      alert('Resim güncellenirken hata oluştu.');
+      console.error(err);
+    }
   };
 
-  const addImageField = () =>
-    setProduct(prev => ({ ...prev, photos: [...prev.photos, ''] }));
-
-  const removeImageField = idx =>
-    setProduct(prev => ({
-      ...prev,
-      photos: prev.photos.filter((_, i) => i !== idx),
-    }));
-
-  const handleSubmit = e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Güncellenmiş ürün:', product);
-    navigate('/admin/products');
+    try {
+      // Verileri hazırla
+      const productData = {
+        ...product,
+        sizes: JSON.stringify(product.sizes), // sizes'ı string'e çevir
+        price: parseFloat(product.price), // price'ı number'a çevir
+        score: parseFloat(product.score) // score'u number'a çevir
+      };
+
+      await axios.put(`${backendURL}/admin/products/${id}`, productData);
+      alert('Ürün başarıyla güncellendi.');
+      navigate('/admin/products');
+    } catch (err) {
+      console.error('Güncelleme hatası:', err);
+      alert(err.response?.data?.message || 'Ürün güncellenirken hata oluştu.');
+    }
   };
+
+  if (loading) return <div>Yükleniyor...</div>;
+  if (error) return <div>{error} Yönlendiriliyorsunuz...</div>;
 
   return (
-    <div className="edit-product">
-      <h1>Ürün Düzenle</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="add-product">
+      <div className="add-product-header">
+        <h1>Ürünü Düzenle</h1>
+        <p>Ürün bilgilerini güncellemek için aşağıdaki formu doldurun</p>
+      </div>
+
+      {error && <div className="error-message">{error}</div>}
+
+      <form className="add-product-form" onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="name">Ürün Adı</label>
           <input
@@ -95,136 +128,127 @@ function EditProduct() {
             id="name"
             name="name"
             value={product.name}
-            onChange={handleChange}
+            onChange={handleInputChange}
             required
           />
         </div>
 
         <div className="form-group">
           <label>Ürün Görselleri</label>
-          {product.photos.map((src, idx) => (
-            <div key={idx} className="image-upload-group">
-              <input
-                type="file"
-                accept="image/*"
-                onChange={e => handleImageChange(e, idx)}
-                required={!src}
-              />
-              {src && (
-                <div className="image-preview">
-                  <img src={src} alt={`Preview ${idx + 1}`} />
-                  <button
-                    type="button"
-                    onClick={() => removeImageField(idx)}
-                    className="remove-image"
-                  >
-                    Kaldır
-                  </button>
+          <div className="image-preview-container">
+            {product.images.map((img, idx) => (
+              <div 
+                key={idx} 
+                className="image-preview"
+                onClick={() => handleImageClick(idx)}
+                style={{ cursor: 'pointer' }}
+              >
+                <img src={`${backendURL}${img}`} alt={`Görsel ${idx + 1}`} />
+                <div className="image-overlay">
+                  <span>Değiştir</span>
                 </div>
-              )}
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={addImageField}
-            className="add-image-button"
-          >
-            + Görsel Ekle
-          </button>
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="productFeatures">Ürün Özellikleri</label>
-          <textarea
-            id="productFeatures"
-            name="productFeatures"
-            value={product.productFeatures}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <div className="category">
-            <label htmlFor="category">Kategori Seçin</label>
-            <select
-              id="category"
-              name="category"
-              value={product.category}
-              onChange={handleChange}
-              required
-            >
-              
-              <option value="woman">Kadın</option>
-              <option value="man">Erkek</option>
-              <option value="child">Aksesuar</option>
-            </select>
-          </div>
-        </div>
-
-        <div className="form-group">
-          <label>Beden Stokları</label>
-          <div className="sizes">
-            {['S', 'M', 'L'].map(size => (
-              <div className="size" key={size}>
-                <span className="tag">{size}</span>
-                <input
-                  type="number"
-                  min="0"
-                  step="1"
-                  name={size}
-                  value={product.sizes[size]}
-                  onChange={handleChange}
-                  className="input-size"
-                  required
-                />
               </div>
             ))}
           </div>
+          <input
+            type="file"
+            id="imageInput"
+            accept="image/*"
+            onChange={handleImageChange}
+            style={{ display: 'none' }}
+          />
         </div>
 
         <div className="form-group">
-          <label htmlFor="oldPrice">Eski Fiyat</label>
-          <input
-            type="number"
-            id="oldPrice"
-            name="oldPrice"
-            value={product.oldPrice}
-            onChange={handleChange}
-            min="0"
-            step="0.01"
-          />
-
-          <label htmlFor="newPrice">Yeni Fiyat</label>
-          <input
-            type="number"
-            id="newPrice"
-            name="newPrice"
-            value={product.newPrice}
-            onChange={handleChange}
-            min="0"
-            step="0.01"
+          <label htmlFor="description">Ürün Açıklaması</label>
+          <textarea
+            id="description"
+            name="description"
+            value={product.description}
+            onChange={handleInputChange}
             required
           />
         </div>
 
-        <div className="form-group">
-          <label className="checkbox-label">
+        <div className="form-row">
+          <div className="form-group">
+            <label htmlFor="price">Fiyat</label>
             <input
-              type="checkbox"
-              name="isDiscounted"
-              checked={product.isDiscounted}
-              onChange={handleChange}
+              type="number"
+              id="price"
+              name="price"
+              value={product.price}
+              onChange={handleInputChange}
+              required
+              min="0"
+              step="0.01"
             />
-            <span>İndirimli Ürün</span>
-          </label>
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="category">Kategori Seçin</label>
+          <select
+            id="category"
+            name="category"
+            value={product.category}
+            onChange={handleInputChange}
+            required
+          >
+            <option value="">Seçiniz</option>
+            <option value="woman">Kadın</option>
+            <option value="man">Erkek</option>
+            <option value="child">Aksesuar</option>
+          </select>
+        </div>
+
+        <div className="form-group">
+          <div className="sizes">
+            <div className="size">
+              <span className='tag'>S</span>
+              <input 
+                type="number" 
+                min="0" 
+                step="1" 
+                name="S"
+                value={product.sizes.S}
+                onChange={handleInputChange}
+                className='input-size' 
+                required 
+              />
+            </div>
+            <div className="size">
+              <span className='tag'>M</span>
+              <input 
+                type="number" 
+                min="0" 
+                step="1" 
+                name="M"
+                value={product.sizes.M}
+                onChange={handleInputChange}
+                className='input-size' 
+                required 
+              />
+            </div>
+            <div className="size">
+              <span className='tag'>L</span>
+              <input 
+                type="number" 
+                min="0" 
+                step="1" 
+                name="L"
+                value={product.sizes.L}
+                onChange={handleInputChange}
+                className='input-size' 
+                required 
+              />
+            </div>
+          </div>
         </div>
 
         <div className="form-actions">
-          <button type="button" onClick={() => navigate('/admin/products')}>
-            İptal
-          </button>
-          <button type="submit">Değişiklikleri Kaydet</button>
+          <button type="button" onClick={() => navigate('/admin/products')}>İptal</button>
+          <button type="submit">Güncelle</button>
         </div>
       </form>
     </div>

@@ -2,29 +2,34 @@ const express = require('express');
 const cors = require('cors');
 const {join} = require('path');
 const dbs=require(join(__dirname,'db.js'));
-const adminRoutes = require('./routes/admin'); // <- burası yeni
+const adminRoutes = require('./routes/admin'); //admin fonksiyonlarının olduğu dosya
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 dbs();
 const app=express();
 
 // CORS ayarları
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: `${process.env.FRONTEND_URL}`,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true
 }));
 
-// Request boyut limitini artır
+// Request boyut limiti
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
+//uploads klasörünü static olarak sun
 app.use('/uploads', express.static(join(__dirname, 'uploads')));
 
+//Port ve backend yapılandırması
 const PORT = process.env.PORT || 5000;
 const BACKEND_URL = process.env.BACKEND_URL || "http://127.0.0.1:5000";
 
 
-//admin routes
+//yönlendirmeler
 app.use('/admin',adminRoutes);
 
 

@@ -69,9 +69,12 @@ const renderStars = (score) => {
     setHoveredImageIndex(0); // ya da default resim indeksini sıfırla
   };
 
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
   const imageUrl = images?.[hoveredImageIndex]?.startsWith('/uploads')
-    ? `http://localhost:5000${images[hoveredImageIndex]}`
+    ? `${backendUrl}${images[hoveredImageIndex]}`
     : images?.[hoveredImageIndex] || '';
+  
 
   return (
     <div className="product-card">

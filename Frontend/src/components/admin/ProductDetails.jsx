@@ -1,28 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import ProductList from '../../../public/ProductList'
 
 function ProductDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [product, setProduct] = useState(null);
   const [selectedImage, setSelectedImage] = useState(0);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  // Find the product with the matching ID
-  const product = ProductList.find(p => p.id === parseInt(id));
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
 
-
-  if (!product) {
-    return (
-      <div className="product-details">
-        <div className="product-details-header">
-          <h1>Product Not Found</h1>
-          <p>The requested product could not be found.</p>
-        </div>
-      </div>
-    );
-  }
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await axios.get(`${backendURL}/admin/products/${id}`);
+        setProduct(response.data);
+      } catch (error) {
+        console.error('Ürün verisi alınamadı:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProduct();
+  }, [id, backendURL]);
 
   const handleEdit = () => {
     navigate(`/admin/products/${id}/edit`);
@@ -32,15 +35,35 @@ function ProductDetails() {
     setShowDeleteConfirm(true);
   };
 
-  const confirmDelete = () => {
-    // TODO: Implement delete functionality
-    console.log('Deleting product:', product.id);
-    navigate('/admin/products');
+  const confirmDelete = async () => {
+    try {
+      setLoading(true); // Silme sırasında "Yükleniyor..." gösterebiliriz
+      await axios.delete(`${backendURL}/admin/products/${id}`);
+      alert('Ürün başarıyla silindi.');
+      navigate('/admin/products');
+    } catch (error) {
+      console.error('Silme hatası:', error);
+      alert('Ürün silinirken bir hata oluştu.');
+    } finally {
+      setLoading(false);
+      setShowDeleteConfirm(false); // Modal'ı kapat
+    }
   };
 
-  const cancelDelete = () => {
-    setShowDeleteConfirm(false);
-  };
+  const cancelDelete = () => setShowDeleteConfirm(false);
+
+  if (loading) {
+    return <div className="product-details"><p>Yükleniyor...</p></div>;
+  }
+
+  if (!product) {
+    return (
+      <div className="product-details">
+        <h1>Ürün Bulunamadı</h1>
+        <p>Belirtilen ürün mevcut değil.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="product-details">
@@ -48,7 +71,7 @@ function ProductDetails() {
         <div className="header-content">
           <div>
             <h1>{product.name}</h1>
-            <p>ID: {product.id}</p>
+            <p>ID: {product._id}</p>
           </div>
           <div className="action-buttons">
             <button className="edit-button" onClick={handleEdit}>
@@ -64,38 +87,39 @@ function ProductDetails() {
       <div className="product-details-content">
         <div className="product-gallery">
           <div className="main-image">
-            <img src={product.photos[selectedImage]} alt={product.name} />
+            <img src={`${backendURL}${product.images[selectedImage]}`} alt={product.name} />
           </div>
           <div className="thumbnail-gallery">
-            {product.photos.map((image, index) => (
+            {product.images.map((img, idx) => (
               <div 
-                key={index} 
-                className={`thumbnail ${selectedImage === index ? 'active' : ''}`}
-                onClick={() => setSelectedImage(index)}
+                key={idx}
+                className={`thumbnail ${selectedImage === idx ? 'active' : ''}`}
+                onClick={() => setSelectedImage(idx)}
               >
-                <img src={image} alt={`${product.name} - ${index + 1}`} />
+                <img src={`${backendURL}${img}`} alt={`thumb-${idx}`} />
               </div>
             ))}
           </div>
         </div>
-        
+
         <div className="product-info-container">
           <h2 className="product-name">{product.name}</h2>
           <div className="product-meta">
             <span className="product-category">{product.category}</span>
-            <span className="product-stock">Stok: 
-              <span className="stock-item">S: {product.sizes.S}</span>
-              <span className="stock-item">M: {product.sizes.M}</span>
-              <span className="stock-item">L: {product.sizes.L}</span>
+            <span className="product-stock">
+              Stok:
+              <span className="stock-item">S: {product.sizes?.S || 0}</span>
+              <span className="stock-item">M: {product.sizes?.M || 0}</span>
+              <span className="stock-item">L: {product.sizes?.L || 0}</span>
             </span>
           </div>
-          <div className="product-price">₺{product.newPrice.toLocaleString('tr-TR', { minimumFractionDigits: 2 })}</div>
+          <div className="product-price">₺{product.price?.toLocaleString('tr-TR', { minimumFractionDigits: 2 })}</div>
           <div className="product-rating">
-            <span className="score">Puan : {product.score} / 5</span>
+            <span className="score">Puan: {product.score} / 5</span>
           </div>
           <div className="product-description">
             <h3>Açıklama</h3>
-            <p>{product.productFeatures}</p>
+            <p>{product.description}</p>
           </div>
         </div>
       </div>
@@ -104,15 +128,11 @@ function ProductDetails() {
         <div className="delete-confirmation-modal">
           <div className="delete-confirmation-content">
             <h3>Ürünü Sil</h3>
-            <p>Bu ürünü silmek istediğinizden emin misiniz?</p>
+            <p>Bu ürünü silmek istediğinize emin misiniz?</p>
             <p className="warning-text">Bu işlem geri alınamaz!</p>
             <div className="confirmation-buttons">
-              <button className="cancel-button" onClick={cancelDelete}>
-                İptal
-              </button>
-              <button className="confirm-delete-button" onClick={confirmDelete}>
-                Sil
-              </button>
+              <button className="cancel-button" onClick={cancelDelete}>İptal</button>
+              <button className="confirm-delete-button" onClick={confirmDelete}>Sil</button>
             </div>
           </div>
         </div>

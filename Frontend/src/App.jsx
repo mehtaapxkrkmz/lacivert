@@ -40,6 +40,7 @@ const AppContent = () => {
           <Route path="erkek" element={<ProductFilter category="Erkek" />} />
           <Route path="cocuk" element={<ProductFilter category="Çocuk" />} />
           <Route path="/product/:id" element={<ProductDetails />} />
+          
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profileupdate" element={<Profileupdate />} />
@@ -47,10 +48,7 @@ const AppContent = () => {
          
           <Route path='/search' element={<Search />} />
           <Route path='/cart' element={<CartPage />} />
-          <Route
-  path="/favori"
-  element={<Favori favorites={favorites} toggleFavorite={toggleFavorite} />}
-/>
+          <Route path="/favori" element={<Favori favorites={favorites} toggleFavorite={toggleFavorite} />}/>
         </Route>
         <Route path="/admin/*" element={<Admin />} />
       </Routes>

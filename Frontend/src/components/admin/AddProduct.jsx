@@ -1,108 +1,120 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function AddProduct() {
   const navigate = useNavigate();
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
 
   const [product, setProduct] = useState({
-    name: '',
-    description: '',
-    price: '',
-    stock: '',
-    category: '',
+    name: "",
+    description: "",
+    price: "",
+    stock: "",
+    category: "",
     score: 1.0,
     isDiscounted: false,
     sizes: {
       S: 0,
       M: 0,
-      L: 0
-    }
+      L: 0,
+    },
   });
 
   const [images, setImages] = useState([null, null, null, null]);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    if (name === 'S' || name === 'M' || name === 'L') {
-      setProduct(prev => ({
+    if (name === "S" || name === "M" || name === "L") {
+      setProduct((prev) => ({
         ...prev,
         sizes: {
           ...prev.sizes,
-          [name]: parseInt(value) || 0
-        }
+          [name]: parseInt(value) || 0,
+        },
       }));
     } else {
-    setProduct(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }));
+      setProduct((prev) => ({
+        ...prev,
+        [name]: type === "checkbox" ? checked : value,
+      }));
     }
   };
 
   const handleImageChange = (e, index) => {
     const file = e.target.files[0];
     if (file) {
-      setImages(prev => {
+      setImages((prev) => {
         const newImages = [...prev];
         newImages[index] = file;
         return newImages;
-        });
+      });
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setLoading(true);
 
     try {
       // Validate required fields
-      if (!product.name || !product.description || !product.price || !product.category) {
-        throw new Error('Lütfen tüm zorunlu alanları doldurun.');
+      if (
+        !product.name ||
+        !product.description ||
+        !product.price ||
+        !product.category
+      ) {
+        throw new Error("Lütfen tüm zorunlu alanları doldurun.");
       }
 
       // Validate images
-      if (images.some(img => !img)) {
-        throw new Error('Lütfen tüm ürün görsellerini yükleyin.');
+      if (images.some((img) => !img)) {
+        throw new Error("Lütfen tüm ürün görsellerini yükleyin.");
       }
 
       // Validate sizes
-      if (Object.values(product.sizes).some(size => size < 0)) {
-        throw new Error('Beden stokları negatif olamaz.');
+      if (Object.values(product.sizes).some((size) => size < 0)) {
+        throw new Error("Beden stokları negatif olamaz.");
       }
 
       // FormData oluştur
       const formData = new FormData();
-      formData.append('name', product.name);
-      formData.append('description', product.description);
-      formData.append('price', product.price);
-      formData.append('stock', product.stock || '0');
-      formData.append('category', product.category);
-      formData.append('isDiscounted', product.isDiscounted);
-      formData.append('score', product.score.toFixed(1)); // "1.0"
-      
-      formData.append('sizes', JSON.stringify(product.sizes));
+      formData.append("name", product.name);
+      formData.append("description", product.description);
+      formData.append("price", product.price);
+      formData.append("stock", product.stock || "0");
+      formData.append("category", product.category);
+      formData.append("isDiscounted", product.isDiscounted);
+      formData.append("score", product.score.toFixed(1)); // "1.0"
+
+      formData.append("sizes", JSON.stringify(product.sizes));
 
       // Resimleri ekle
       images.forEach((image, index) => {
-        formData.append('images', image);
+        formData.append("images", image);
       });
 
-      const response = await axios.post('http://localhost:5000/admin/addProduct', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+      const response = await axios.post(
+        `${backendURL}/admin/addProduct`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
-      });
+      );
 
       if (response.status === 201) {
-        alert('Ürün başarıyla eklendi!');
-    navigate('/admin/products');
+        alert("Ürün başarıyla eklendi!");
+        navigate("/admin/products");
       }
     } catch (err) {
-      setError(err.response?.data?.message || err.message || 'Bir hata oluştu.');
+      setError(
+        err.response?.data?.message || err.message || "Bir hata oluştu."
+      );
     } finally {
       setLoading(false);
     }
@@ -137,12 +149,24 @@ function AddProduct() {
               <input
                 type="file"
                 accept="image/*"
+                id={`imageInput-${index}`}
+                style={{ display: "none" }}
                 onChange={(e) => handleImageChange(e, index)}
                 required={!image}
               />
+              <label
+                htmlFor={`imageInput-${index}`}
+                className="custom-file-upload"
+              >
+                {image ? `Seçildi: ${image.name}` : `Görsel ${index + 1} seç`}
+              </label>
+
               {image && (
                 <div className="image-preview">
-                  <img src={URL.createObjectURL(image)} alt={`Preview ${index + 1}`} />
+                  <img
+                    src={URL.createObjectURL(image)}
+                    alt={`Preview ${index + 1}`}
+                  />
                 </div>
               )}
             </div>
@@ -195,42 +219,42 @@ function AddProduct() {
         <div className="form-group">
           <div className="sizes">
             <div className="size">
-              <span className='tag'>S</span>
-              <input 
-                type="number" 
-                min="0" 
-                step="1" 
+              <span className="tag">S</span>
+              <input
+                type="number"
+                min="0"
+                step="1"
                 name="S"
                 value={product.sizes.S}
                 onChange={handleChange}
-                className='input-size' 
-                required 
+                className="input-size"
+                required
               />
             </div>
             <div className="size">
-              <span className='tag'>M</span>
-              <input 
-                type="number" 
-                min="0" 
-                step="1" 
+              <span className="tag">M</span>
+              <input
+                type="number"
+                min="0"
+                step="1"
                 name="M"
                 value={product.sizes.M}
                 onChange={handleChange}
-                className='input-size' 
-                required 
+                className="input-size"
+                required
               />
             </div>
             <div className="size">
-              <span className='tag'>L</span>
-              <input 
-                type="number" 
-                min="0" 
-                step="1" 
+              <span className="tag">L</span>
+              <input
+                type="number"
+                min="0"
+                step="1"
                 name="L"
                 value={product.sizes.L}
                 onChange={handleChange}
-                className='input-size' 
-                required 
+                className="input-size"
+                required
               />
             </div>
           </div>
@@ -249,11 +273,20 @@ function AddProduct() {
         </div>
 
         <div className="form-actions">
-          <button type="button" className="cancel-button" onClick={() => navigate('/admin/products')}>
+          <button
+            type="button"
+            className="cancel-button"
+            onClick={() => navigate("/admin/products")}
+          >
             İptal
           </button>
-          <button onClick={console.log(product)} type="submit" className="submit-button" disabled={loading}>
-            {loading ? 'Ekleniyor...' : 'Ürün Ekle'}
+          <button
+            onClick={console.log(product)}
+            type="submit"
+            className="submit-button"
+            disabled={loading}
+          >
+            {loading ? "Ekleniyor..." : "Ürün Ekle"}
           </button>
         </div>
       </form>

@@ -12,8 +12,10 @@ function Products() {
     navigate(`/admin/products/${productId}`);
   };
 
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
   useEffect(() => {
-    axios.get('http://localhost:5000/admin/products') // Portunu backend'e göre değiştir
+    axios.get(`${backendUrl}/admin/products`)
       .then(response => {
         console.log('Ürünler:', response.data);
         setProducts(response.data);
