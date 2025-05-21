@@ -15,7 +15,7 @@ const productSchema = new mongoose.Schema({
     stock: { type: Number, default: 0 }, // stok alanı varsa (formda yok ama eklenebilir)
     category: { type: String, enum: ['woman', 'man', 'child'], required: true },
     sizes: { type: sizeSchema, required: true }, // formda size bilgisi için
-    score: { type: Number, default: 0, min: 0, max: 5 }, // puan 0-5 arası varsayım
+    score: { type: Number, default: 1.0, min: 1.0, max: 5.0 }, // puan 0-5 arası varsayım
     isDiscounted: { type: Boolean, default: false },
   });
   

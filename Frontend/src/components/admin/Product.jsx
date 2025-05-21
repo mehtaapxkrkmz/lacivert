@@ -1,48 +1,87 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
 import { IoStarOutline } from 'react-icons/io5';
 
 function Product({ product }) {
-  // Default product data if none is provided
   const defaultProduct = {
-    id: 1,
-    name: 'Sample Product',
-    images: ['https://via.placeholder.com/150'],
+    id: 9999999999999,
+    name: 'Örnek Ürün',
+    images: [
+      'https://i0.wp.com/learn.onemonth.com/wp-content/uploads/2017/08/1-10.png?fit=845%2C503&ssl=1',
+      'https://i0.wp.com/learn.onemonth.com/wp-content/uploads/2017/08/1-10.png?fit=845%2C503&ssl=1',
+      'https://i0.wp.com/learn.onemonth.com/wp-content/uploads/2017/08/1-10.png?fit=845%2C503&ssl=1',
+      'https://i0.wp.com/learn.onemonth.com/wp-content/uploads/2017/08/1-10.png?fit=845%2C503&ssl=1'
+    ],
     score: 4.5
   };
 
-  // Use provided product data or default
-  const { id, name, photos, score } = product || defaultProduct;
+  const { id, name, images, score } = product || defaultProduct;
 
-  // Function to render stars based on score
-  const renderStars = (score) => {
-    const stars = [];
-    const fullStars = Math.floor(score);
-    const hasHalfStar = score % 1 !== 0;
+  //Yıldızları render etme
+const renderStars = (score) => {
+  const stars = [];                                                   // Tüm yıldız ikonlarını tutacak dizi
+  const fullStars = Math.floor(score);                                // Tam sayı olan yıldız sayısı (örneğin 4.5 ise 4 tam yıldız)
+  const hasHalfStar = score % 1 !== 0;                                // Yarım yıldız olup olmadığını kontrol et (örneğin 4.5 gibi)
 
-    // Add full stars
-    for (let i = 0; i < fullStars; i++) {
-      stars.push(<FaStar key={`star-${i}`} className="star filled" />);
-    }
+  // Tam yıldızları ekle (örneğin score = 4.5 ise buradan 4 tane yıldız döner)
+  for (let i = 0; i < fullStars; i++) {
+    stars.push(
+      <FaStar key={`star-${i}`} className="star filled" />            // Dolmuş yıldız ikonu (renkli yıldız)
+    );
+  }
 
-    // Add half star if needed
-    if (hasHalfStar) {
-      stars.push(<FaStarHalfAlt key="half-star" className="star half" />);
-    }
+  // Eğer puan küsuratlıysa, bir yarım yıldız ekle (örneğin 4.5 için)
+  if (hasHalfStar) {
+    stars.push(
+      <FaStarHalfAlt key="half-star" className="star half" /> // Yarım yıldız ikonu
+    );
+  }
 
-    // Add empty stars to complete 5
-    const emptyStars = 5 - Math.ceil(score);
-    for (let i = 0; i < emptyStars; i++) {
-      stars.push(<IoStarOutline key={`empty-star-${i}`} className="star empty" />);
-    }
+  // Toplam 5 yıldız olacak şekilde boş yıldızları ekle
+  // Örneğin score = 4.5 ise yukarıda 4 dolu + 1 yarım eklendi, burada 0 boş yıldız eklenir
+  // Örneğin score = 3.2 ise 3 dolu + 1 yarım + 1 boş yıldız olur
+  const emptyStars = 5 - Math.ceil(score); // Eksik kalan yıldız sayısı
+  for (let i = 0; i < emptyStars; i++) {
+    stars.push(
+      <IoStarOutline key={`empty-star-${i}`} className="star empty" /> // Boş yıldız ikonu
+    );
+  }
 
-    return stars;
+  return stars; // Oluşturulan yıldız ikonlarını döndür
+};
+
+
+  const [hoveredImageIndex, setHoveredImageIndex] = useState(0);
+
+  const handleMouseMove = (e) => {
+    const boundingBox = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - boundingBox.left;
+    const width = boundingBox.width;
+    const quarter = width / 4;
+
+    let index = Math.floor(x / quarter);
+    if (index < 0) index = 0;
+    if (index > 3) index = 3;
+    setHoveredImageIndex(index);
   };
+
+  const handleMouseLeave = () => {
+    setHoveredImageIndex(0); // ya da default resim indeksini sıfırla
+  };
+
+  const imageUrl = images?.[hoveredImageIndex]?.startsWith('/uploads')
+    ? `http://localhost:5000${images[hoveredImageIndex]}`
+    : images?.[hoveredImageIndex] || '';
 
   return (
     <div className="product-card">
-      <div className="product-image">
-        <img src={photos[0]} alt={name} />
+      <div
+        className="product-image"
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{ cursor: 'pointer' }}
+      >
+        <img src={imageUrl} alt={`Product ${hoveredImageIndex + 1}`} />
       </div>
       <div className="product-info">
         <h3 className="product-name">{name}</h3>

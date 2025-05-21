@@ -11,7 +11,7 @@ function AddProduct() {
     price: '',
     stock: '',
     category: '',
-    score: 0,
+    score: 1.0,
     isDiscounted: false,
     sizes: {
       S: 0,
@@ -35,10 +35,10 @@ function AddProduct() {
         }
       }));
     } else {
-      setProduct(prev => ({
-        ...prev,
-        [name]: type === 'checkbox' ? checked : value
-      }));
+    setProduct(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
     }
   };
 
@@ -49,7 +49,7 @@ function AddProduct() {
         const newImages = [...prev];
         newImages[index] = file;
         return newImages;
-      });
+        });
     }
   };
 
@@ -82,7 +82,8 @@ function AddProduct() {
       formData.append('stock', product.stock || '0');
       formData.append('category', product.category);
       formData.append('isDiscounted', product.isDiscounted);
-      formData.append('score', product.score);
+      formData.append('score', product.score.toFixed(1)); // "1.0"
+      
       formData.append('sizes', JSON.stringify(product.sizes));
 
       // Resimleri ekle
@@ -98,7 +99,7 @@ function AddProduct() {
 
       if (response.status === 201) {
         alert('Ürün başarıyla eklendi!');
-        navigate('/admin/products');
+    navigate('/admin/products');
       }
     } catch (err) {
       setError(err.response?.data?.message || err.message || 'Bir hata oluştu.');
@@ -251,7 +252,7 @@ function AddProduct() {
           <button type="button" className="cancel-button" onClick={() => navigate('/admin/products')}>
             İptal
           </button>
-          <button type="submit" className="submit-button" disabled={loading}>
+          <button onClick={console.log(product)} type="submit" className="submit-button" disabled={loading}>
             {loading ? 'Ekleniyor...' : 'Ürün Ekle'}
           </button>
         </div>

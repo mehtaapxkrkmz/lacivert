@@ -18,10 +18,18 @@ app.use(cors({
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
+app.use('/uploads', express.static(join(__dirname, 'uploads')));
+
 const PORT = process.env.PORT || 5000;
 const BACKEND_URL = process.env.BACKEND_URL || "http://127.0.0.1:5000";
 
+
+//admin routes
 app.use('/admin',adminRoutes);
+
+
+
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on ${BACKEND_URL}`);

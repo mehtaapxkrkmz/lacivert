@@ -26,7 +26,7 @@ const upload = multer({
         cb(null, true);
     },
     limits: {
-        fileSize: 5 * 1024 * 1024 // 5MB
+        fileSize: 10 * 1024 * 1024 // 5MB
     }
 });
 
@@ -62,7 +62,7 @@ router.post('/addProduct', upload.array('images', 4), async (req, res) => {
             images,
             description,
             price: parseFloat(price),
-            stock: parseInt(stock) || 0,
+            stock: 1.0 ,
             category,
             sizes: parsedSizes,
             isDiscounted: isDiscounted === 'true' || isDiscounted === true,
@@ -81,5 +81,17 @@ router.post('/addProduct', upload.array('images', 4), async (req, res) => {
         });
     }
 });
+
+// GET /admin/products - Tüm ürünleri getir
+router.get('/products', async (req, res) => {
+    try {
+        const products = await Product.find();
+        res.status(200).json(products);
+    } catch (err) {
+        console.error('Ürünleri alma hatası:', err);
+        res.status(500).json({ message: 'Ürünler getirilirken bir hata oluştu.', error: err.message });
+    }
+});
+
 
 module.exports = router;

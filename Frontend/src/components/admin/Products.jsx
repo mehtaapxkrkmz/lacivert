@@ -1,17 +1,27 @@
-import React from 'react'
-import Product from './Product'
-import { useNavigate } from 'react-router-dom'
-import ProductList from '../../../public/ProductList'
-
-// ProductList'i products olarak export et
-export const products = ProductList;
+import React, { useEffect, useState } from 'react';
+import Product from './Product';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import datas from './../../data/ProductList'
 
 function Products() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [products, setProducts] = useState([]);
 
   const handleProductClick = (productId) => {
     navigate(`/admin/products/${productId}`);
   };
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/admin/products') // Portunu backend'e göre değiştir
+      .then(response => {
+        console.log('Ürünler:', response.data);
+        setProducts(response.data);
+      })
+      .catch(error => {
+        console.error('Ürünleri alırken hata oluştu:', error);
+      });
+  }, []);
 
   return (
     <div className="products-container">
@@ -19,12 +29,12 @@ function Products() {
         <h1>Ürünleriniz</h1>
         <p>Ürünlerinizi yönetebilirsiniz</p>
       </div>
-      
+
       <div className="products-grid">
-        {ProductList.map(product => (
+        {products.map(product => (
           <div 
-            key={product.id} 
-            onClick={() => handleProductClick(product.id)}
+            key={product._id} 
+            onClick={() => handleProductClick(product._id)}
             className="product-card-wrapper"
           >
             <Product product={product} />
@@ -32,7 +42,7 @@ function Products() {
         ))}
       </div>
     </div>
-  )
+  );
 }
 
 export default Products;
