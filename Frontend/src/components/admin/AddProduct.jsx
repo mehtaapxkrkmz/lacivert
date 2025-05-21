@@ -281,7 +281,7 @@ function AddProduct() {
             İptal
           </button>
           <button
-            onClick={console.log(product)}
+            
             type="submit"
             className="submit-button"
             disabled={loading}

@@ -842,12 +842,18 @@
         cursor: pointer;    
     display: flex; 
      width: 100%;
-     background-color: #c6c6c6;
+     background-color: #d7d7d7;
      margin-bottom: 1rem;
-     padding: 1rem;
+     
         input{
             width: 100%;
             cursor: pointer;
+        }
+        label{
+            cursor: pointer;
+            width:100%;
+            display: flex;
+            padding: 1rem;
         }
     }
     

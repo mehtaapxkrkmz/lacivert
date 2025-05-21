@@ -1,29 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Product from './Product';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import datas from './../../data/ProductList'
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts } from '../../store/slices/adminSlice';
 
 function Products() {
   const navigate = useNavigate();
-  const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
+
+  const products = useSelector(state => state.admin.products);
+  const status = useSelector(state => state.admin.status);
+  const error = useSelector(state => state.admin.error);
+
+  useEffect(() => {
+    if (status === 'idle') {
+      dispatch(fetchProducts());
+    }
+  }, [dispatch, status]);
 
   const handleProductClick = (productId) => {
     navigate(`/admin/products/${productId}`);
   };
-
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
-  useEffect(() => {
-    axios.get(`${backendUrl}/admin/products`)
-      .then(response => {
-        console.log('Ürünler:', response.data);
-        setProducts(response.data);
-      })
-      .catch(error => {
-        console.error('Ürünleri alırken hata oluştu:', error);
-      });
-  }, []);
 
   return (
     <div className="products-container">
@@ -32,8 +29,11 @@ function Products() {
         <p>Ürünlerinizi yönetebilirsiniz</p>
       </div>
 
+      {status === 'loading' && <p>Yükleniyor...</p>}
+      {status === 'failed' && <p>Hata: {error}</p>}
+
       <div className="products-grid">
-        {products.map(product => (
+        {status === 'succeeded' && products.map(product => (
           <div 
             key={product._id} 
             onClick={() => handleProductClick(product._id)}

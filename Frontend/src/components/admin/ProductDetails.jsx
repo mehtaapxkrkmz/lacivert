@@ -29,10 +29,12 @@ function ProductDetails() {
 
   const handleEdit = () => {
     navigate(`/admin/products/${id}/edit`);
+    window.location.reload();
   };
 
   const handleDelete = () => {
     setShowDeleteConfirm(true);
+    
   };
 
   const confirmDelete = async () => {
