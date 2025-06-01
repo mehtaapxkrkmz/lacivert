@@ -1,19 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '/src/scss/comment/addComment.scss';
 import DeleteComment from './DeleteComment';
 import UpdateComment from './UpdateComment';
 import Rating from './Rating';
 
 const AddComment = ({ productId }) => {
-  const [comments, setComments] = useState([
-    { id: 1, text: "Harika bir ürün!", rating: 5 },
-    { id: 2, text: "Fiyatı çok uygun.", rating: 4 }
-  ]);
-
+  const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
   const [charCount, setCharCount] = useState(0);
   const [newRating, setNewRating] = useState(0);
-  const [errorMessage, setErrorMessage] = useState(''); // Hata mesajı için state
+  const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  // Backend URL'i - .env dosyanızdan alın
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
+  // Sayfa yüklendiğinde yorumları getir
+  useEffect(() => {
+    fetchComments();
+  }, [productId]);
+
+  // Yorumları getir
+  const fetchComments = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(`${API_URL}/api/comments/product/${productId}`);
+      const result = await response.json();
+      
+      if (result.success) {
+        setComments(result.data);
+      } else {
+        console.error('Yorumlar getirilemedi:', result.message);
+        // Hata durumunda örnek yorumları göster
+        setComments([
+          { id: 1, text: "Harika bir ürün!", rating: 5 },
+          { id: 2, text: "Fiyatı çok uygun.", rating: 4 }
+        ]);
+      }
+    } catch (error) {
+      console.error('API hatası:', error);
+      // Hata durumunda örnek yorumları göster
+      setComments([
+        { id: 1, text: "Harika bir ürün!", rating: 5 },
+        { id: 2, text: "Fiyatı çok uygun.", rating: 4 }
+      ]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleDelete = (commentId) => {
     setComments(comments.filter(comment => comment.id !== commentId));
@@ -27,25 +61,71 @@ const AddComment = ({ productId }) => {
     );
   };
 
-  const handleAddComment = (e) => {
+  const handleAddComment = async (e) => {
     e.preventDefault();
 
     if (newComment.trim() === '') {
-      setErrorMessage('Yorum alanı boş olamaz!'); // Hata mesajını ayarla
-      setTimeout(() => setErrorMessage(''), 3000); // 3 saniye sonra mesajı temizle
-      return; // Fonksiyonu durdur
+      setErrorMessage('Yorum alanı boş olamaz!');
+      setTimeout(() => setErrorMessage(''), 3000);
+      return;
     }
 
-    const newCommentObj = {
-      id: comments.length + 1,
-      text: newComment,
-      rating: newRating,
-      date: new Date().toLocaleDateString('tr-TR')
-    };
-    setComments([newCommentObj, ...comments]);
-    setNewComment("");
-    setCharCount(0);
-    setNewRating(0);
+    try {
+      setLoading(true);
+      
+      // Backend'e yorum gönder
+      const response = await fetch(`${API_URL}/api/comments`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          productId: productId,
+          text: newComment,
+          rating: newRating
+        })
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        // Backend'den gelen veriyle yorum listesini güncelle
+        const newCommentObj = {
+          id: result.data.id,
+          text: result.data.text,
+          rating: result.data.rating,
+          date: result.data.date
+        };
+        
+        setComments([newCommentObj, ...comments]);
+        setNewComment("");
+        setCharCount(0);
+        setNewRating(0);
+        
+        console.log('Yorum başarıyla eklendi!');
+      } else {
+        setErrorMessage(result.message || 'Yorum eklenirken hata oluştu');
+        setTimeout(() => setErrorMessage(''), 3000);
+      }
+    } catch (error) {
+      console.error('Yorum ekleme hatası:', error);
+      setErrorMessage('Sunucu ile bağlantı kurulamadı');
+      setTimeout(() => setErrorMessage(''), 3000);
+      
+      // Hata durumunda local olarak ekle
+      const newCommentObj = {
+        id: Date.now(), // Geçici ID
+        text: newComment,
+        rating: newRating,
+        date: new Date().toLocaleDateString('tr-TR')
+      };
+      setComments([newCommentObj, ...comments]);
+      setNewComment("");
+      setCharCount(0);
+      setNewRating(0);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleTextChange = (e) => {
@@ -71,16 +151,22 @@ const AddComment = ({ productId }) => {
           placeholder="Yorumunuzu buraya yazın..."
           maxLength={200}
           className="comment-textarea"
+          disabled={loading}
         />
         <div className="form-footer">
           <div className="char-counter">
             {charCount}/200
           </div>
-          <button type="submit" className="submit-button">Yorum Ekle</button>
+          <button type="submit" className="submit-button" disabled={loading}>
+            {loading ? 'Ekleniyor...' : 'Yorum Ekle'}
+          </button>
         </div>
       </form>
 
-      {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Hata mesajını göster */}
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
+
+      {/* Loading göstergesi */}
+      {loading && <p className="loading-message">Yükleniyor...</p>}
 
       {/* Yorumlar listesi */}
       {comments.length > 0 ? (

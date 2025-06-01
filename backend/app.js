@@ -3,6 +3,7 @@ const cors = require('cors');
 const {join} = require('path');
 const dbs=require(join(__dirname,'db.js'));
 const adminRoutes = require('./routes/admin'); //admin fonksiyonlarının olduğu dosya
+const commentRoutes = require('./routes/comments'); //yorum fonksiyonlarının olduğu dosya
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -31,6 +32,7 @@ const BACKEND_URL = process.env.BACKEND_URL || "http://127.0.0.1:5000";
 
 //yönlendirmeler
 app.use('/admin',adminRoutes);
+app.use('/api/comments', commentRoutes);
 
 
 
