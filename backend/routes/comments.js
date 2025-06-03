@@ -5,7 +5,7 @@ const commentController = require('../controllers/commentController');
 // POST /api/comments - Yorum ekleme (Ana endpoint)
 router.post('/', commentController.addComment);
 
-// POST /api/comments/add - Yorum ekleme (Alternative endpoint - mevcut uyumunuz için)
+// POST /api/comments/add - Yorum ekleme (Alternative endpoint)
 router.post('/add', commentController.addCommentAlternative);
 
 // GET /api/comments/product/:productId - Belirli ürünün yorumlarını getir

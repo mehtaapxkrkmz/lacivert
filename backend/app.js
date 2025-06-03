@@ -12,8 +12,26 @@ dbs();
 const app=express();
 
 // CORS ayarları
+/*
 app.use(cors({
-  origin: `${process.env.FRONTEND_URL}`,
+  origin:[
+    
+  ] `${process.env.FRONTEND_URL}`,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true
+}));
+*/
+// bu şekilde CORS ayarlarını yaparak, frontend uygulamanızın backend ile iletişim kurmasını sağlıyoruz.
+app.use(cors({
+  origin: [
+    process.env.FRONTEND_URL,
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'http://127.0.0.1:3000', 
+    'http://127.0.0.1:3001',
+    'http://localhost:5173',
+    'http://127.0.0.1:5173'
+  ].filter(Boolean),
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true
 }));

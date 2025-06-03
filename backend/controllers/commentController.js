@@ -44,7 +44,7 @@ const commentController = {
     }
   },
 
-  // POST /api/comments/add - Alternative endpoint (mevcut çalışan versiyonunuzla uyumlu)
+  // POST /api/comments/add - Alternative endpoint
   addCommentAlternative: async (req, res) => {
     try {
       const { productId, text, rating } = req.body;
