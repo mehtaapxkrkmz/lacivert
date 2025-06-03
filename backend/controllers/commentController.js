@@ -141,6 +141,51 @@ const commentController = {
         error: error.message 
       });
     }
+  },
+
+  // DELETE /api/comments/:id - Yorum silme
+  deleteComment: async (req, res) => {
+    try {
+      const { id } = req.params;
+      
+      console.log('Silinecek yorum ID:', id); // Debug için
+      
+      if (!id) {
+        return res.status(400).json({
+          success: false,
+          message: 'Yorum ID\'si gerekli.'
+        });
+      }
+
+      // Yorumu veritabanından bul
+      const comment = await Comment.findById(id);
+      
+      if (!comment) {
+        return res.status(404).json({
+          success: false,
+          message: 'Yorum bulunamadı.'
+        });
+      }
+
+      // Yorumu sil
+      await Comment.findByIdAndDelete(id);
+      
+      res.status(200).json({
+        success: true,
+        message: 'Yorum başarıyla silindi.',
+        data: {
+          deletedCommentId: id
+        }
+      });
+      
+    } catch (error) {
+      console.error('Yorum silme hatası:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Yorum silinirken hata oluştu',
+        error: error.message
+      });
+    }
   }
 };
 

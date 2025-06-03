@@ -1,19 +1,54 @@
 import React, { useState } from 'react';
 import '/src/scss/comment/deleteComment.scss';
 
-const DeleteComment = ({ comment, onDelete }) => {
+const DeleteComment = ({ comment, onDelete, setFeedbackMessage }) => {
   const [showConfirm, setShowConfirm] = useState(false);
-  const [feedbackMessage, setFeedbackMessage] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
 
-  const handleDelete = () => {
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
+  const handleDelete = async () => {
+    setIsDeleting(true);
+
     try {
-      onDelete();
-      setFeedbackMessage('Yorumunuz başarıyla silindi.');
+      console.log('Silme isteği gönderiliyor:', `${API_URL}/api/comments/${comment.id}`);
+
+      const response = await fetch(`${API_URL}/api/comments/${comment.id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      });
+
+      console.log('Response status:', response.status);
+      console.log('Response ok:', response.ok);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Response error:', errorText);
+        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+      }
+
+      const result = await response.json();
+      console.log('Backend response:', result);
+
+      if (result.success) {
+        setFeedbackMessage('Yorumunuz başarıyla silindi.');
+        const deletedId = result.data?.deletedCommentId || comment.id;
+        onDelete(deletedId);
+      } else {
+        throw new Error(result.message || 'Silme işlemi başarısız');
+      }
+
     } catch (error) {
-      setFeedbackMessage('Yorumunuz silinemedi. Lütfen tekrar deneyin.');
+      console.error('Yorum silme hatası:', error);
+      setFeedbackMessage(`Yorumunuz silinemedi: ${error.message}`);
+    } finally {
+      setIsDeleting(false);
+      setShowConfirm(false);
+      setTimeout(() => setFeedbackMessage(''), 3000);
     }
-    setShowConfirm(false);
-    setTimeout(() => setFeedbackMessage(''), 3000);
   };
 
   const cancelDelete = () => {
@@ -24,25 +59,35 @@ const DeleteComment = ({ comment, onDelete }) => {
 
   return (
     <div className="delete-comment">
-      {/* Delete button in the bottom right */}
       <button 
-        className="delete-button" 
+        className="delete-button"
         onClick={() => setShowConfirm(true)}
+        disabled={isDeleting}
       >
-        Yorumu Sil
+        {isDeleting ? 'Siliniyor...' : 'Yorumu Sil'}
       </button>
 
       {showConfirm && (
         <div className="confirm-dialog">
           <p>Yorumunuzu silmek istediğinizden emin misiniz?</p>
           <div className="button-group">
-            <button className="yes" onClick={handleDelete}>Evet</button>
-            <button className="no" onClick={cancelDelete}>Hayır</button>
+            <button 
+              className="yes" 
+              onClick={handleDelete}
+              disabled={isDeleting}
+            >
+              {isDeleting ? 'Siliniyor...' : 'Evet'}
+            </button>
+            <button 
+              className="no" 
+              onClick={cancelDelete}
+              disabled={isDeleting}
+            >
+              Hayır
+            </button>
           </div>
         </div>
       )}
-
-      {feedbackMessage && <p className="feedback-message">{feedbackMessage}</p>}
     </div>
   );
 };

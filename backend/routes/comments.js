@@ -14,4 +14,7 @@ router.get('/product/:productId', commentController.getCommentsByProduct);
 // GET /api/comments - Tüm yorumları getir
 router.get('/', commentController.getAllComments);
 
+// DELETE /api/comments/:id - Yorum silme
+router.delete('/:id', commentController.deleteComment);
+
 module.exports = router;

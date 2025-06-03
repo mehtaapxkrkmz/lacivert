@@ -10,28 +10,25 @@ const AddComment = ({ productId }) => {
   const [charCount, setCharCount] = useState(0);
   const [newRating, setNewRating] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
+  const [feedbackMessage, setFeedbackMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Backend URL'i - .env dosyanızdan alın
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
-  // Sayfa yüklendiğinde yorumları getir
   useEffect(() => {
     fetchComments();
   }, [productId]);
 
-  // Yorumları getir
   const fetchComments = async () => {
     try {
       setLoading(true);
       const response = await fetch(`${API_URL}/api/comments/product/${productId}`);
       const result = await response.json();
-      
+
       if (result.success) {
         setComments(result.data);
       } else {
         console.error('Yorumlar getirilemedi:', result.message);
-        // Hata durumunda örnek yorumları göster
         setComments([
           { id: 1, text: "Harika bir ürün!", rating: 5 },
           { id: 2, text: "Fiyatı çok uygun.", rating: 4 }
@@ -39,7 +36,6 @@ const AddComment = ({ productId }) => {
       }
     } catch (error) {
       console.error('API hatası:', error);
-      // Hata durumunda örnek yorumları göster
       setComments([
         { id: 1, text: "Harika bir ürün!", rating: 5 },
         { id: 2, text: "Fiyatı çok uygun.", rating: 4 }
@@ -72,13 +68,10 @@ const AddComment = ({ productId }) => {
 
     try {
       setLoading(true);
-      
-      // Backend'e yorum gönder
+
       const response = await fetch(`${API_URL}/api/comments`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           productId: productId,
           text: newComment,
@@ -89,20 +82,19 @@ const AddComment = ({ productId }) => {
       const result = await response.json();
 
       if (result.success) {
-        // Backend'den gelen veriyle yorum listesini güncelle
         const newCommentObj = {
           id: result.data.id,
           text: result.data.text,
           rating: result.data.rating,
           date: result.data.date
         };
-        
+
         setComments([newCommentObj, ...comments]);
         setNewComment("");
         setCharCount(0);
         setNewRating(0);
-        
-        console.log('Yorum başarıyla eklendi!');
+        setFeedbackMessage('Yorum başarıyla eklendi!');
+        setTimeout(() => setFeedbackMessage(''), 3000);
       } else {
         setErrorMessage(result.message || 'Yorum eklenirken hata oluştu');
         setTimeout(() => setErrorMessage(''), 3000);
@@ -111,10 +103,9 @@ const AddComment = ({ productId }) => {
       console.error('Yorum ekleme hatası:', error);
       setErrorMessage('Sunucu ile bağlantı kurulamadı');
       setTimeout(() => setErrorMessage(''), 3000);
-      
-      // Hata durumunda local olarak ekle
+
       const newCommentObj = {
-        id: Date.now(), // Geçici ID
+        id: Date.now(),
         text: newComment,
         rating: newRating,
         date: new Date().toLocaleDateString('tr-TR')
@@ -142,7 +133,6 @@ const AddComment = ({ productId }) => {
     <div className="add-comment">
       <h2 className="comment-title">Yorumlar</h2>
 
-      {/* Yorum ekleme formu */}
       <form onSubmit={handleAddComment} className="comment-form">
         <Rating productId={productId} onRatingSubmit={handleRatingSubmit} />
         <textarea
@@ -154,9 +144,7 @@ const AddComment = ({ productId }) => {
           disabled={loading}
         />
         <div className="form-footer">
-          <div className="char-counter">
-            {charCount}/200
-          </div>
+          <div className="char-counter">{charCount}/200</div>
           <button type="submit" className="submit-button" disabled={loading}>
             {loading ? 'Ekleniyor...' : 'Yorum Ekle'}
           </button>
@@ -164,11 +152,9 @@ const AddComment = ({ productId }) => {
       </form>
 
       {errorMessage && <p className="error-message">{errorMessage}</p>}
-
-      {/* Loading göstergesi */}
+      {feedbackMessage && <p className="feedback-message">{feedbackMessage}</p>}
       {loading && <p className="loading-message">Yükleniyor...</p>}
 
-      {/* Yorumlar listesi */}
       {comments.length > 0 ? (
         <ul className="comments-list">
           {comments.map((item) => (
@@ -182,16 +168,16 @@ const AddComment = ({ productId }) => {
                     </span>
                   </div>
                 )}
-                {item.date && (
-                  <p className="comment-date">{item.date}</p>
-                )}
+                {item.date && <p className="comment-date">{item.date}</p>}
               </div>
               <div className="comment-actions">
                 <UpdateComment
                   onUpdate={(updatedText) => handleUpdate(updatedText, item.id)}
                 />
                 <DeleteComment
+                  comment={item}
                   onDelete={() => handleDelete(item.id)}
+                  setFeedbackMessage={setFeedbackMessage}
                 />
               </div>
             </li>
