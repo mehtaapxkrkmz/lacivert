@@ -186,6 +186,68 @@ const commentController = {
         error: error.message
       });
     }
+  },
+
+  // PUT /api/comments/:id - Yorum güncelleme
+  updateComment: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { text,rating } = req.body;
+      
+      console.log('Güncellenecek yorum ID:', id, 'Yeni metin:',text, 'Yeni rating:', rating); // Debug için
+      
+      // Veri doğrulama
+      if (!id) {
+        return res.status(400).json({
+          success: false,
+          message: 'Yorum ID\'si gerekli.'
+        });
+      }
+
+      if (!text || text.trim() === '') {
+        return res.status(400).json({
+          success: false,
+          message: 'Yorum metni boş olamaz.'
+        });
+      }
+
+      // Yorumu veritabanından bul
+      const existingComment = await Comment.findById(id);
+      
+      if (!existingComment) {
+        return res.status(404).json({
+          success: false,
+          message: 'Yorum bulunamadı.'
+        });
+      }
+
+      // Yorumu güncelle
+      const updatedComment = await Comment.findByIdAndUpdate(
+        id,
+        { text,rating},
+        { new: true} // Güncellenmiş versiyonu döndür
+      );
+
+      res.status(200).json({
+        success: true,
+        message: 'Yorum başarıyla güncellendi.',
+        data: {
+          id: updatedComment._id,
+          productId: updatedComment.productId,
+          text: updatedComment.text,
+          rating: updatedComment.rating,
+          date: updatedComment.date.toLocaleDateString('tr-TR')
+        }
+      });
+      
+    } catch (error) {
+      console.error('Yorum güncelleme hatası:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Yorum güncellenirken hata oluştu',
+        error: error.message
+      });
+    }
   }
 };
 

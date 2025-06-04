@@ -17,4 +17,9 @@ router.get('/', commentController.getAllComments);
 // DELETE /api/comments/:id - Yorum silme
 router.delete('/:id', commentController.deleteComment);
 
+// PUT /api/comments/:id - Yorum  güncelleme
+
+router.put('/:id', commentController.updateComment);
+
+
 module.exports = router;

@@ -49,10 +49,12 @@ const AddComment = ({ productId }) => {
     setComments(comments.filter(comment => comment.id !== commentId));
   };
 
-  const handleUpdate = (updatedText, commentId) => {
+  const handleUpdate = (updatedText, commentId, updatedRating) => {
     setComments(
       comments.map(comment =>
-        comment.id === commentId ? { ...comment, text: updatedText } : comment
+        comment.id === commentId
+          ? { ...comment, text: updatedText, rating: updatedRating }
+          : comment
       )
     );
   };
@@ -104,6 +106,7 @@ const AddComment = ({ productId }) => {
       setErrorMessage('Sunucu ile bağlantı kurulamadı');
       setTimeout(() => setErrorMessage(''), 3000);
 
+      // Yerel fallback
       const newCommentObj = {
         id: Date.now(),
         text: newComment,
@@ -125,6 +128,7 @@ const AddComment = ({ productId }) => {
     setCharCount(text.length);
   };
 
+  
   const handleRatingSubmit = (rating) => {
     setNewRating(rating);
   };
@@ -134,7 +138,8 @@ const AddComment = ({ productId }) => {
       <h2 className="comment-title">Yorumlar</h2>
 
       <form onSubmit={handleAddComment} className="comment-form">
-        <Rating productId={productId} onRatingSubmit={handleRatingSubmit} />
+    
+        <Rating currentRating={newRating} onStarClick={handleRatingSubmit} />
         <textarea
           value={newComment}
           onChange={handleTextChange}
@@ -172,7 +177,9 @@ const AddComment = ({ productId }) => {
               </div>
               <div className="comment-actions">
                 <UpdateComment
-                  onUpdate={(updatedText) => handleUpdate(updatedText, item.id)}
+                  comment={item}
+                  onUpdate={(updatedText, updatedRating) => handleUpdate(updatedText, item.id, updatedRating)}
+                  setFeedbackMessage={setFeedbackMessage}
                 />
                 <DeleteComment
                   comment={item}

@@ -1,19 +1,21 @@
-import React, { useState } from "react";
-import '/src/scss/comment/rating.scss';
+import React, { useState, useEffect } from "react";
+import "/src/scss/comment/rating.scss";
 
-const Rating = ({ productId, onRatingSubmit }) => {
-  const [selectedStars, setSelectedStars] = useState(0);
+const Rating = ({ currentRating = 0, onStarClick }) => {
+  const [selectedRating, setSelectedRating] = useState(currentRating);
   const [hoveredStar, setHoveredStar] = useState(0);
 
-  // Handle star click (to select the rating)
+  useEffect(() => {
+    setSelectedRating(currentRating);
+  }, [currentRating]);
+
   const handleStarClick = (star) => {
-    setSelectedStars(star);
-    if (onRatingSubmit) {
-      onRatingSubmit(star, productId); // Send the rating and productId to parent
+    setSelectedRating(star);
+    if (onStarClick) {
+      onStarClick(star); // dışarıdan gelen callback'i çağır
     }
   };
 
-  // Handle mouse hover on stars
   const handleMouseEnter = (star) => {
     setHoveredStar(star);
   };
@@ -28,7 +30,7 @@ const Rating = ({ productId, onRatingSubmit }) => {
         {[1, 2, 3, 4, 5].map((star) => (
           <span
             key={star}
-            className={star <= (hoveredStar || selectedStars) ? "star filled" : "star"}
+            className={star <= (hoveredStar || selectedRating) ? "star filled" : "star"}
             onClick={() => handleStarClick(star)}
             onMouseEnter={() => handleMouseEnter(star)}
             onMouseLeave={handleMouseLeave}
