@@ -1,11 +1,10 @@
-
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Product from './Product'
-import ProductList from '../../../data/ProductList.js'
-//import '../../../scss/Home.scss'
 
 function Products() {
+  const backendUrl = import.meta.env.VITE_API_URL;
   const [favorites, setFavorites] = useState([])
+  const [products, setProducts] = useState([]) // backendden gelen ürünler için state
 
   const toggleFavorite = (productId) => {
     const isFavorite = favorites.includes(productId)
@@ -19,30 +18,35 @@ function Products() {
       ? "Bu ürünü favorilerden çıkardınız."
       : "Bu ürünü favorilere eklediniz.")
   } 
+
+  useEffect(() => {
+    fetch(`${backendUrl}/admin/products`)
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Network response was not ok')
+        }
+        return res.json()
+      })
+      .then(data => {
+        setProducts(data)
+        console.log(data) // data'yı log'la, products henüz güncellenmemiş olabilir
+      })
+      .catch(err => {
+        console.error('Fetch hatası:', err)
+      })
+  }, [backendUrl])
+
   return (
-   
     <div className="products">
-      
-    {ProductList.map((product) => (
-      <Product
-        key={product.id}
-        id={product.id} // Pass the id to the Product component
-        name={product.name}
-        photos={product.photos}
-        gender={product.gender}
-        sizes={product.sizes}
-        inCart={product.inCart}
-        isFavorite={favorites.includes(product.id)}
-        isDiscounted={product.isDiscounted}
-        oldPrice={product.oldPrice}
-        newPrice={product.newPrice}
-        comments={product.comments}
-        toggleFavorite={toggleFavorite}
-      />
-    ))}
+      {products.length > 0 ? (
+        products.map((product) => (
+          <Product key={product._id} product={product} />
+        ))
+      ) : (
+        <p>Ürünler yükleniyor...</p>
+      )}
     </div>
-   
   )
 }
-     
-     export default Products;
+
+export default Products

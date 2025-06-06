@@ -50,7 +50,7 @@ function EditProduct() {
     } else if (name === 'price') {
       setProduct(prev => ({ ...prev, price: value }));
     } else if (name === 'isDiscounted') {
-      console.log('Checkbox durumu:', checked);
+      
       setProduct(prev => ({
         ...prev,
         isDiscounted: checked
@@ -107,10 +107,10 @@ function EditProduct() {
         isDiscounted: product.isDiscounted === true ? true : false
       };
 
-      console.log('Gönderilen veri:', productData);
+     
 
       const response = await axios.put(`${backendURL}/admin/products/${id}`, productData);
-      console.log('Backend yanıtı:', response.data);
+      
       alert('Ürün başarıyla güncellendi.');
       navigate('/admin/products');
     } catch (err) {

@@ -1,76 +1,69 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-//import '../../../scss/Home.scss'
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function Product({ id, name, photos, oldPrice, newPrice, isDiscounted ,isFavorite,toggleFavorite}) {
-  const navigate = useNavigate()
-  const [currentImage, setCurrentImage] = useState(photos[0]) // Initialize with the first photo
+function Product({ product }) {
+  const navigate = useNavigate();
+  const backendUrl = import.meta.env.VITE_API_URL;
+
+  const [hoveredImageIndex, setHoveredImageIndex] = useState(0);
 
   const handleProductClick = () => {
-    navigate(`/product/${id}`); // Use the id to navigate to the product details page
-  }
- 
+    navigate(`/product/${product._id}`);
+  };
 
   const handleMouseMove = (e) => {
-    const imageWidth = e.target.offsetWidth
-    const mousePosition = e.nativeEvent.offsetX
+    const boundingBox = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - boundingBox.left;
+    const width = boundingBox.width;
+    const quarter = width / 4;
 
-    // Calculate which image to show based on mouse position
-    if (mousePosition < imageWidth / 4) {
-      setCurrentImage(photos[0]) // Show the first image (index 0) for the left 1/4
-    } else if (mousePosition < imageWidth / 2) {
-      setCurrentImage(photos[1]) // Show the second image (index 1) for the middle 2/4
-    } else if(mousePosition < (imageWidth * 3) / 4) {
-      setCurrentImage(photos[2]) // Show the third image (index 2) for the middle 3/4
-    }
-    else{
-      setCurrentImage(photos[3]) // Show the fourth image (index 3) for the right 1/4
-    }
-  }
+    let index = Math.floor(x / quarter);
+    if (index < 0) index = 0;
+    if (index > 3) index = 3;
+
+    setHoveredImageIndex(index);
+  };
 
   const handleMouseLeave = () => {
-    setCurrentImage(photos[0]) // Reset to the first image
-  }
+    setHoveredImageIndex(0); // İstersen varsayılanı sıfırla
+  };
+
+  const imageUrl = product.images?.[hoveredImageIndex]?.startsWith("/uploads")
+    ? `${backendUrl}${product.images[hoveredImageIndex]}`
+    : product.images?.[hoveredImageIndex] || "";
 
   return (
-    <div className="product" onClick={handleProductClick}>
-      <img 
-        src={currentImage} 
-        alt={name} 
-        onMouseMove={handleMouseMove} 
-        onMouseLeave={handleMouseLeave} 
-      />
-     
-      {isDiscounted && (
+    <div
+      className="product"
+      key={product._id}
+      onClick={handleProductClick}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      <img src={imageUrl} alt={product.name} />
+
+      {product.isDiscounted && (
         <div className="etiket11">
-          <span id='etiket'>İndirimli Ürün</span>
+          <span id="etiket">İndirimli Ürün</span>
         </div>
       )}
-      
-      
-      
-      <span
-  className={`heart-icon ${isFavorite ? 'favorited' : ''}`}
-  onClick={(e) => {
-    e.stopPropagation(); // Ürün detayına gitmesin
-    toggleFavorite(id); // Favori durumunu değiştir
-  }}
->
-  &#9829;
-</span>
 
-      <div className='name'>{name}</div>
+      <span
+        className={`heart-icon ${product.isFavorite ? "favorited" : ""}`}
+        onClick={(e) => {
+          e.stopPropagation();
+          // toggleFavorite(product._id);
+        }}
+      >
+        &#9829;
+      </span>
+
+      <div className="name">{product.name}</div>
       <div className="price">
-        {isDiscounted && (
-          <>
-            <span className="old-price">{oldPrice.toFixed(2)} TL</span>
-          </>
-        )}
-        &nbsp;
-        <span className="new-price">{newPrice.toFixed(2)} TL</span>
+        <span className="new-price">{product.price} TL</span>
       </div>
     </div>
-  )
+  );
 }
 
-export default Product
+export default Product;
