@@ -4,7 +4,7 @@ import axios from "axios";
 
 function AddProduct() {
   const navigate = useNavigate();
-  const backendURL = import.meta.env.VITE_BACKEND_URL;
+  const backendURL = import.meta.env.VITE_API_URL;
 
   const [product, setProduct] = useState({
     name: "",

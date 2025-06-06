@@ -11,12 +11,17 @@ function Products() {
   const products = useSelector(state => state.admin.products);
   const status = useSelector(state => state.admin.status);
   const error = useSelector(state => state.admin.error);
-
+  
   useEffect(() => {
+    console.log('Current status:', status);
+    console.log('Current products:', products);
+    console.log('Current error:', error);
+    
     if (status === 'idle') {
+      console.log('Fetching products...');
       dispatch(fetchProducts());
     }
-  }, [dispatch, status]);
+  }, [dispatch, status, products, error]);
 
   const handleProductClick = (productId) => {
     navigate(`/admin/products/${productId}`);
@@ -33,7 +38,7 @@ function Products() {
       {status === 'failed' && <p>Hata: {error}</p>}
 
       <div className="products-grid">
-        {status === 'succeeded' && products.map(product => (
+        {status === 'succeeded' && Array.isArray(products) && products.map(product => (
           <div 
             key={product._id} 
             onClick={() => handleProductClick(product._id)}

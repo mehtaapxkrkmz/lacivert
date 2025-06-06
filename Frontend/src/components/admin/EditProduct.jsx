@@ -5,7 +5,7 @@ import axios from 'axios';
 function EditProduct() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const backendURL = import.meta.env.VITE_BACKEND_URL;
+  const backendURL = import.meta.env.VITE_API_URL;
 
   const [product, setProduct] = useState({
     name: '',
@@ -14,6 +14,7 @@ function EditProduct() {
     price: '',
     category: '',
     score: 0,
+    isDiscounted: false,
     sizes: { S: 0, M: 0, L: 0 },
   });
   const [loading, setLoading] = useState(true);
@@ -36,7 +37,7 @@ function EditProduct() {
   }, [id, navigate, backendURL]);
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
 
     if (['S', 'M', 'L'].includes(name)) {
       setProduct(prev => ({
@@ -48,6 +49,8 @@ function EditProduct() {
       setProduct(prev => ({ ...prev, score: numValue }));
     } else if (name === 'price') {
       setProduct(prev => ({ ...prev, price: value }));
+    } else if (name === 'isDiscounted') {
+      setProduct(prev => ({ ...prev, isDiscounted: checked }));
     } else {
       setProduct(prev => ({ ...prev, [name]: value }));
     }
@@ -94,10 +97,13 @@ function EditProduct() {
       // Verileri hazırla
       const productData = {
         ...product,
-        sizes: JSON.stringify(product.sizes), // sizes'ı string'e çevir
-        price: parseFloat(product.price), // price'ı number'a çevir
-        score: parseFloat(product.score) // score'u number'a çevir
+        sizes: JSON.stringify(product.sizes),
+        price: parseFloat(product.price),
+        score: parseFloat(product.score),
+        isDiscounted: product.isDiscounted || false
       };
+
+      console.log('Gönderilen veri:', productData);
 
       await axios.put(`${backendURL}/admin/products/${id}`, productData);
       alert('Ürün başarıyla güncellendi.');
@@ -246,9 +252,29 @@ function EditProduct() {
           </div>
         </div>
 
+        <div className="form-group">
+          <label className="checkbox-label">
+            <input
+              type="checkbox"
+              name="isDiscounted"
+              checked={product.isDiscounted}
+              onChange={handleInputChange}
+            />
+            <span>İndirimli Ürün</span>
+          </label>
+        </div>
+
         <div className="form-actions">
-          <button type="button" onClick={() => navigate('/admin/products')}>İptal</button>
-          <button type="submit">Güncelle</button>
+          <button
+            type="button"
+            className="cancel-button"
+            onClick={() => navigate('/admin/products')}
+          >
+            İptal
+          </button>
+          <button type="submit" className="submit-button">
+            Ürünü Güncelle
+          </button>
         </div>
       </form>
     </div>
