@@ -110,9 +110,9 @@ function ProductDetails() {
   ];
 
   const options = [
-    { value: "small", label: "Small" },
-    { value: "medium", label: "Medium" },
-    { value: "large", label: "Large" },
+    { value: "S", label: "Small" },
+    { value: "M", label: "Medium" },
+    { value: "L", label: "Large" },
   ];
   
 

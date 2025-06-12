@@ -5,8 +5,6 @@ const Product = require('../models/product');
 const cartController = {
     // POST /api/cart/add/:userId - Sepete ürün ekleme
     // Kullanıcı kimliği req.user._id üzerinden alınır
-
-    
     addToCart : async (req, res) => {
         try{
             //const userId = req.user._id;
@@ -26,9 +24,10 @@ const cartController = {
                 return res.status(404).json({ message: 'Ürün bulunamadı' });
             }
 
-            const cart = await Cart.findOne({ user: userId });
+            let cart = await Cart.findOne({ user: userId });
             if (!cart) {
                 cart = new Cart({ user: userId, items: [] });
+                await cart.save();
             }
             //Kullanıcının daha önce bir sepeti varsa onu bulur, yoksa yeni bir Cart nesnesi oluşturur 
 
@@ -71,6 +70,18 @@ const cartController = {
     
 
     /*
+
+
+    Ürün kontrolü → Ürün var mı?
+    Sepet bulma/oluşturma → Kullanıcının sepeti var mı?
+    Item kontrolü → Aynı ürün+beden daha önce eklenmiş mi?
+    Güncelleme/Ekleme → Varsa artır, yoksa yeni ekle
+    Kaydetme → Veritabanına kaydet
+    Populate ile dönüş → Ürün detaylarıyla birlikte sepeti döndür
+
+
+
+
     addToCart: async (req, res) => {
         console.log("addToCart çağrıldı");
         console.log("Params:", req.params);
