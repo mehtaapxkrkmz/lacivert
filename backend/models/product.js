@@ -11,8 +11,7 @@ const productSchema = new mongoose.Schema({
     name: { type: String, required: true },
     images: [{ type: String, required: true }], // resim dosya yolları ya da URL'ler
     description: { type: String, required: true },
-    price: { type: Number, required: true, min: 0 },
-    stock: { type: Number, default: 0 }, 
+    price: { type: Number, required: true, min: 0 }, 
     category: { type: String, enum: ['woman', 'man', 'child'], required: true },
     sizes: { type: sizeSchema, required: true }, // formda size bilgisi için
     score: { type: Number, default: 1.0, min: 1.0, max: 5.0 }, // puan 0-5 arası varsayım

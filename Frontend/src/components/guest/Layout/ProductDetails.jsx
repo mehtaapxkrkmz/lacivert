@@ -12,6 +12,7 @@ import { useParams } from "react-router-dom";
 function ProductDetails() {
   const [openAccordion, setOpenAccordion] = useState(null);
   const [product, setProduct] = useState(null);
+  const [selectedSize, setSelectedSize] = useState(null);
   const { id } = useParams();
 
   const backendUrl = import.meta.env.VITE_API_URL || "http://localhost:5000"; // Backend adresi
@@ -34,7 +35,44 @@ function ProductDetails() {
     setOpenAccordion(openAccordion === idx ? null : idx);
   };
 
-  if (!product) return <div>Yükleniyor...</div>;
+  const handleAddToCart = async (e) => {
+    e.preventDefault();
+
+    if (!selectedSize) {
+      alert("Lütfen beden seçiniz.");
+      return;
+    }
+
+    const userId = "68492f8cadf1df76ce14e9a1";
+
+    try {
+      const res = await fetch(`${backendUrl}/api/cart/add/${userId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          productId: product._id,
+          size: selectedSize.value,
+          quantity: 1,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        alert("Ürün sepete eklendi!");
+      } else {
+        alert(data.message || "Hata oluştu.");
+      }
+    } catch (error) {
+      console.error("Sepete ekleme hatası:", error);
+      alert("Sunucu hatası.");
+    }
+  };
+
+
+   if (!product) return <div>Yükleniyor...</div>;
   const customSelectStyles = {
     control: (provided, state) => ({
       ...provided,
@@ -48,6 +86,7 @@ function ProductDetails() {
       color: state.isFocused ? "#fff" : "#333",
     }),
   };
+
   const accordionData = [
     {
       title: "Ürün Özellikleri",
@@ -75,6 +114,7 @@ function ProductDetails() {
     { value: "medium", label: "Medium" },
     { value: "large", label: "Large" },
   ];
+  
 
   return (
     <div className="productPage">
@@ -98,9 +138,9 @@ function ProductDetails() {
           <p className="product-code">Ürün Kodu: {product._id}</p>
           <br />
           <div className="size-quantities">
-            <p>Small (S): {product.sizes?.S || 0} adet</p>
-            <p>Medium (M): {product.sizes?.M || 0} adet</p>
-            <p>Large (L): {product.sizes?.L || 0} adet</p>
+            <p>small (S): {product.sizes?.S || 0} adet</p>
+            <p>medium (M): {product.sizes?.M || 0} adet</p>
+            <p>large (L): {product.sizes?.L || 0} adet</p>
           </div>
           <br />
           <div className="product-description">
@@ -112,8 +152,10 @@ function ProductDetails() {
               options={options}
               placeholder="Beden Seçiniz"
               styles={customSelectStyles}
+              value={selectedSize}
+              onChange={setSelectedSize}
             />
-            <button type="submit">Sepete Ekle</button>
+            <button type="button" onClick={handleAddToCart}>Sepete Ekle</button>
           </form>
           <br />
           <hr className="line" />
