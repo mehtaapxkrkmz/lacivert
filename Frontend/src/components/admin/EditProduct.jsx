@@ -27,7 +27,6 @@ function EditProduct() {
     collar: '',
     closure: '',
     sleeve: '',
-    stock: 0,
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -383,19 +382,6 @@ function EditProduct() {
             />
             <span>İndirimli Ürün</span>
           </label>
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="stock">Stok</label>
-          <input
-            type="number"
-            id="stock"
-            name="stock"
-            value={product.stock || 0}
-            onChange={handleInputChange}
-            min="0"
-            step="1"
-          />
         </div>
 
         <div className="form-group">

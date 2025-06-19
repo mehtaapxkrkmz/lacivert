@@ -10,7 +10,6 @@ function AddProduct() {
     name: "",
     description: "",
     price: "",
-    stock: "",
     category: "",
     score: 1.0,
     isDiscounted: false,
@@ -194,7 +193,6 @@ function AddProduct() {
       formData.append("name", product.name);
       formData.append("description", product.description);
       formData.append("price", product.price);
-      formData.append("stock", product.stock || "0");
       formData.append("category", product.category);
       formData.append("isDiscounted", product.isDiscounted);
       formData.append("score", product.score.toFixed(1));
