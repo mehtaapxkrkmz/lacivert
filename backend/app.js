@@ -5,6 +5,7 @@ const {join} = require('path');
 const adminRoutes = require('./routes/admin'); //admin fonksiyonlarının olduğu dosya
 const commentRoutes = require('./routes/comments'); //yorum fonksiyonlarının olduğu dosya
 const cartRoutes = require('./routes/cart'); //sepet fonksiyonlarının olduğu dosya
+const productRoutes = require('./routes/products'); //ürün fonksiyonlarının olduğu dosya
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -53,6 +54,7 @@ const BACKEND_URL = process.env.BACKEND_URL || "http://127.0.0.1:5000";
 app.use('/admin',adminRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/cart', cartRoutes);
+app.use('/api/products', productRoutes);
 
 
 

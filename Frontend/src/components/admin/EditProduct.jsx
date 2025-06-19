@@ -324,7 +324,7 @@ function EditProduct() {
             <option value="">Seçiniz</option>
             <option value="woman">Kadın</option>
             <option value="man">Erkek</option>
-            <option value="child">Aksesuar</option>
+            <option value="child">Çocuk</option>
           </select>
         </div>
 
