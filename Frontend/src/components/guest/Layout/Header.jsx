@@ -5,12 +5,24 @@ import { VscAccount } from "react-icons/vsc";
 import { CiSearch } from "react-icons/ci";
 import { CiLogin } from "react-icons/ci";
 import { RiMenu3Line } from "react-icons/ri";
-import { NavLink } from 'react-router-dom';
+import { NavLink , useNavigate } from 'react-router-dom';
 import CategoryNavMenu from './CategoryNavMenu';
 import logo from '../../../assets/lacivert-logo.png'
 
 const Header = ({ cartItemCount }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const navigate = useNavigate();
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem('user');
+        alert('Başarıyla çıkış yapıldı.');
+        navigate('/login');
+    };
 
     const menuItems = [
         { path: '/', label: 'ANASAYFA' },
@@ -19,9 +31,7 @@ const Header = ({ cartItemCount }) => {
         { path: '/cocuk', label: 'ÇOCUK' },
     ];
 
-    const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
-    };
+    
 
     return (
         <div className='header'>
@@ -55,11 +65,19 @@ const Header = ({ cartItemCount }) => {
                                 <VscAccount className="VscAccount" />
                             </div>
                         </NavLink>
+                        {user ? (
+                            <button className="logout" onClick={handleLogout}>
+                                Çıkış Yap
+                            </button>
+                        ) : (
+
                         <NavLink to="/login">
                             <div className="login">
                                 <CiLogin className="CiLogin" />
                             </div>
                         </NavLink>
+                        )}
+
                         <NavLink to="/cart">
                             <div className="shopping-bag">
                                 <HiOutlineShoppingBag />
