@@ -32,12 +32,14 @@ function EditProduct() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
+  const [originalPrice, setOriginalPrice] = useState(null);
 
   useEffect(() => {
     async function fetchProduct() {
       try {
         const { data } = await axios.get(`${backendURL}/admin/products/${id}`);
         setProduct(data);
+        setOriginalPrice(data.price);
       } catch (err) {
         setError('Ürün yüklenirken hata oluştu.');
         setTimeout(() => navigate('/admin/products'), 3000);
@@ -91,7 +93,17 @@ function EditProduct() {
       const numValue = Math.min(Math.max(Number(value), 0), 5);
       setProduct(prev => ({ ...prev, score: numValue }));
     } else if (name === 'price') {
-      setProduct(prev => ({ ...prev, price: value }));
+      const newPrice = parseFloat(value);
+      setProduct((prev) => ({
+        ...prev,
+        price: value,
+        isDiscounted:
+          originalPrice !== null && newPrice < originalPrice
+            ? true
+            : originalPrice !== null && newPrice > originalPrice
+            ? false
+            : prev.isDiscounted,
+      }));
     } else if (name === 'isDiscounted') {
       
       setProduct(prev => ({
