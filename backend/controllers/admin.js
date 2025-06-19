@@ -147,7 +147,9 @@ exports.updateProductImage = async (req, res) => {
 exports.updateProduct = async (req, res) => {
     try {
         const productId = req.params.id;
-        const { name, description, price, category, sizes, score, isDiscounted } = req.body;
+        const { name, description, price, stock, category, sizes, score, isDiscounted,
+            productType, theme, fit, color, waist, leg, length, hood, collar, closure, sleeve
+        } = req.body;
 
         if (!name || !description || !price || !category || !sizes) {
             return res.status(400).json({ message: 'Tüm zorunlu alanları doldurun.' });
@@ -169,10 +171,22 @@ exports.updateProduct = async (req, res) => {
         product.name = name;
         product.description = description;
         product.price = parseFloat(price);
+        product.stock = stock ? parseInt(stock) : 0;
         product.category = category;
         product.sizes = parsedSizes;
         product.score = parseFloat(score) || 0;
         product.isDiscounted = isDiscounted === 'true' || isDiscounted === true;
+        product.productType = productType;
+        product.theme = theme;
+        product.fit = fit;
+        product.color = color;
+        product.waist = waist;
+        product.leg = leg;
+        product.length = length;
+        product.hood = hood;
+        product.collar = collar;
+        product.closure = closure;
+        product.sleeve = sleeve;
 
         await product.save();
         res.status(200).json({ message: 'Ürün başarıyla güncellendi.', product });

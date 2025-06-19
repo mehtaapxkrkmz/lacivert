@@ -16,6 +16,18 @@ function EditProduct() {
     score: 0,
     isDiscounted: false,
     sizes: { S: 0, M: 0, L: 0 },
+    productType: '',
+    theme: '',
+    fit: '',
+    color: '',
+    waist: '',
+    leg: '',
+    length: '',
+    hood: '',
+    collar: '',
+    closure: '',
+    sleeve: '',
+    stock: 0,
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -39,11 +51,42 @@ function EditProduct() {
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
 
-    if (['S', 'M', 'L'].includes(name)) {
-      setProduct(prev => ({
+    if (["S", "M", "L"].includes(name)) {
+      setProduct((prev) => ({
         ...prev,
-        sizes: { ...prev.sizes, [name]: Number(value) }
+        sizes: {
+          ...prev.sizes,
+          [name]: parseInt(value) || 0,
+        },
       }));
+    } else if (name === "productType") {
+      setProduct((prev) => {
+        const newProduct = { ...prev, [name]: value };
+        switch (value) {
+          case 'T-shirt':
+            newProduct.sleeve = 'Kısa Kol';
+            newProduct.collar = 'Dik Yaka';
+            break;
+          case 'Jean':
+            newProduct.waist = 'Orta Bel';
+            newProduct.leg = 'Straight';
+            break;
+          case 'Elbise':
+            newProduct.length = 'Midi';
+            newProduct.waist = 'Orta Bel';
+            newProduct.sleeve = 'Kolsuz';
+            break;
+          case 'Ceket':
+            newProduct.hood = 'Kapüşonsuz';
+            newProduct.sleeve = 'Uzun Kol';
+            break;
+          case 'Gömlek':
+            newProduct.sleeve = 'Uzun Kol';
+            newProduct.closure = 'Düğmeli';
+            break;
+        }
+        return newProduct;
+      });
     } else if (name === 'score') {
       const numValue = Math.min(Math.max(Number(value), 0), 5);
       setProduct(prev => ({ ...prev, score: numValue }));
@@ -56,7 +99,7 @@ function EditProduct() {
         isDiscounted: checked
       }));
     } else {
-      setProduct(prev => ({ ...prev, [name]: value }));
+      setProduct(prev => ({ ...prev, [name]: type === "checkbox" ? checked : value }));
     }
   };
 
@@ -116,6 +159,67 @@ function EditProduct() {
     } catch (err) {
       console.error('Güncelleme hatası:', err);
       alert(err.response?.data?.message || 'Ürün güncellenirken hata oluştu.');
+    }
+  };
+
+  const getFilterFieldsForProductType = (productType) => {
+    const baseFields = ['theme', 'fit', 'color'];
+    switch (productType) {
+      case 'T-shirt':
+        return [...baseFields, 'collar', 'sleeve'];
+      case 'Jean':
+        return [...baseFields, 'waist', 'leg'];
+      case 'Elbise':
+        return [...baseFields, 'waist', 'length', 'collar', 'sleeve', 'closure'];
+      case 'Ceket':
+        return [...baseFields, 'hood', 'collar', 'closure', 'sleeve'];
+      case 'Gömlek':
+        return [...baseFields, 'collar', 'closure', 'sleeve'];
+      default:
+        return baseFields;
+    }
+  };
+
+  const filterFieldConfig = {
+    theme: {
+      label: 'Tema',
+      options: ['Casual', 'Sport', 'Elegant', 'Vintage', 'Trendy']
+    },
+    fit: {
+      label: 'Fit/Kalıp',
+      options: ['Regular', 'Slim', 'Oversize', 'Skinny', 'Loose']
+    },
+    color: {
+      label: 'Renk',
+      options: ['Siyah', 'Beyaz', 'Mavi', 'Kırmızı', 'Yeşil']
+    },
+    waist: {
+      label: 'Bel',
+      options: ['Yüksek Bel', 'Orta Bel', 'Düşük Bel']
+    },
+    leg: {
+      label: 'Paça',
+      options: ['Dar Paça', 'Geniş Paça', 'Straight', 'Bootcut']
+    },
+    length: {
+      label: 'Boy',
+      options: ['Mini', 'Midi', 'Maxi', 'Standart']
+    },
+    hood: {
+      label: 'Kapüşon',
+      options: ['Kapüşonlu', 'Kapüşonsuz']
+    },
+    collar: {
+      label: 'Yaka',
+      options: ['V Yaka', 'Bisiklet Yaka', 'Polo Yaka', 'Dik Yaka']
+    },
+    closure: {
+      label: 'Düğme/Fermuar',
+      options: ['Düğmeli', 'Düğmesiz', 'Fermuarlı']
+    },
+    sleeve: {
+      label: 'Kol',
+      options: ['Uzun Kol', 'Kısa Kol', 'Kolsuz']
     }
   };
 
@@ -267,6 +371,202 @@ function EditProduct() {
             />
             <span>İndirimli Ürün</span>
           </label>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="stock">Stok</label>
+          <input
+            type="number"
+            id="stock"
+            name="stock"
+            value={product.stock || 0}
+            onChange={handleInputChange}
+            min="0"
+            step="1"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="productType">Ürün Tipi</label>
+          <select
+            id="productType"
+            name="productType"
+            value={product.productType || ''}
+            onChange={handleInputChange}
+            required
+          >
+            <option value="T-shirt">T-shirt</option>
+            <option value="Jean">Jean</option>
+            <option value="Elbise">Elbise</option>
+            <option value="Ceket">Ceket</option>
+            <option value="Gömlek">Gömlek</option>
+          </select>
+        </div>
+
+        <div className="filter-section">
+          <h3>{product.productType} Özellikleri</h3>
+          <div className="form-row">
+            <div className="form-group">
+              <label htmlFor="theme">Tema</label>
+              <select
+                id="theme"
+                name="theme"
+                value={product.theme || ''}
+                onChange={handleInputChange}
+              >
+                {filterFieldConfig.theme.options.map(option => (
+                  <option key={option} value={option}>{option}</option>
+                ))}
+              </select>
+            </div>
+            <div className="form-group">
+              <label htmlFor="fit">Fit/Kalıp</label>
+              <select
+                id="fit"
+                name="fit"
+                value={product.fit || ''}
+                onChange={handleInputChange}
+              >
+                {filterFieldConfig.fit.options.map(option => (
+                  <option key={option} value={option}>{option}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div className="form-row">
+            <div className="form-group">
+              <label htmlFor="color">Renk</label>
+              <select
+                id="color"
+                name="color"
+                value={product.color || ''}
+                onChange={handleInputChange}
+              >
+                {filterFieldConfig.color.options.map(option => (
+                  <option key={option} value={option}>{option}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+          {getFilterFieldsForProductType(product.productType || '').includes('waist') && (
+            <div className="form-row">
+              <div className="form-group">
+                <label htmlFor="waist">Bel</label>
+                <select
+                  id="waist"
+                  name="waist"
+                  value={product.waist || ''}
+                  onChange={handleInputChange}
+                >
+                  {filterFieldConfig.waist.options.map(option => (
+                    <option key={option} value={option}>{option}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          )}
+          {getFilterFieldsForProductType(product.productType || '').includes('leg') && (
+            <div className="form-row">
+              <div className="form-group">
+                <label htmlFor="leg">Paça</label>
+                <select
+                  id="leg"
+                  name="leg"
+                  value={product.leg || ''}
+                  onChange={handleInputChange}
+                >
+                  {filterFieldConfig.leg.options.map(option => (
+                    <option key={option} value={option}>{option}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          )}
+          {getFilterFieldsForProductType(product.productType || '').includes('length') && (
+            <div className="form-row">
+              <div className="form-group">
+                <label htmlFor="length">Boy</label>
+                <select
+                  id="length"
+                  name="length"
+                  value={product.length || ''}
+                  onChange={handleInputChange}
+                >
+                  {filterFieldConfig.length.options.map(option => (
+                    <option key={option} value={option}>{option}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          )}
+          {getFilterFieldsForProductType(product.productType || '').includes('hood') && (
+            <div className="form-row">
+              <div className="form-group">
+                <label htmlFor="hood">Kapüşon</label>
+                <select
+                  id="hood"
+                  name="hood"
+                  value={product.hood || ''}
+                  onChange={handleInputChange}
+                >
+                  {filterFieldConfig.hood.options.map(option => (
+                    <option key={option} value={option}>{option}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          )}
+          {getFilterFieldsForProductType(product.productType || '').includes('collar') && (
+            <div className="form-row">
+              <div className="form-group">
+                <label htmlFor="collar">Yaka</label>
+                <select
+                  id="collar"
+                  name="collar"
+                  value={product.collar || ''}
+                  onChange={handleInputChange}
+                >
+                  {filterFieldConfig.collar.options.map(option => (
+                    <option key={option} value={option}>{option}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          )}
+          {getFilterFieldsForProductType(product.productType || '').includes('closure') && (
+            <div className="form-row">
+              <div className="form-group">
+                <label htmlFor="closure">Düğme/Fermuar</label>
+                <select
+                  id="closure"
+                  name="closure"
+                  value={product.closure || ''}
+                  onChange={handleInputChange}
+                >
+                  {filterFieldConfig.closure.options.map(option => (
+                    <option key={option} value={option}>{option}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          )}
+          {getFilterFieldsForProductType(product.productType || '').includes('sleeve') && (
+            <div className="form-row">
+              <div className="form-group">
+                <label htmlFor="sleeve">Kol</label>
+                <select
+                  id="sleeve"
+                  name="sleeve"
+                  value={product.sleeve || ''}
+                  onChange={handleInputChange}
+                >
+                  {filterFieldConfig.sleeve.options.map(option => (
+                    <option key={option} value={option}>{option}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="form-actions">

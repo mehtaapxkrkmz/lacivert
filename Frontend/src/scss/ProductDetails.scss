@@ -65,15 +65,18 @@
         justify-content: center;
         align-items: center;
         text-align: center;
-        height:1rem;
+        height:2rem;
+        
         
       
         p{
           margin: 0 0.5rem;
-          background-color: #b1b1b1;
+          background-color: #d4d2d2;
           padding: 0.2rem 0.5rem;
           border-radius: 5px;
-          border: 3px solid black;
+          border: 3px solid rgb(89, 89, 89);
+          height: 2rem;
+          
         }
       }
       .product-description {

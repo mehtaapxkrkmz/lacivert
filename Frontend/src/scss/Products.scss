@@ -42,7 +42,10 @@
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
       transform: scale(1.03); // biraz daha etkili büyüme efekti
     }
-   
+   .name{
+    color: #000000;
+    font-size: 17px;
+   }
     .heart-icon {
       position: absolute;
       top: 15px;
@@ -82,11 +85,7 @@
     .price {
       font-size: 16px;
 
-      .old-price {
-        text-decoration: line-through;
-        color: #aaa;
-        margin-right: 8px;
-      }
+     
 
       .new-price {
         color: #000;
