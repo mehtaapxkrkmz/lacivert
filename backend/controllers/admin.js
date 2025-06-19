@@ -8,7 +8,9 @@ const unlinkAsync = promisify(fs.unlink);
 
 exports.addProduct = async (req, res) => {
     try {
-        const { name, description, price, stock, category, sizes, isDiscounted, score } = req.body;
+        const { name, description, price, stock, category, sizes, isDiscounted, score,
+            productType, theme, fit, color, waist, leg, length, hood, collar, closure, sleeve
+        } = req.body;
 
         if (!name || !description || !price || !category || !sizes) {
             return res.status(400).json({ message: 'Tüm zorunlu alanları doldurun.' });
@@ -31,11 +33,22 @@ exports.addProduct = async (req, res) => {
             images,
             description,
             price: parseFloat(price),
-            stock: 1.0,
+            stock: stock ? parseInt(stock) : 0,
             category,
             sizes: parsedSizes,
             isDiscounted: isDiscounted === 'true' || isDiscounted === true,
-            score: parseFloat(score) || 0
+            score: parseFloat(score) || 0,
+            productType,
+            theme,
+            fit,
+            color,
+            waist,
+            leg,
+            length,
+            hood,
+            collar,
+            closure,
+            sleeve
         });
 
         await newProduct.save();
