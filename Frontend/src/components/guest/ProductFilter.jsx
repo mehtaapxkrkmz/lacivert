@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import '/src/scss/productFilter.scss';
 import Products from './Layout/Products';
 import { useNavigate, Link } from 'react-router-dom';
+import Product from './Layout/Product';
 
 const ProductFilter = ({ category }) => {
     const [activeFilters, setActiveFilters] = useState({});
@@ -340,25 +341,7 @@ const ProductFilter = ({ category }) => {
                 <div className="products">
                     {filteredProducts.length > 0 ? (
                         filteredProducts.map((product) => (
-                            <div key={product._id} className="product-item">
-                                <Link to={`/product/${product._id}`}>
-                                    <img 
-                                        src={
-                                            product.images && product.images.length > 0
-                                                ? product.images[0].startsWith('http')
-                                                    ? product.images[0]
-                                                    : product.images[0].startsWith('/')
-                                                        ? `${backendUrl}${product.images[0]}`
-                                                        : `${backendUrl}/uploads/${product.images[0]}`
-                                                : 'https://via.placeholder.com/150'
-                                        }
-                                        alt={product.name}
-                                    />
-                                </Link>
-                                <h3>{product.name}</h3>
-                                <p>{product.description}</p>
-                                <p className="price">{product.price} TL</p>
-                            </div>
+                            <Product key={product._id} product={product} />
                         ))
                     ) : (
                         <p>Filtre kriterlerinize uygun ürün bulunamadı.</p>
