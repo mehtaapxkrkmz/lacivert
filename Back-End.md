@@ -1,14 +1,14 @@
-Domain Adresi: domainadresi.com
+Domain Adresi: https://lacivert-backend.vercel.app/
 
 Docker: Kullanılmadı/Kullanıldı.
 
-REST API: Kullanıldı/Kullanılmadı.
+REST API: Kullanıldı
 
 Redis:Kullanıldı/Kullanılmadı.
 
 RabbitMQ: Kullanıldı/Kullanılmadı.
 
-CI/CD: Kullanıldı/Kullanılmadı.
+CI/CD: Kullanıldı
 
 # Enis Özgür Backend #
 1. Kayıt Ol

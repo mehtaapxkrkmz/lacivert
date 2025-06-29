@@ -269,7 +269,7 @@ function EditProduct() {
                 onClick={() => handleImageClick(idx)}
                 style={{ cursor: 'pointer' }}
               >
-                <img src={`${backendURL}${img}`} alt={`Görsel ${idx + 1}`} />
+                <img src={img.startsWith('http') ? img : `${backendURL}${img}`} alt={`Görsel ${idx + 1}`} />
                 <div className="image-overlay">
                   <span>Değiştir</span>
                 </div>

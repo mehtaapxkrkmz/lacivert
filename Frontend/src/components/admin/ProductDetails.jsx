@@ -89,7 +89,7 @@ function ProductDetails() {
       <div className="product-details-content">
         <div className="product-gallery">
           <div className="main-image">
-            <img src={`${backendURL}${product.images[selectedImage]}`} alt={product.name} />
+            <img src={product.images[selectedImage]?.startsWith('http') ? product.images[selectedImage] : `${backendURL}${product.images[selectedImage]}`} alt={product.name} />
           </div>
           <div className="thumbnail-gallery">
             {product.images.map((img, idx) => (
@@ -98,7 +98,7 @@ function ProductDetails() {
                 className={`thumbnail ${selectedImage === idx ? 'active' : ''}`}
                 onClick={() => setSelectedImage(idx)}
               >
-                <img src={`${backendURL}${img}`} alt={`thumb-${idx}`} />
+                <img src={img.startsWith('http') ? img : `${backendURL}${img}`} alt={`thumb-${idx}`} />
               </div>
             ))}
           </div>

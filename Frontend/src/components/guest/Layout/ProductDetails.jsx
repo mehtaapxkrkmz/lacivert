@@ -124,7 +124,7 @@ function ProductDetails() {
             product.images.map((photo, index) => (
               <img
                 key={index}
-                src={`${backendUrl}${photo}`}
+                src={photo.startsWith('http') ? photo : `${backendUrl}${photo}`}
                 alt={`Product Image ${index + 1}`}
               />
             ))}

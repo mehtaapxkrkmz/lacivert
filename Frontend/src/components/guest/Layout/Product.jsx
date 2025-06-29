@@ -32,6 +32,11 @@ function Product({ product }) {
     ? `${backendUrl}${product.images[hoveredImageIndex]}`
     : product.images?.[hoveredImageIndex] || "";
 
+  // Cloudinary URL kontrolü
+  const displayImageUrl = product.images?.[hoveredImageIndex]?.startsWith('http')
+    ? product.images[hoveredImageIndex]
+    : imageUrl;
+
   return (
     <div
       className="product"
@@ -40,7 +45,7 @@ function Product({ product }) {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      <img src={imageUrl} alt={product.name} />
+      <img src={displayImageUrl} alt={product.name} />
 
       {product.isDiscounted && (
         <div className="etiket11">

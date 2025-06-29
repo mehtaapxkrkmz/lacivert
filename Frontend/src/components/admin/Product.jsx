@@ -75,6 +75,10 @@ const renderStars = (score) => {
     ? `${backendUrl}${images[hoveredImageIndex]}`
     : images?.[hoveredImageIndex] || '';
   
+  // Cloudinary URL kontrolü
+  const displayImageUrl = images?.[hoveredImageIndex]?.startsWith('http')
+    ? images[hoveredImageIndex]
+    : imageUrl;
 
   return (
     <div className="product-card">
@@ -84,7 +88,7 @@ const renderStars = (score) => {
         onMouseLeave={handleMouseLeave}
         style={{ cursor: 'pointer' }}
       >
-        <img src={imageUrl} alt={`Product ${hoveredImageIndex + 1}`} />
+        <img src={displayImageUrl} alt={`Product ${hoveredImageIndex + 1}`} />
       </div>
       <div className="product-info">
         <h3 className="product-name">{name}</h3>
