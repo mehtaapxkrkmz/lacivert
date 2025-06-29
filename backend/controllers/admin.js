@@ -18,7 +18,7 @@ exports.addProduct = async (req, res) => {
         if (!req.files || req.files.length < 1) {
             return res.status(400).json({ message: 'En az 1 adet resim yüklenmeli.' });
         }
-        const images = req.files.map(file => `/uploads/${file.filename}`);
+        const images = req.files.map(file => file.path);
 
         let parsedSizes;
         try {
@@ -54,12 +54,8 @@ exports.addProduct = async (req, res) => {
         await newProduct.save();
         res.status(201).json({ message: 'Ürün başarıyla eklendi!', product: newProduct });
     } catch (err) {
-        console.error('Ürün ekleme hatası:', err);
-        res.status(500).json({
-            message: 'Ürün eklenirken bir hata oluştu.',
-            error: err.message,
-            stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
-        });
+        console.error('addProduct HATASI:', err);
+        return res.status(500).json({ message: 'Bir hata oluştu.', error: err.message, stack: err.stack });
     }
 };
 
