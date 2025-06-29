@@ -5,7 +5,7 @@ const DeleteComment = ({ comment, onDelete, setFeedbackMessage }) => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, '');
 
   const handleDelete = async () => {
     setIsDeleting(true);

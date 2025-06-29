@@ -69,7 +69,7 @@ const renderStars = (score) => {
     setHoveredImageIndex(0); // ya da default resim indeksini sıfırla
   };
 
-  const backendUrl = import.meta.env.VITE_API_URL;
+  const backendUrl = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, '');
 
   const imageUrl = images?.[hoveredImageIndex]?.startsWith('/uploads')
     ? `${backendUrl}${images[hoveredImageIndex]}`

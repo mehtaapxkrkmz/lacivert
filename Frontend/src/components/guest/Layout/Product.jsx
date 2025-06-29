@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 function Product({ product }) {
   const navigate = useNavigate();
-  const backendUrl = import.meta.env.VITE_API_URL;
+  const backendUrl = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, '');
 
   const [hoveredImageIndex, setHoveredImageIndex] = useState(0);
 

@@ -5,7 +5,7 @@ import axios from 'axios';
 function EditProduct() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const backendURL = import.meta.env.VITE_API_URL;
+  const backendURL = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, '');
 
   const [product, setProduct] = useState({
     name: '',

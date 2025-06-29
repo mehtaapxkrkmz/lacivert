@@ -10,7 +10,7 @@ const UpdateComment = ({ onUpdate, comment }) => {
   const [feedbackMessage, setFeedbackMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, '');
 
   // comment prop'u değiştiğinde rating state'ini güncelle
   useEffect(() => {

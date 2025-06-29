@@ -11,7 +11,7 @@ function ProductDetails() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const backendURL = import.meta.env.VITE_API_URL;
+  const backendURL = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, '');
 
   useEffect(() => {
     const fetchProduct = async () => {

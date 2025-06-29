@@ -15,7 +15,7 @@ function ProductDetails() {
   const [selectedSize, setSelectedSize] = useState(null);
   const { id } = useParams();
 
-  const backendUrl = import.meta.env.VITE_API_URL || "http://localhost:5000"; // Backend adresi
+  const backendUrl = (import.meta.env.VITE_API_URL || "http://localhost:5000").replace(/\/$/, ''); // Backend adresi
 
   useEffect(() => {
     async function fetchProduct() {

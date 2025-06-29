@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Product from './Product'
 
 function Products() {
-  const backendUrl = import.meta.env.VITE_API_URL;
+  const backendUrl = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, '');
   const [favorites, setFavorites] = useState([])
   const [products, setProducts] = useState([]) // backendden gelen ürünler için state
 

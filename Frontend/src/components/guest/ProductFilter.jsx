@@ -14,7 +14,7 @@ const ProductFilter = ({ category }) => {
     const [loading, setLoading] = useState(false);
     const dropdownRef1 = useRef(null);
     const dropdownRef2 = useRef(null);
-    const backendUrl = 'http://localhost:5000'; // Backend URL'ini doğrudan tanımla
+    const backendUrl = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, ''); // Backend URL'ini environment variable'dan al
     const navigate = useNavigate();
 
     const categoryMap = {
