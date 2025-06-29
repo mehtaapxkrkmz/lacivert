@@ -266,7 +266,7 @@ function AddProduct() {
         </div>
 
         <div className="form-group">
-          <label>Ürün Görselleri (4 adet)</label>
+          <label>Ürün Görselleri (Sadece JPG formatı kullanılabilir.)</label>
           {images.map((image, index) => (
             <div key={index} className="image-upload-group">
               <input
