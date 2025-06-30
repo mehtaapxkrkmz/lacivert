@@ -3,6 +3,88 @@ const Cart = require('../models/cart');
 const Product = require('../models/product');
 
 const cartController = {
+
+     // GET /api/cart/:userId - Kullanıcının sepetini getir
+    getCart: async (req, res) => {
+        try {
+        const { userId } = req.params;
+
+        // Kullanıcı ID validasyonu
+        if (!userId) {
+            return res.status(400).json({
+            message: 'Kullanıcı ID gereklidir'
+            });
+        }
+
+        // Sepeti veritabanından bul ve ürün bilgilerini populate et
+        const cart = await Cart.findOne({ user: userId })
+            .populate({
+            path: 'items.product',
+            select: 'name price images sizes', // İhtiyaç duyduğunuz alanları seçin
+            });
+
+        // Sepet bulunamadı ise boş sepet döndür
+        if (!cart) {
+            return res.status(200).json({
+            message: 'Sepet boş',
+            cart: {
+                user: userId,
+                items: [],
+                totalAmount: 0,
+                totalItems: 0
+            }
+            });
+        }
+
+        // Sepet toplam tutarını hesapla
+        let totalAmount = 0;
+        let totalItems = 0;
+
+        const cartItems = cart.items.map(item => {
+            const itemTotal = item.quantity * item.product.price;
+            totalAmount += itemTotal;
+            totalItems += item.quantity;
+
+            return {
+            _id: item._id,
+            product: {
+                _id: item.product._id,
+                name: item.product.name,
+                price: item.product.price,
+                images: item.product.images,
+                stock: item.product.stock
+            },
+            size: item.size,
+            quantity: item.quantity,
+            itemTotal: itemTotal
+            };
+        });
+
+        // Başarılı yanıt
+        res.status(200).json({
+            message: 'Sepet başarıyla getirildi',
+            cart: {
+            _id: cart._id,
+            user: cart.user,
+            items: cartItems,
+            totalAmount: totalAmount,
+            totalItems: totalItems,
+            createdAt: cart.createdAt,
+            updatedAt: cart.updatedAt
+            }
+        });
+
+        } catch (error) {
+        console.error('Sepet getirme hatası:', error);
+        res.status(500).json({
+            message: 'Sunucu hatası',
+            error: error.message
+        });
+        }
+    },
+
+
+
     // POST /api/cart/add/:userId - Sepete ürün ekleme
     // Kullanıcı kimliği req.user._id üzerinden alınır
     addToCart : async (req, res) => {
@@ -66,8 +148,19 @@ const cartController = {
                 error: error.message 
             });
         }
+
+        console.log("Populated Cart:", populatedCart);
     }
-    
+
+   
+
+
+
+
+
+
+
+
 
     /*
 

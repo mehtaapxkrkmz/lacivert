@@ -43,7 +43,7 @@ function ProductDetails() {
       return;
     }
 
-    const userId = "68492f8cadf1df76ce14e9a1";
+    const userId = "686139539cfeaf8e64211422";
 
     try {
       const res = await fetch(`${backendUrl}/api/cart/add/${userId}`, {
@@ -114,7 +114,7 @@ function ProductDetails() {
     { value: "M", label: "Medium" },
     { value: "L", label: "Large" },
   ];
-  
+
 
   return (
     <div className="productPage">
