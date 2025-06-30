@@ -17,7 +17,6 @@ CI/CD: Kullanıldı
 4. .....
 5. .....
 
-
 # Mehtap Korkmaz Backend #
 1. Yorum Ekleme
 2. Yorum Silme
@@ -25,7 +24,6 @@ CI/CD: Kullanıldı
 4. Puanlama
 5. Ürün Sıralama
 6. Ürün Filtreleme
-
 
 # Nida Ekinci Backend #
 1. ....
