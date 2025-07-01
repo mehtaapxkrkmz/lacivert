@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema({
   password:  { type: String, required: true },
   resetToken: String,
   resetTokenExpire: Date,
+  favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }]
 });
 
 // Parolayı kayıt öncesi hashle

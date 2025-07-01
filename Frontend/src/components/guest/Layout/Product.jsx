@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../context/AuthContext";
 
-function Product({ product }) {
+function Product({ product, toggleFavorite }) {
   const navigate = useNavigate();
-  const backendUrl = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, '');
+  const backendUrl =(import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, '');
+  const { isAuthenticated } = useAuth();
 
   const [hoveredImageIndex, setHoveredImageIndex] = useState(0);
 
@@ -25,18 +27,27 @@ function Product({ product }) {
   };
 
   const handleMouseLeave = () => {
-    setHoveredImageIndex(0); // İstersen varsayılanı sıfırla
+    setHoveredImageIndex(0);
   };
 
   const imageUrl = product.images?.[hoveredImageIndex]?.startsWith("/uploads")
     ? `${backendUrl}${product.images[hoveredImageIndex]}`
     : product.images?.[hoveredImageIndex] || "";
 
+  const handleFavoriteClick = (e) => {
+    e.stopPropagation();
+    if (!isAuthenticated) {
+      alert("Favori eklemek için lütfen giriş yapınız!");
+      navigate("/login");
+      return;
+    }
+    toggleFavorite(product._id);
+  };
+
   // Cloudinary URL kontrolü
   const displayImageUrl = product.images?.[hoveredImageIndex]?.startsWith('http')
     ? product.images[hoveredImageIndex]
     : imageUrl;
-
   return (
     <div
       className="product"
@@ -55,10 +66,7 @@ function Product({ product }) {
 
       <span
         className={`heart-icon ${product.isFavorite ? "favorited" : ""}`}
-        onClick={(e) => {
-          e.stopPropagation();
-          // toggleFavorite(product._id);
-        }}
+        onClick={handleFavoriteClick}
       >
         &#9829;
       </span>

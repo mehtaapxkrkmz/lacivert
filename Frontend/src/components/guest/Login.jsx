@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '/src/scss/login.scss';
+import { useAuth } from '../../context/AuthContext';
 
 const Login = () => {
+  const { login } = useAuth(); // ✅ Context login fonksiyonu
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
@@ -19,7 +21,6 @@ const Login = () => {
       return;
     }
 
-    // basit e-posta format kontrolü
     const emailRegex = /\S+@\S+\.\S+/;
     if (!emailRegex.test(email)) {
       alert('Geçerli bir e-posta adresi giriniz.');
@@ -49,11 +50,10 @@ const Login = () => {
       const userWithToken = {
         ...res.data.user,
         _id: res.data.user._id || res.data.user.id,
-        token: res.data.token,
       };
 
-      localStorage.setItem('user', JSON.stringify(userWithToken));
-      localStorage.setItem('token', res.data.token);
+      // ✅ Context ile login yap
+      login(res.data.token, userWithToken);
 
       alert('Giriş başarılı!');
       navigate('/');

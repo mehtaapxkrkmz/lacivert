@@ -9,6 +9,8 @@ const authMiddleware = require('../middleware/Auth');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 
+const { sendToQueue } = require('../rabbitmq');
+
 const JWT_SECRET = process.env.JWT_SECRET || 'gizli_jwt_anahtari';
 
 // POST /api/login
@@ -60,6 +62,10 @@ router.post('/register', async (req, res) => {
 
     // Kayıttan sonra token oluşturup dönebiliriz
     const token = jwt.sign({ id: newUser._id }, JWT_SECRET, { expiresIn: '1d' });
+    await sendToQueue({
+      email: newUser.email,
+      firstname: newUser.firstname
+    });
 
     res.status(201).json({
       message: 'Kayıt başarılı',

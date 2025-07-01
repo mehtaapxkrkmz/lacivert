@@ -35,7 +35,7 @@ function Register() {
         alert(result.message || 'Kayıt başarılı!');
         localStorage.setItem('token', result.token); // ✅ Token'ı sakla
         login(result.token, result.user);
-        navigate('/'); // veya istersen '/login' yerine direkt ana sayfaya
+        setTimeout(() => navigate('/'), 300); // veya istersen '/login' yerine direkt ana sayfaya
       } else {
         alert(result.message || 'Kayıt başarısız!');
       }

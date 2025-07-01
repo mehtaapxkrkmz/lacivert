@@ -13,10 +13,15 @@ export const AuthProvider = ({ children }) => {
 
   // Oturum açma
   const login = (token, user) => {
+    const userWithId = {
+    ...user,
+    _id: user._id || user.id || '',  // _id varsa onu kullan, yoksa id'yi
+    token,
+  };
     setToken(token);
-    setUser(user);
+    setUser(userWithId);
     localStorage.setItem('token', token);
-    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('user', JSON.stringify(userWithId));
   };
 
   // Oturumu kapatma
@@ -29,6 +34,7 @@ export const AuthProvider = ({ children }) => {
 
   // Tarayıcıyı yenilediğinde bilgileri geri yükle
   useEffect(() => {
+    
     const storedToken = localStorage.getItem('token');
     const storedUser = localStorage.getItem('user');
     if (storedToken) setToken(storedToken);

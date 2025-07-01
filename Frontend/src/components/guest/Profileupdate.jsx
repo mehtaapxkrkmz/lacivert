@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '/src/scss/profileupdate.scss';
-import DeleteAccountButton from '../DeleteAccountButton'; // yolu kendi dosya yapına göre ayarla
+import DeleteAccountButton from '../DeleteAccountButton';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
+function Profileupdate() {
+  const { token, user , login , logout} = useAuth(); // ✅ sadece context'ten al
+  const navigate = useNavigate();
 
-function ProfileUpdate() {
-  const [user, setUser] = useState(null);
   const [formData, setFormData] = useState({
     firstname: '',
     lastname: '',
@@ -16,15 +18,6 @@ function ProfileUpdate() {
     birthdate: '',
     gender: '',
   });
-
-   const navigate = useNavigate();
-
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    if (storedUser) {
-      setUser(storedUser);
-    }
-  }, []);
 
   useEffect(() => {
     if (user) {
@@ -45,41 +38,45 @@ function ProfileUpdate() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+   
 
-    if (!user || !user._id || !user.token) {
+    e.preventDefault();
+  const userId = user._id || user.id;
+    if (!user || !userId || !token) {
       alert('Giriş yapmış kullanıcı bulunamadı.');
       return;
     }
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/users/${user._id}`,
+        `http://localhost:5000/api/users/${userId}`,
         formData,
         {
           headers: {
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
 
-      // localStorage ve state güncelle
-      const updatedUser = { ...response.data, token: user.token };
+      // Kullanıcı bilgisi güncellendiyse, yeni verileri context’e veya localStorage'a yazabilirsin.
+      const updatedUser = { ...response.data, token };
       localStorage.setItem('user', JSON.stringify(updatedUser));
-      setUser(updatedUser);
+      // Context güncelle (login fonksiyonunu kullan)
+      login(token, updatedUser);
       alert('Profil başarıyla güncellendi.');
+      // Sayfayı yenilemeden AuthContext güncellemek istersen burada `login(token, updatedUser)` çağrısı da yapılabilir.
     } catch (err) {
       console.error('Profil güncelleme hatası:', err);
       alert('Güncelleme sırasında bir hata oluştu.');
     }
   };
 
-   const handleDeleted = () => {
+  const handleDeleted = () => {
+    logout();
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     navigate('/login');
   };
-
 
   return (
     <div className="profile-page">
@@ -115,16 +112,14 @@ function ProfileUpdate() {
           <button type="submit">Kaydet</button>
         </form>
 
-       {user && (
-  <div style={{ marginTop: '20px' }}>
-    <DeleteAccountButton userId={user._id} onDeleted={handleDeleted} />
-  </div>
-)}
-               
-
+        {user && (
+          <div style={{ marginTop: '20px' }}>
+            <DeleteAccountButton userId={user._id} onDeleted={handleDeleted} />
+          </div>
+        )}
       </div>
     </div>
   );
 }
 
-export default ProfileUpdate;
+export default Profileupdate;

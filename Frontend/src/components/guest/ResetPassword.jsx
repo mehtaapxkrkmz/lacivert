@@ -18,7 +18,7 @@ function ResetPassword() {
 
     try {
       const res = await axios.post(`http://localhost:5000/api/users/reset-password/${token}`, { password });
-      setMessage(res.data.message || 'Şifre başarıyla sıfırlandı.');
+      setMessage(res.data.message || 'Şifre başarıyla güncellendi.');
       setTimeout(() => navigate('/login'), 2000);
     } catch (err) {
       setMessage('Token geçersiz veya süresi dolmuş.');
