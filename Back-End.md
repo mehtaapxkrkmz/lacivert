@@ -6,7 +6,7 @@ REST API: Kullanıldı
 
 Redis:Kullanıldı/Kullanılmadı.
 
-RabbitMQ: Kullanıldı/Kullanılmadı.
+RabbitMQ: Kullanıldı.
 
 CI/CD: Kullanıldı
 
