@@ -3,7 +3,7 @@ import Product from './Product';
 import { useAuth } from '../../../context/AuthContext';
 
 function Products() {
-  const backendUrl = import.meta.env.VITE_API_URL;
+  const backendUrl = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
   const { token, user, isAuthenticated } = useAuth();
   const [favorites, setFavorites] = useState([]);
   const [products, setProducts] = useState([]);
