@@ -8,9 +8,10 @@ const cartController = require('../controllers/cartController'); // Sepet kontro
 router.get('/:userId', cartController.getCart);
 //router.get('/:userId', protect, cartController.getCart);
 router.post('/add/:userId', cartController.addToCart); //  /add
-//router.put('/update', cartController.updateCartItem);
+router.put('/update/:userId', cartController.updateCartItem);
 //router.put('/update', protect, cartController.updateCartItem);
-//router.delete('/remove/:productId/:size', cartController.removeFromCart);
+router.delete('/remove/:userId/:productId/:size', cartController.removeFromCart);
 //router.delete('/remove/:productId/:size', protect, cartController.removeFromCart);
+router.delete('/clear/:userId', cartController.clearCart);
 
 module.exports = router;
