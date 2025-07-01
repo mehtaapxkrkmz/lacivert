@@ -4,82 +4,84 @@ const Product = require('../models/product');
 
 const cartController = {
 
-     // GET /api/cart/:userId - Kullanıcının sepetini getir
+    // GET /api/cart/:userId - Kullanıcının sepetini getir
     getCart: async (req, res) => {
         try {
-        const { userId } = req.params;
+            const { userId } = req.params;
 
-        // Kullanıcı ID validasyonu
-        if (!userId) {
-            return res.status(400).json({
-            message: 'Kullanıcı ID gereklidir'
-            });
-        }
-
-        // Sepeti veritabanından bul ve ürün bilgilerini populate et
-        const cart = await Cart.findOne({ user: userId })
-            .populate({
-            path: 'items.product',
-            select: 'name price images sizes', // İhtiyaç duyduğunuz alanları seçin
-            });
-
-        // Sepet bulunamadı ise boş sepet döndür
-        if (!cart) {
-            return res.status(200).json({
-            message: 'Sepet boş',
-            cart: {
-                user: userId,
-                items: [],
-                totalAmount: 0,
-                totalItems: 0
+            // Kullanıcı ID validasyonu
+            if (!userId) {
+                return res.status(400).json({
+                    message: 'Kullanıcı ID gereklidir'
+                });
             }
-            });
-        }
 
-        // Sepet toplam tutarını hesapla
-        let totalAmount = 0;
-        let totalItems = 0;
+            // Sepeti veritabanından bul ve ürün bilgilerini populate et
+            const cart = await Cart.findOne({ user: userId })
+                .populate({
+                    path: 'items.product',
+                    select: 'name price images sizes', // İhtiyaç duyduğunuz alanları seçin
+                });
 
-        const cartItems = cart.items.map(item => {
-            const itemTotal = item.quantity * item.product.price;
-            totalAmount += itemTotal;
-            totalItems += item.quantity;
-
-            return {
-            _id: item._id,
-            product: {
-                _id: item.product._id,
-                name: item.product.name,
-                price: item.product.price,
-                images: item.product.images,
-                stock: item.product.stock
-            },
-            size: item.size,
-            quantity: item.quantity,
-            itemTotal: itemTotal
-            };
-        });
-
-        // Başarılı yanıt
-        res.status(200).json({
-            message: 'Sepet başarıyla getirildi',
-            cart: {
-            _id: cart._id,
-            user: cart.user,
-            items: cartItems,
-            totalAmount: totalAmount,
-            totalItems: totalItems,
-            createdAt: cart.createdAt,
-            updatedAt: cart.updatedAt
+            // Sepet bulunamadı ise boş sepet döndür
+            if (!cart) {
+                return res.status(200).json({
+                    message: 'Sepet boş',
+                    cart: {
+                        user: userId,
+                        items: [],
+                        totalAmount: 0,
+                        totalItems: 0
+                    }
+                });
             }
-        });
+
+
+            // Sepet toplam tutarını hesapla
+            let totalAmount = 0;
+            let totalItems = 0;
+
+            const cartItems = cart.items.map(item => {
+                const itemTotal = item.quantity * item.product.price;
+                totalAmount += itemTotal;
+                totalItems += item.quantity;
+
+                return {
+                    _id: item._id,
+                    product: {
+                        id: item.product._id,
+                        name: item.product.name,
+                        price: item.product.price,
+                        images: item.product.images,
+                        size: item.size || '',
+                        stock: item.product.sizes[item.size] ?? 0,
+                    },
+                    size: item.size || '',
+                    quantity: item.quantity,
+                    itemTotal: itemTotal
+                };
+            });
+
+            // Başarılı yanıt
+            res.status(200).json({
+                message: 'Sepet başarıyla getirildi',
+                cart: {
+                    _id: cart._id,
+                    user: cart.user,
+                    items: cartItems,
+                    totalAmount: totalAmount,
+                    totalItems: totalItems,
+                    createdAt: cart.createdAt,
+                    updatedAt: cart.updatedAt
+                }
+            });
 
         } catch (error) {
-        console.error('Sepet getirme hatası:', error);
-        res.status(500).json({
-            message: 'Sunucu hatası',
-            error: error.message
-        });
+            console.error('Sepet getirme hatası:', error);
+            res.status(500).json({
+                message: 'Sunucu hatası',
+                error: error.message
+            });
         }
     },
 
@@ -87,16 +89,16 @@ const cartController = {
 
     // POST /api/cart/add/:userId - Sepete ürün ekleme
     // Kullanıcı kimliği req.user._id üzerinden alınır
-    addToCart : async (req, res) => {
-        try{
+    addToCart: async (req, res) => {
+        try {
             //const userId = req.user._id;
-            const {userId} = req.params; //gecici
+            const { userId } = req.params; //gecici
             const { productId, size, quantity } = req.body;
 
             // Gerekli alanları kontrol et
             if (!productId || !size || !quantity) {
-                return res.status(400).json({ 
-                    message: 'ProductId, size ve quantity alanları zorunludur' 
+                return res.status(400).json({
+                    message: 'ProductId, size ve quantity alanları zorunludur'
                 });
             }
 
@@ -124,14 +126,14 @@ const cartController = {
                 existingItem.quantity += quantity; //varsa adetini artırır
                 if (existingItem.quantity < 1) {
                     // Eğer adet 1'den az ise, bu ürünü sepetten kaldırır
-                    cart.items = cart.items.filter(item => item !== existingItem); 
+                    cart.items = cart.items.filter(item => item !== existingItem);
                 }
             } else {
                 cart.items.push({ product: productId, size, quantity });
             }
 
             await cart.save();
-            
+
             // Populate ile ürün bilgilerini de döndür
             const populatedCart = await Cart.findOne({ user: userId })
                 .populate('items.product');
@@ -141,18 +143,90 @@ const cartController = {
                 cart: populatedCart
             });
 
-        }catch (error) {
+            console.log("Populated Cart:", populatedCart);
+
+        } catch (error) {
             console.error('Sepete ekleme hatası:', error);
-            res.status(500).json({ 
-                message: 'Sunucu hatası', 
-                error: error.message 
+            res.status(500).json({
+                message: 'Sunucu hatası',
+                error: error.message
             });
         }
+    },
 
-        console.log("Populated Cart:", populatedCart);
+    //PUT /api/cart/update/:userId - Sepetteki ürünü güncelleme
+    updateCartItem: async (req, res) => {
+        try {
+            const { userId } = req.params; //gecici
+            //const userId = req.user._id; // veya req.params.userId
+            const { productId, size, quantity } = req.body;
+
+            if (quantity < 1) {
+                return res.status(400).json({ message: "Quantity must be at least 1." });
+            }
+
+            const cart = await Cart.findOne({ user: userId });
+
+            if (!cart) {
+                return res.status(404).json({ message: 'Cart not found' });
+            }
+
+            const item = cart.items.find(item =>
+                item.product.toString() === productId && item.size === size
+            );
+
+            if (!item) {
+                return res.status(404).json({ message: 'Item not found in cart' });
+            }
+
+            item.quantity = quantity;
+            await cart.save();
+
+            return res.status(200).json({ message: 'Cart item updated', cart });
+        } catch (error) {
+            console.error("Cart update error:", error);
+            res.status(500).json({ message: 'Internal server error' });
+        }
+    },
+
+    // DELETE /api/cart/remove/:userId/:productId/:size
+    removeFromCart: async (req, res) => {
+        try {
+            const { userId, productId, size } = req.params;
+            const cart = await Cart.findOne({ user: userId });
+            if (!cart) return res.status(404).json({ message: 'Cart not found' });
+
+            cart.items = cart.items.filter(
+                item => !(item.product.toString() === productId && item.size === size)
+            );
+            await cart.save();
+
+            return res.status(200).json({ message: 'Item removed', cart });
+        } catch (error) {
+            console.error('Remove item error:', error);
+            res.status(500).json({ message: 'Internal server error' });
+        }
+    },
+
+    // DELETE /api/cart/clear/:userId
+    clearCart: async (req, res) => {
+        try {
+            const { userId } = req.params;
+            const cart = await Cart.findOne({ user: userId });
+            if (!cart) return res.status(404).json({ message: 'Cart not found' });
+
+            cart.items = [];
+            await cart.save();
+
+            return res.status(200).json({ message: 'Cart cleared', cart });
+        } catch (error) {
+            console.error('Clear cart error:', error);
+            res.status(500).json({ message: 'Internal server error' });
+        }
     }
 
-   
+
+
 
 
 

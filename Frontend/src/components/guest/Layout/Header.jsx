@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { VscAccount } from "react-icons/vsc";
 import { CiSearch } from "react-icons/ci";
 import { CiLogin } from "react-icons/ci";
 import { RiMenu3Line } from "react-icons/ri";
-import { NavLink , useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import CategoryNavMenu from './CategoryNavMenu';
 import logo from '../../../assets/lacivert-logo.png'
 
@@ -31,7 +31,6 @@ const Header = ({ cartItemCount }) => {
         { path: '/cocuk', label: 'ÇOCUK' },
     ];
 
-    
 
     return (
         <div className='header'>
@@ -71,11 +70,11 @@ const Header = ({ cartItemCount }) => {
                             </button>
                         ) : (
 
-                        <NavLink to="/login">
-                            <div className="login">
-                                <CiLogin className="CiLogin" />
-                            </div>
-                        </NavLink>
+                            <NavLink to="/login">
+                                <div className="login">
+                                    <CiLogin className="CiLogin" />
+                                </div>
+                            </NavLink>
                         )}
 
                         <NavLink to="/cart">

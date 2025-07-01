@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../../../scss/index.scss";
 import "../../../scss/ProductDetails.scss";
+import { useOutletContext } from 'react-router-dom';
 
 import AddComment from "../../user/comment/AddComment";
 import Rating from "../../user/comment/Rating";
@@ -14,6 +15,7 @@ function ProductDetails() {
   const [product, setProduct] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
   const { id } = useParams();
+  const { refreshCartCount } = useOutletContext();
 
   const backendUrl = (import.meta.env.VITE_API_URL || "http://localhost:5000").replace(/\/$/, ''); // Backend adresi
 
@@ -43,6 +45,12 @@ function ProductDetails() {
       return;
     }
 
+    const sizeStock = product.sizes?.[selectedSize.value] || 0;
+    if (sizeStock < 1) {
+      alert("Seçtiğiniz beden stokta yok.");
+      return;
+    }
+
     const userId = "686139539cfeaf8e64211422";
 
     try {
@@ -62,6 +70,7 @@ function ProductDetails() {
 
       if (res.ok) {
         alert("Ürün sepete eklendi!");
+        refreshCartCount(); // Update cart count in header immediately
       } else {
         alert(data.message || "Hata oluştu.");
       }
@@ -72,7 +81,7 @@ function ProductDetails() {
   };
 
 
-   if (!product) return <div>Yükleniyor...</div>;
+  if (!product) return <div>Yükleniyor...</div>;
   const customSelectStyles = {
     control: (provided, state) => ({
       ...provided,

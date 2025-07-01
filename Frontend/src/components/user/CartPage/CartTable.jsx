@@ -50,7 +50,7 @@ const CartTable = ({ items, removeItem, updateQuantity, backendURL }) => {
             <tbody>
                 {items.map((item) => (
                     <CartItem
-                        key={`${item.id}-${item.size}`} // Unique key için id + size
+                        key={`${item._id}-${item.size}`} // Unique key için id + size
                         item={item} // Mevcut CartItem yapınıza uygun
                         onRemove={removeItem}
                         onQuantityChange={updateQuantity}
