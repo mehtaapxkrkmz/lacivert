@@ -11,7 +11,7 @@ const crypto = require('crypto');
 
 const { sendToQueue } = require('../rabbitmq');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'gizli_jwt_anahtari';
+const JWT_SECRET = process.env.JWT_SECRET || '';
 
 // POST /api/login
 router.post('/login', async (req, res) => {
