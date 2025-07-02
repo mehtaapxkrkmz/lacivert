@@ -143,8 +143,7 @@ const transporter = nodemailer.createTransport({
 });
 
 
-  const resetUrl = `http://localhost:3000/reset-password/${token}`;
-
+  const resetUrl = `http://lacivert.com/reset-password/${token}`;
   await transporter.sendMail({
     to: user.email,
     subject: 'Şifre Sıfırlama',
