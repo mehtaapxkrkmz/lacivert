@@ -3,3 +3,4 @@ lavicert/Frontend/node_modules/
 .qodo/history.sqlite
 .qodo
 backend/node_modules/
+.env
