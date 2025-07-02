@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '/src/scss/comment/updateComment.scss';
 import Rating from './Rating';
 
-const UpdateComment = ({ onUpdate, comment }) => {
+const UpdateComment = ({ onUpdate, comment, user }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedText, setEditedText] = useState('');
   const [charCount, setCharCount] = useState(0);
@@ -90,6 +90,8 @@ const UpdateComment = ({ onUpdate, comment }) => {
     setCharCount(0);
     setFeedbackMessage('');
   };
+
+  if (!user) return null;
 
   return (
     <div className="update-comment">

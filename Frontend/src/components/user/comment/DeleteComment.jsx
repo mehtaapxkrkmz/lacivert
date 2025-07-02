@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '/src/scss/comment/deleteComment.scss';
 
-const DeleteComment = ({ comment, onDelete, setFeedbackMessage }) => {
+const DeleteComment = ({ comment, onDelete, setFeedbackMessage, user }) => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -56,6 +56,8 @@ const DeleteComment = ({ comment, onDelete, setFeedbackMessage }) => {
     setFeedbackMessage('Yorum silme işlemi iptal edildi.');
     setTimeout(() => setFeedbackMessage(''), 3000);
   };
+
+  if (!user) return null;
 
   return (
     <div className="delete-comment">

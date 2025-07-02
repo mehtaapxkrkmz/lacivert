@@ -3,8 +3,10 @@ import '/src/scss/comment/addComment.scss';
 import DeleteComment from './DeleteComment';
 import UpdateComment from './UpdateComment';
 import Rating from './Rating';
+import { useAuth } from '../../../context/AuthContext';
 
 const AddComment = ({ productId }) => {
+  const { user } = useAuth(); 
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
   const [charCount, setCharCount] = useState(0);
@@ -12,12 +14,21 @@ const AddComment = ({ productId }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [feedbackMessage, setFeedbackMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPopup, setShowPopup] = useState(!user);
 
   const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, '');
   
   useEffect(() => {
     fetchComments();
   }, [productId]);
+
+  useEffect(() => {
+    if (!user) {
+      setShowPopup(true);
+    } else {
+      setShowPopup(false);
+    }
+  }, [user]);
 
   const fetchComments = async () => {
     try {
@@ -61,6 +72,12 @@ const AddComment = ({ productId }) => {
 
   const handleAddComment = async (e) => {
     e.preventDefault();
+
+    if (!user) {
+      setErrorMessage('Yorum yapmak için giriş yapmalısınız!');
+      setTimeout(() => setErrorMessage(''), 3000);
+      return;
+    }
 
     if (newComment.trim() === '') {
       setErrorMessage('Yorum alanı boş olamaz!');
@@ -133,28 +150,58 @@ const AddComment = ({ productId }) => {
     setNewRating(rating);
   };
 
+  // Animasyon için stil
+  const topBarStyle = {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    zIndex: 9999,
+    background: '#ffe0e0',
+    color: '#b00',
+    padding: '16px',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+    transform: 'translateY(-100%)',
+    animation: 'slideDown 0.5s forwards',
+  };
+
+  // Animasyon keyframes'i ekle
+  const styleSheet = document.createElement('style');
+  styleSheet.innerText = `@keyframes slideDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }`;
+  if (!document.getElementById('slideDownAnim')) {
+    styleSheet.id = 'slideDownAnim';
+    document.head.appendChild(styleSheet);
+  }
+
   return (
     <div className="add-comment">
-      <h2 className="comment-title">Yorumlar</h2>
-
-      <form onSubmit={handleAddComment} className="comment-form">
-    
-        <Rating currentRating={newRating} onStarClick={handleRatingSubmit} />
-        <textarea
-          value={newComment}
-          onChange={handleTextChange}
-          placeholder="Yorumunuzu buraya yazın..."
-          maxLength={200}
-          className="comment-textarea"
-          disabled={loading}
-        />
-        <div className="form-footer">
-          <div className="char-counter">{charCount}/200</div>
-          <button type="submit" className="submit-button" disabled={loading}>
-            {loading ? 'Ekleniyor...' : 'Yorum Ekle'}
-          </button>
+      {!user && (
+        <div className="top-warning" style={{background:'#ffe0e0',color:'#b00',padding:'10px',borderRadius:'6px',marginBottom:'16px',textAlign:'center',fontWeight:'bold'}}>
+          Yorum yapmak için giriş yapmalısınız.
         </div>
-      </form>
+      )}
+
+      {user && (
+        <form onSubmit={handleAddComment} className="comment-form">
+          <Rating currentRating={newRating} onStarClick={handleRatingSubmit} user={user} />
+          <textarea
+            value={newComment}
+            onChange={handleTextChange}
+            placeholder="Yorumunuzu buraya yazın..."
+            maxLength={200}
+            className="comment-textarea"
+            disabled={loading}
+          />
+          <div className="form-footer">
+            <div className="char-counter">{charCount}/200</div>
+            <button type="submit" className="submit-button" disabled={loading}>
+              {loading ? 'Ekleniyor...' : 'Yorum Ekle'}
+            </button>
+          </div>
+        </form>
+      )}
 
       {errorMessage && <p className="error-message">{errorMessage}</p>}
       {feedbackMessage && <p className="feedback-message">{feedbackMessage}</p>}
@@ -178,11 +225,13 @@ const AddComment = ({ productId }) => {
               <div className="comment-actions">
                 <UpdateComment
                   comment={item}
+                  user={user}
                   onUpdate={(updatedText, updatedRating) => handleUpdate(updatedText, item.id, updatedRating)}
                   setFeedbackMessage={setFeedbackMessage}
                 />
                 <DeleteComment
                   comment={item}
+                  user={user}
                   onDelete={() => handleDelete(item.id)}
                   setFeedbackMessage={setFeedbackMessage}
                 />

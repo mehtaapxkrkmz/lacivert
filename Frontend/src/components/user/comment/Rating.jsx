@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "/src/scss/comment/rating.scss";
 
-const Rating = ({ currentRating = 0, onStarClick }) => {
+const Rating = ({ currentRating = 0, onStarClick, user }) => {
   const [selectedRating, setSelectedRating] = useState(currentRating);
   const [hoveredStar, setHoveredStar] = useState(0);
 
@@ -31,14 +31,16 @@ const Rating = ({ currentRating = 0, onStarClick }) => {
           <span
             key={star}
             className={star <= (hoveredStar || selectedRating) ? "star filled" : "star"}
-            onClick={() => handleStarClick(star)}
-            onMouseEnter={() => handleMouseEnter(star)}
-            onMouseLeave={handleMouseLeave}
+            onClick={user ? () => handleStarClick(star) : undefined}
+            onMouseEnter={user ? () => handleMouseEnter(star) : undefined}
+            onMouseLeave={user ? handleMouseLeave : undefined}
+            style={!user ? { cursor: 'not-allowed', opacity: 0.5 } : {}}
           >
             ★
           </span>
         ))}
       </div>
+      {!user && <div className="rating-warning">Puan vermek için giriş yapmalısınız.</div>}
     </div>
   );
 };
