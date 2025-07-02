@@ -77,15 +77,41 @@ function Register() {
     <div className="register-page">
       <div className="register-container">
         <h1>LACİVERT'E KAYIT OL</h1>
+      
         <form onSubmit={handleSubmit}>
-          {/* form elemanları */}
           <label htmlFor="firstname">Ad</label>
           <input type="text" id="firstname" name="firstname" required />
-          {/* diğer inputlar... */}
-           <label htmlFor="password">Şifre</label>
+
+          <label htmlFor="lastname">Soyad</label>
+          <input type="text" id="lastname" name="lastname" required />
+
+          <label htmlFor="phone">Telefon</label>
+          <input type="tel" id="phone" name="phone" required />
+
+          <label htmlFor="gender">Cinsiyet</label>
+          <select id="gender" name="gender" required>
+            <option value="">Seçiniz</option>
+            <option value="Erkek">Erkek</option>
+            <option value="Kadın">Kadın</option>
+            <option value="Diğer">Diğer</option>
+          </select>
+
+          <label htmlFor="birthdate">Doğum Tarihi</label>
+          <input type="date" id="birthdate" name="birthdate" required />
+
+          <label htmlFor="address">Adres</label>
+          <input type="text" id="address" name="address" required />
+
+          <label htmlFor="email">E-posta</label>
+          <input type="email" id="email" name="email" required />
+
+          <label htmlFor="password">Şifre</label>
           <input type="password" id="password" name="password" required />
+
           <button type="submit">Kayıt Ol</button>
         </form>
+      
+       
 
         <p>
           Zaten hesabınız var mı? <Link to="/login">Giriş Yap</Link>
@@ -112,5 +138,7 @@ function Register() {
 }
 
 export default Register;
+
+
 
 
