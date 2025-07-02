@@ -7,6 +7,7 @@ function Register() {
   const navigate = useNavigate();
   const { login } = useAuth();
 
+  const backendURL = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, '');
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -23,7 +24,8 @@ function Register() {
     };
 
     try {
-      const response = await fetch('http://localhost:5000/api/users/register', {
+      const response = await fetch(`${backendURL}/api/users/register`, {
+
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -55,7 +57,8 @@ function Register() {
     }
 
     try {
-      const res = await fetch('http://localhost:5000/api/users/forgot-password', {
+   
+      const res = await fetch(`${backendURL}/api/users/forgot-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),

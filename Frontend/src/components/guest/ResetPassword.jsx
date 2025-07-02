@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function ResetPassword() {
+  const backendURL = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, '');
+
   const { token } = useParams();
   const navigate = useNavigate();
   const [password, setPassword] = useState('');
@@ -17,7 +19,7 @@ function ResetPassword() {
     }
 
     try {
-      const res = await axios.post(`http://localhost:5000/api/users/reset-password/${token}`, { password });
+      const res = await axios.post(`${backendURL}/api/users/reset-password/${token}`, { password });
       setMessage(res.data.message || 'Şifre başarıyla güncellendi.');
       setTimeout(() => navigate('/login'), 2000);
     } catch (err) {

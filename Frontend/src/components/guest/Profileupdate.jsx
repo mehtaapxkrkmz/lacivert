@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 function Profileupdate() {
+  const backendURL = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, '');
   const { token, user , login , logout} = useAuth(); // ✅ sadece context'ten al
   const navigate = useNavigate();
 
@@ -49,7 +50,7 @@ function Profileupdate() {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/users/${userId}`,
+       `${backendURL}/api/users/${userId}`,
         formData,
         {
           headers: {
