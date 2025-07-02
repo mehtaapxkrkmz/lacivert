@@ -1,4 +1,5 @@
 const Comment = require('../models/comment');
+// const redisClient = require('../utils/redisClient');
 
 const commentController = {
   // POST /api/comments - Yorum ekleme
@@ -23,6 +24,9 @@ const commentController = {
       });
 
       const savedComment = await newComment.save();
+      
+      // Yorum eklendikten sonra cache'i sil
+      // await redisClient.del(`product:${productId}:comments`);
       
       res.status(201).json({
         success: true,
@@ -91,9 +95,19 @@ const commentController = {
   getCommentsByProduct: async (req, res) => {
     try {
       const { productId } = req.params;
+      // const cacheKey = `product:${productId}:comments`;
+      // Önce Redis'te var mı bak
+      // const cached = await redisClient.get(cacheKey);
+      // if (cached) {
+      //   console.log("Redis cache'den geldi!");
+      //   return res.status(200).json({
+      //     success: true,
+      //     data: JSON.parse(cached)
+      //   });
+      // }
+      // Yoksa DB'den çek
       const comments = await Comment.find({ productId: parseInt(productId) })
                                     .sort({ date: -1 });
-      
       const formattedComments = comments.map(comment => ({
         id: comment._id,
         productId: comment.productId,
@@ -101,7 +115,8 @@ const commentController = {
         rating: comment.rating,
         date: comment.date.toLocaleDateString('tr-TR')
       }));
-
+      // Redis'e yaz (ör: 1 saatlik)
+      // await redisClient.set(cacheKey, JSON.stringify(formattedComments), { EX: 3600 });
       res.status(200).json({
         success: true,
         data: formattedComments
@@ -170,6 +185,11 @@ const commentController = {
       // Yorumu sil
       await Comment.findByIdAndDelete(id);
       
+      // Yorum silindikten sonra cache'i sil
+      // if (comment && comment.productId) {
+      //   await redisClient.del(`product:${comment.productId}:comments`);
+      // }
+      
       res.status(200).json({
         success: true,
         message: 'Yorum başarıyla silindi.',
@@ -192,7 +212,7 @@ const commentController = {
   updateComment: async (req, res) => {
     try {
       const { id } = req.params;
-      const { text,rating } = req.body;
+      const { text, rating } = req.body;
       
       console.log('Güncellenecek yorum ID:', id, 'Yeni metin:',text, 'Yeni rating:', rating); // Debug için
       
@@ -224,9 +244,14 @@ const commentController = {
       // Yorumu güncelle
       const updatedComment = await Comment.findByIdAndUpdate(
         id,
-        { text,rating},
-        { new: true} // Güncellenmiş versiyonu döndür
+        { text, rating },
+        { new: true }
       );
+
+      // Yorum güncellendikten sonra cache'i sil
+      // if (existingComment && existingComment.productId) {
+      //   await redisClient.del(`product:${existingComment.productId}:comments`);
+      // }
 
       res.status(200).json({
         success: true,
