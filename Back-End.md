@@ -1,13 +1,12 @@
 Domain Adresi: https://lacivert-backend.vercel.app/
 
-Docker: Kullanılmadı/Kullanıldı.
+Docker: Kullanıldı.
 
 REST API: Kullanıldı
 
-Redis:Kullanıldı/Kullanılmadı.
+Redis:Kullanıldı.
 
 RabbitMQ: Kullanıldı.
-
 
 CI/CD: Kullanıldı
 
