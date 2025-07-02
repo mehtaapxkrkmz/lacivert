@@ -26,7 +26,7 @@ const commentController = {
       const savedComment = await newComment.save();
       
       // Yorum eklendikten sonra cache'i sil
-      // await redisClient.del(`product:${productId}:comments`);
+      //  await redisClient.del(`product:${productId}:comments`);
       
       res.status(201).json({
         success: true,
@@ -95,16 +95,16 @@ const commentController = {
   getCommentsByProduct: async (req, res) => {
     try {
       const { productId } = req.params;
-      // const cacheKey = `product:${productId}:comments`;
+      const cacheKey = `product:${productId}:comments`;
       // Önce Redis'te var mı bak
-      // const cached = await redisClient.get(cacheKey);
+      //  const cached = await redisClient.get(cacheKey);
       // if (cached) {
       //   console.log("Redis cache'den geldi!");
       //   return res.status(200).json({
       //     success: true,
-      //     data: JSON.parse(cached)
-      //   });
-      // }
+      //      data: JSON.parse(cached)
+      //    });
+      //  }
       // Yoksa DB'den çek
       const comments = await Comment.find({ productId: parseInt(productId) })
                                     .sort({ date: -1 });
@@ -186,9 +186,9 @@ const commentController = {
       await Comment.findByIdAndDelete(id);
       
       // Yorum silindikten sonra cache'i sil
-      // if (comment && comment.productId) {
-      //   await redisClient.del(`product:${comment.productId}:comments`);
-      // }
+      //  if (comment && comment.productId) {
+      //    await redisClient.del(`product:${comment.productId}:comments`);
+      //  }
       
       res.status(200).json({
         success: true,
@@ -251,7 +251,7 @@ const commentController = {
       // Yorum güncellendikten sonra cache'i sil
       // if (existingComment && existingComment.productId) {
       //   await redisClient.del(`product:${existingComment.productId}:comments`);
-      // }
+      //  }
 
       res.status(200).json({
         success: true,
