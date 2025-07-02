@@ -1,7 +1,7 @@
-const { connectRabbitMQ } = require("./rabbitmq");
-connectRabbitMQ();
-const { startWorker } = require("./worker");
-startWorker();
+//const { connectRabbitMQ } = require("./rabbitmq");
+//connectRabbitMQ();
+//const { startWorker } = require("./worker");
+//startWorker();
 const express = require('express');
 const cors = require('cors');
 const {join} = require('path');
@@ -39,7 +39,7 @@ app.use(cors({
     'https://lacivert-proje2.vercel.app',
     'http://localhost:3000',
     'http://localhost:3001',
-    'http://127.0.0.1:3000', 
+    'http://127.0.0.1:3000',
     'http://127.0.0.1:3001',
     'http://localhost:5173',
     'http://127.0.0.1:5173'

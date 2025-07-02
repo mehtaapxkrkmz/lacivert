@@ -8,6 +8,7 @@ Redis:Kullanıldı/Kullanılmadı.
 
 RabbitMQ: Kullanıldı.
 
+
 CI/CD: Kullanıldı
 
 # Enis Özgür Backend #
