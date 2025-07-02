@@ -133,6 +133,7 @@ router.post('/forgot-password', async (req, res) => {
   user.resetTokenExpire = Date.now() + 1000 * 60 * 15; // 15 dk
   await user.save();
 
+  
   // Gmail ile mail gönder
 const transporter = nodemailer.createTransport({
   service: 'gmail',
