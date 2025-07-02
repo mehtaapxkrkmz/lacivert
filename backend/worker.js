@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport({
 });
 
 (async () => {
-  const connection = await amqp.connect("amqp://localhost");
+  const connection = await amqp.connect("amqps://mulurzrq:hvGvwgEtB4sLH8CvanLtmavzvcCfqc1Q@stingray.rmq.cloudamqp.com/mulurzrq");
   const channel = await connection.createChannel();
   await channel.assertQueue("welcome_email", { durable: true });
 

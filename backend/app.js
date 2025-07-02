@@ -1,7 +1,7 @@
-//const { connectRabbitMQ } = require("./rabbitmq");
-//connectRabbitMQ();
-//const { startWorker } = require("./worker");
-//startWorker();
+const { connectRabbitMQ } = require("./rabbitmq");
+connectRabbitMQ();
+const { startWorker } = require("./worker");
+startWorker();
 const express = require('express');
 const cors = require('cors');
 const {join} = require('path');
