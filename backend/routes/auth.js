@@ -143,7 +143,7 @@ const transporter = nodemailer.createTransport({
 });
 
 
-  const resetUrl = `https://lacivert-proje2.vercel.app/reset-password/${token}`;
+  const resetUrl = `http://lacivert.com/reset-password/${token}`;
   await transporter.sendMail({
     to: user.email,
     subject: 'Şifre Sıfırlama',
