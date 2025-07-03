@@ -34,14 +34,22 @@ function Product({ product, toggleFavorite }) {
     ? `${backendUrl}${product.images[hoveredImageIndex]}`
     : product.images?.[hoveredImageIndex] || "";
 
-  const handleFavoriteClick = (e) => {
+  const handleFavoriteClick = async (e) => {
     e.stopPropagation();
     if (!isAuthenticated) {
       alert("Favori eklemek için lütfen giriş yapınız!");
       navigate("/login");
       return;
     }
-    toggleFavorite(product._id);
+    const result = await toggleFavorite(product._id);
+    console.log("toggleFavorite sonucu:", result);
+  if (result === true) {
+    alert("Ürün favorilere eklendi.");
+  } else if (result === false) {
+    alert("Ürün favorilerden çıkarıldı.");
+  } else {
+    alert("Favori işlemi gerçekleştirilemedi.");
+  }
   };
 
   // Cloudinary URL kontrolü

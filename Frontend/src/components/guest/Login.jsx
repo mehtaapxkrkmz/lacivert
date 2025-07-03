@@ -57,7 +57,12 @@ const Login = () => {
       login(res.data.token, userWithToken);
 
       alert('Giriş başarılı!');
-      navigate('/');
+      if (userWithToken.role === 'admin') {
+      navigate('/admin');     // Admin paneli sayfası
+    } else {
+      navigate('/');          // Normal kullanıcı anasayfası
+    }
+      
     } catch (err) {
       alert(err.response?.data?.message || 'Giriş başarısız!');
     }

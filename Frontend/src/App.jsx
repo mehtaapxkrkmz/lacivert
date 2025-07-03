@@ -12,6 +12,7 @@ import Search from './components/guest/Layout/SearchPage'
 import Products from './components/guest/Layout/Products'
 import Home from './components/guest/Layout/Home'
 import Favori from './components/guest/Favori'
+import Favorites from './components/guest/Favorites';
 import Layout from './components/guest/Layout/Layout'
 import ProductFilter from './components/guest/ProductFilter';
 import Profile from './components/guest/Products/Profile';
@@ -58,7 +59,7 @@ const AppContent = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} /> {/* Ana sayfa */}
-          <Route path="kadin" element={<ProductFilter key="kadin" category="Kadın" />} />
+     <Route path="kadin" element={<ProductFilter key="kadin" category="Kadın" />} />
           <Route path="erkek" element={<ProductFilter key="erkek" category="Erkek" />} />
           <Route path="cocuk" element={<ProductFilter key="cocuk" category="Çocuk" />} />
           <Route path="/product/:id" element={<ProductDetails />} />
@@ -74,6 +75,7 @@ const AppContent = () => {
           <Route path='/search' element={<Search />} />
           <Route path='/cart' element={<CartPage />} />
           <Route path="/favori" element={<Favori favorites={favorites} toggleFavorite={toggleFavorite} />}/>
+          <Route path="/favorites" element={<Favorites />} />
         </Route>
         <Route path="/admin/*" element={<Admin />} />
       </Routes>
