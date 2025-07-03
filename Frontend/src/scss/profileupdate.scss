@@ -29,7 +29,9 @@
           margin-bottom: 0.3rem;
           color: #333;
         }
-  
+        input {
+        color: black; /* veya istediğin başka bir renk */
+        }
         input,
         select {
           padding: 0.75rem;
@@ -70,4 +72,5 @@
       }
     }
   }
+  
   

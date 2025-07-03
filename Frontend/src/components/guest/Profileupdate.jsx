@@ -19,7 +19,12 @@ function Profileupdate() {
     birthdate: '',
     gender: '',
   });
-
+   useEffect(() => {
+  if (!user || !token) {
+    alert('Bu sayfaya erişmek için giriş yapmanız gerekiyor.');
+    navigate('/login');
+  }
+}, [user, token, navigate]);
   useEffect(() => {
     if (user) {
       setFormData({
