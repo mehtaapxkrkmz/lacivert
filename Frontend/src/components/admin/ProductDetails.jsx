@@ -117,7 +117,11 @@ function ProductDetails() {
           </div>
           <div className="product-price">₺{product.price?.toLocaleString('tr-TR', { minimumFractionDigits: 2 })}</div>
           <div className="product-rating">
-            <span className="score">Puan: {product.score} / 5</span>
+            {typeof product.averageRating === 'number' && !isNaN(product.averageRating) ? (
+              <span className="score">Ortalama Puan: {product.averageRating} / 5</span>
+            ) : (
+              <span className="score">Puan: {product.score} / 5</span>
+            )}
           </div>
           <div className="product-description">
             <h3>Açıklama</h3>

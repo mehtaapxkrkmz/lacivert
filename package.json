@@ -2,6 +2,7 @@
   "dependencies": {
     "cloudinary": "^1.41.3",
     "multer-storage-cloudinary": "^4.0.0",
-    "react-select": "^5.10.1"
+    "react-select": "^5.10.1",
+    "redis": "^5.5.6"
   }
 }

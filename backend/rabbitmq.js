@@ -7,7 +7,7 @@ let connection;
 // RabbitMQ bağlantısını başlat
 async function connectRabbitMQ() {
   try {
-    connection = await amqp.connect("amqp://localhost");
+    connection = await amqp.connect("amqps://mulurzrq:hvGvwgEtB4sLH8CvanLtmavzvcCfqc1Q@stingray.rmq.cloudamqp.com/mulurzrq");
     channel = await connection.createChannel();
     console.log("✅ RabbitMQ bağlantısı başarılı.");
 

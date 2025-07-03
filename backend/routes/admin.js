@@ -25,5 +25,6 @@ router.get('/products/:id', adminController.getProductById);
 router.delete('/products/:id', adminController.deleteProduct);
 router.put('/products/:id/image/:imageIndex', upload.single('image'), adminController.updateProductImage);
 router.put('/products/:id', adminController.updateProduct);
+router.get('/dashboard', adminController.getDashboardStats);
 
 module.exports = router;

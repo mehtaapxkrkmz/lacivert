@@ -5,6 +5,7 @@ import '/src/scss/login.scss';
 import { useAuth } from '../../context/AuthContext';
 
 const Login = () => {
+  const backendURL = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, '');
   const { login } = useAuth(); // ✅ Context login fonksiyonu
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -29,7 +30,7 @@ const Login = () => {
 
     try {
       setLoadingReset(true);
-      await axios.post('http://localhost:5000/api/users/forgot-password', { email });
+      await axios.post(`${backendURL}/api/users/forgot-password`, { email });
       alert(`Şifre sıfırlama bağlantısı ${email} adresine gönderildi.`);
     } catch (error) {
       alert(error.response?.data?.message || 'Şifre sıfırlama işlemi başarısız oldu.');
@@ -45,7 +46,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/api/users/login', formData);
+      const res = await axios.post(`${backendURL}/api/users/login`, formData);
 
       const userWithToken = {
         ...res.data.user,
@@ -56,7 +57,12 @@ const Login = () => {
       login(res.data.token, userWithToken);
 
       alert('Giriş başarılı!');
-      navigate('/');
+      if (userWithToken.role === 'admin') {
+      navigate('/admin');     // Admin paneli sayfası
+    } else {
+      navigate('/');          // Normal kullanıcı anasayfası
+    }
+      
     } catch (err) {
       alert(err.response?.data?.message || 'Giriş başarısız!');
     }

@@ -73,4 +73,33 @@
         }
       }
     }
+     // --- Responsive kısım ---
+  @media (max-width: 480px) {
+    padding: 1rem 0.5rem;
+
+    .register-container {
+      padding: 1rem;
+      max-width: 100%;
+
+      label,
+      input,
+      select,
+      button,
+      p,
+      a {
+        font-size: 1rem;
+      }
+
+      input,
+      select,
+      button {
+        padding: 0.6rem;
+      }
+
+      button {
+        font-size: 1.05rem;
+      }
+    }
   }
+}
+  

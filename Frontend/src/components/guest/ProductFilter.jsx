@@ -5,17 +5,15 @@ import { useNavigate, Link, useLocation } from 'react-router-dom';
 import Product from './Layout/Product';
 
 const ProductFilter = ({ category }) => {
+    const categoryMap = {
+        "Kadın": "woman",
+        "Erkek": "man",
+        "Çocuk": "child"
+    };
     const [activeFilters, setActiveFilters] = useState({});
-    const location = useLocation();
-    const [selectedOptions, setSelectedOptions] = useState(() => {
-        if (location.state && location.state.initialFilter) {
-            return { ...location.state.initialFilter };
-        } else if (category) {
-            return { kategori: { [category]: true } };
-        } else {
-            return {};
-        }
-    });
+    const [selectedOptions, setSelectedOptions] = useState(
+        category ? { kategori: { [categoryMap[category] || category]: true } } : {}
+    );
     const [sortOrder, setSortOrder] = useState(null);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -23,12 +21,7 @@ const ProductFilter = ({ category }) => {
     const dropdownRef2 = useRef(null);
     const backendUrl = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, ''); // Backend URL'ini environment variable'dan al
     const navigate = useNavigate();
-
-    const categoryMap = {
-        "Kadın": "woman",
-        "Erkek": "man",
-        "Çocuk": "child"
-    };
+    const [resetFlag, setResetFlag] = useState(false);
 
     // Filter options for each category
     const filterOptions = {
@@ -109,19 +102,33 @@ const ProductFilter = ({ category }) => {
         fetchFilteredProducts();
     }, [selectedOptions, sortOrder]);
 
+    // Kategori değiştiğinde ve selectedOptions.kategori güncellendiğinde ürünleri hemen getir
+    useEffect(() => {
+        if (
+            category &&
+            selectedOptions.kategori &&
+            selectedOptions.kategori[categoryMap[category] || category]
+        ) {
+            fetchFilteredProducts();
+        }
+    }, [category, selectedOptions.kategori]);
+
     // Kategori değiştiğinde selectedOptions'ı güncelle
     useEffect(() => {
         if (category && !(location.state && location.state.initialFilter)) {
             setSelectedOptions({ kategori: { [categoryMap[category] || category]: true } });
+            setActiveFilters({});
+            setSortOrder(null);
+            setResetFlag(true);
         }
     }, [category]);
 
-    // Update selectedOptions when a new initialFilter is received via navigation
     useEffect(() => {
-        if (location.state && location.state.initialFilter) {
-            setSelectedOptions({ ...location.state.initialFilter });
+        if (resetFlag) {
+            fetchFilteredProducts();
+            setResetFlag(false);
         }
-    }, [location.state && location.state.initialFilter]);
+    }, [selectedOptions, resetFlag]);
 
     // Toggle dropdown visibility
     const toggleDropdown = (filterId) => {

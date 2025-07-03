@@ -2,24 +2,27 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 function ForgotPassword() {
+  const backendURL = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, '');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
-  e.preventDefault(); // Önce formun varsayılan davranışını engelle
+    e.preventDefault();
 
-      // Sonra e-posta doğrulamasını yap
-  if (!email || !/\S+@\S+\.\S+/.test(email)) {
-    setMessage('Geçerli bir e-posta adresi giriniz.');
-    return;
-  }
+    if (!email || !/\S+@\S+\.\S+/.test(email)) {
+      setMessage('Geçerli bir e-posta adresi giriniz.');
+      return;
+    }
+
     try {
-      
-
-      await axios.post('http://localhost:5000/api/forgot-password', { email });
+      setLoading(true);
+      await axios.post(`${backendURL}/api/users/forgot-password`, { email });
       setMessage('E-posta adresinize şifre sıfırlama bağlantısı gönderildi.');
     } catch (err) {
-      setMessage('Bu e-posta ile kayıtlı kullanıcı bulunamadı.');
+      setMessage(err.response?.data?.message || 'Bu e-posta ile kayıtlı kullanıcı bulunamadı.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -33,9 +36,15 @@ function ForgotPassword() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="w-full p-2 border mb-2"
+          disabled={loading}
+          required
         />
-        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
-          Gönder
+        <button
+          type="submit"
+          className="bg-blue-600 text-white px-4 py-2 rounded"
+          disabled={loading}
+        >
+          {loading ? 'Gönderiliyor...' : 'Gönder'}
         </button>
       </form>
       {message && <p className="mt-2 text-sm">{message}</p>}
@@ -44,3 +53,4 @@ function ForgotPassword() {
 }
 
 export default ForgotPassword;
+

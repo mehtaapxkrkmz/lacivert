@@ -15,7 +15,7 @@ function Product({ product }) {
     score: 4.5
   };
 
-  const { id, name, images, score } = product || defaultProduct;
+  const { id, name, images, score, averageRating } = product || defaultProduct;
 
   //Yıldızları render etme
 const renderStars = (score) => {
@@ -93,8 +93,8 @@ const renderStars = (score) => {
       <div className="product-info">
         <h3 className="product-name">{name}</h3>
         <div className="product-rating">
-          {renderStars(score)}
-          <span className="score-text">{score} / 5</span>
+          {renderStars(averageRating !== undefined ? averageRating : score)}
+          <span className="score-text">{averageRating !== undefined ? averageRating : score} / 5</span>
         </div>
       </div>
     </div>

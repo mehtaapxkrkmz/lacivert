@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '/src/scss/comment/deleteComment.scss';
 
-const DeleteComment = ({ comment, onDelete, setFeedbackMessage }) => {
+const DeleteComment = ({ comment, onDelete, setFeedbackMessage, user }) => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -11,12 +11,13 @@ const DeleteComment = ({ comment, onDelete, setFeedbackMessage }) => {
     setIsDeleting(true);
 
     try {
-      console.log('Silme isteği gönderiliyor:', `${API_URL}/api/comments/${comment.id}`);
+      console.log('Silme isteği gönderiliyor:', `${API_URL}/api/comments/${comment.id || comment._id}`);
 
-      const response = await fetch(`${API_URL}/api/comments/${comment.id}`, {
+      const response = await fetch(`${API_URL}/api/comments/${comment.id || comment._id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
+          ...(user && user.token ? { 'Authorization': 'Bearer ' + user.token } : {})
         },
         credentials: 'include',
       });
@@ -35,8 +36,9 @@ const DeleteComment = ({ comment, onDelete, setFeedbackMessage }) => {
 
       if (result.success) {
         setFeedbackMessage('Yorumunuz başarıyla silindi.');
-        const deletedId = result.data?.deletedCommentId || comment.id;
+        const deletedId = result.data?.deletedCommentId || comment.id || comment._id;
         onDelete(deletedId);
+        alert('Yorumunuz başarıyla silindi!');
       } else {
         throw new Error(result.message || 'Silme işlemi başarısız');
       }
@@ -44,6 +46,7 @@ const DeleteComment = ({ comment, onDelete, setFeedbackMessage }) => {
     } catch (error) {
       console.error('Yorum silme hatası:', error);
       setFeedbackMessage(`Yorumunuz silinemedi: ${error.message}`);
+      alert('Yorum silinirken hata oluştu!');
     } finally {
       setIsDeleting(false);
       setShowConfirm(false);
@@ -56,6 +59,8 @@ const DeleteComment = ({ comment, onDelete, setFeedbackMessage }) => {
     setFeedbackMessage('Yorum silme işlemi iptal edildi.');
     setTimeout(() => setFeedbackMessage(''), 3000);
   };
+
+  if (!user) return null;
 
   return (
     <div className="delete-comment">

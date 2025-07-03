@@ -55,7 +55,7 @@ const Header = ({ cartItemCount }) => {
                                 <button type="submit"><CiSearch /></button>
                             </NavLink>
                         </div>
-                        <NavLink to="/favori">
+                        <NavLink to="/favorites">
                             <div className="favorites-icon">
                                 <IoMdHeartEmpty />
                             </div>

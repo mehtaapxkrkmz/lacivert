@@ -7,6 +7,7 @@ function Register() {
   const navigate = useNavigate();
   const { login } = useAuth();
 
+  const backendURL = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, '');
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -23,7 +24,8 @@ function Register() {
     };
 
     try {
-      const response = await fetch('http://localhost:5000/api/users/register', {
+      const response = await fetch(`${backendURL}/api/users/register`, {
+
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -55,7 +57,8 @@ function Register() {
     }
 
     try {
-      const res = await fetch('http://localhost:5000/api/users/forgot-password', {
+   
+      const res = await fetch(`${backendURL}/api/users/forgot-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
@@ -77,15 +80,41 @@ function Register() {
     <div className="register-page">
       <div className="register-container">
         <h1>LACİVERT'E KAYIT OL</h1>
+      
         <form onSubmit={handleSubmit}>
-          {/* form elemanları */}
           <label htmlFor="firstname">Ad</label>
           <input type="text" id="firstname" name="firstname" required />
-          {/* diğer inputlar... */}
-           <label htmlFor="password">Şifre</label>
+
+          <label htmlFor="lastname">Soyad</label>
+          <input type="text" id="lastname" name="lastname" required />
+
+          <label htmlFor="phone">Telefon</label>
+          <input type="tel" id="phone" name="phone" required />
+
+          <label htmlFor="gender">Cinsiyet</label>
+          <select id="gender" name="gender" required>
+            <option value="">Seçiniz</option>
+            <option value="Erkek">Erkek</option>
+            <option value="Kadın">Kadın</option>
+            <option value="Diğer">Diğer</option>
+          </select>
+
+          <label htmlFor="birthdate">Doğum Tarihi</label>
+          <input type="date" id="birthdate" name="birthdate" required />
+
+          <label htmlFor="address">Adres</label>
+          <input type="text" id="address" name="address" required />
+
+          <label htmlFor="email">E-posta</label>
+          <input type="email" id="email" name="email" required />
+
+          <label htmlFor="password">Şifre</label>
           <input type="password" id="password" name="password" required />
+
           <button type="submit">Kayıt Ol</button>
         </form>
+      
+       
 
         <p>
           Zaten hesabınız var mı? <Link to="/login">Giriş Yap</Link>
@@ -112,5 +141,7 @@ function Register() {
 }
 
 export default Register;
+
+
 
 

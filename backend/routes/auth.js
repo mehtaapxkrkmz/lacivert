@@ -11,7 +11,7 @@ const crypto = require('crypto');
 
 const { sendToQueue } = require('../rabbitmq');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'gizli_jwt_anahtari';
+const JWT_SECRET = process.env.JWT_SECRET || '';
 
 // POST /api/login
 router.post('/login', async (req, res) => {
@@ -29,7 +29,7 @@ router.post('/login', async (req, res) => {
     }
 
     // JWT oluştur
-    const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1d' });
+    const token = jwt.sign({ id: user._id , role: user.role }, JWT_SECRET, { expiresIn: '1d' });
 
     res.json({
       message: 'Giriş başarılı',
@@ -39,6 +39,7 @@ router.post('/login', async (req, res) => {
         firstname: user.firstname,
         lastname: user.lastname,
         email: user.email,
+        role: user.role,
       },
     });
   } catch (err) {
@@ -57,11 +58,11 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ message: 'Bu e-posta adresi zaten kayıtlı.' });
     }
 
-    const newUser = new User({ firstname, lastname, phone, gender, birthdate, address, email, password });
+    const newUser = new User({ firstname, lastname, phone, gender, birthdate, address, email, password ,role: 'user' });
     await newUser.save();
 
     // Kayıttan sonra token oluşturup dönebiliriz
-    const token = jwt.sign({ id: newUser._id }, JWT_SECRET, { expiresIn: '1d' });
+    const token = jwt.sign({ id: newUser._id , role: newUser.role || 'user' }, JWT_SECRET, { expiresIn: '1d' });
     await sendToQueue({
       email: newUser.email,
       firstname: newUser.firstname
@@ -75,6 +76,7 @@ router.post('/register', async (req, res) => {
         firstname: newUser.firstname,
         lastname: newUser.lastname,
         email: newUser.email,
+        role: newUser.role,
       },
     });
   } catch (err) {
@@ -143,8 +145,10 @@ const transporter = nodemailer.createTransport({
 });
 
 
-  const resetUrl = `http://localhost:3000/reset-password/${token}`;
+  
+  const resetUrl = `https://lacivert-proje2.vercel.app/reset-password/${token}`;
 
+  
   await transporter.sendMail({
     to: user.email,
     subject: 'Şifre Sıfırlama',

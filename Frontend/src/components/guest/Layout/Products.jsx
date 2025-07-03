@@ -70,6 +70,7 @@ function Products() {
         : [...favorites, productId];
 
       setFavorites(updatedFavorites);
+      return !isFavorite;
     } catch (err) {
       alert('Favori işlemi başarısız.');
       console.error(err);
