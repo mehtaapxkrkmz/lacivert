@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const { promisify } = require('util');
 const unlinkAsync = promisify(fs.unlink);
+const Comment = require('../models/comment');
 
 // Controller fonksiyonları:
 
@@ -62,7 +63,18 @@ exports.addProduct = async (req, res) => {
 exports.getProducts = async (req, res) => {
     try {
         const products = await Product.find();
-        res.status(200).json(products);
+        // Her ürün için ortalama puan hesapla
+        const productsWithAvg = await Promise.all(products.map(async (product) => {
+            const comments = await Comment.find({ productId: product._id });
+            let averageRating = 0;
+            if (comments.length > 0) {
+                averageRating = comments.reduce((sum, c) => sum + (c.rating || 0), 0) / comments.length;
+                averageRating = Math.round(averageRating * 100) / 100; // 2 ondalık
+            }
+            // Ürün nesnesine averageRating ekle
+            return { ...product.toObject(), averageRating };
+        }));
+        res.status(200).json(productsWithAvg);
     } catch (err) {
         console.error('Ürünleri alma hatası:', err);
         res.status(500).json({ message: 'Ürünler getirilirken bir hata oluştu.', error: err.message });
@@ -76,7 +88,14 @@ exports.getProductById = async (req, res) => {
         if (!product) {
             return res.status(404).json({ message: 'Ürün bulunamadı.' });
         }
-        res.status(200).json(product);
+        // Ortalama puan hesapla
+        const comments = await Comment.find({ productId: product._id });
+        let averageRating = 0;
+        if (comments.length > 0) {
+            averageRating = comments.reduce((sum, c) => sum + (c.rating || 0), 0) / comments.length;
+            averageRating = Math.round(averageRating * 100) / 100;
+        }
+        res.status(200).json({ ...product.toObject(), averageRating });
     } catch (err) {
         console.error('Ürün getirme hatası:', err);
         res.status(500).json({ message: 'Ürün getirilirken bir hata oluştu.', error: err.message });

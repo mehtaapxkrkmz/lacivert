@@ -1,4 +1,5 @@
 const Comment = require('../models/comment');
+const mongoose = require('mongoose');
 // const redisClient = require('../utils/redisClient');
 
 const commentController = {
@@ -17,7 +18,7 @@ const commentController = {
       }
 
       const newComment = new Comment({
-        productId: parseInt(productId), // Number'a çevir
+        productId: productId, // Doğrudan string (ObjectId) olarak bırak
         text: text.trim(),
         rating: rating || 0,
         date: new Date(),
@@ -25,6 +26,8 @@ const commentController = {
       });
 
       const savedComment = await newComment.save();
+      // userEmail için populate
+      const populatedComment = await Comment.findById(savedComment._id).populate('user', 'email');
       
       // Yorum eklendikten sonra cache'i sil
       //  await redisClient.del(`product:${productId}:comments`);
@@ -32,11 +35,13 @@ const commentController = {
       res.status(201).json({
         success: true,
         data: {
-          id: savedComment._id,
-          productId: savedComment.productId,
-          text: savedComment.text,
-          rating: savedComment.rating,
-          date: savedComment.date.toLocaleDateString('tr-TR')
+          id: populatedComment._id,
+          productId: populatedComment.productId,
+          text: populatedComment.text,
+          rating: populatedComment.rating,
+          date: populatedComment.date.toLocaleDateString('tr-TR'),
+          user: populatedComment.user?._id,
+          userEmail: populatedComment.user?.email
         }
       });
     } catch (error) {
@@ -95,21 +100,15 @@ const commentController = {
   // GET /api/comments/product/:productId - Belirli ürünün yorumlarını getir
   getCommentsByProduct: async (req, res) => {
     try {
-      const { productId } = req.params;
-      const cacheKey = `product:${productId}:comments`;
-      // Önce Redis'te var mı bak
-      //  const cached = await redisClient.get(cacheKey);
-      // if (cached) {
-      //   console.log("Redis cache'den geldi!");
-      //   return res.status(200).json({
-      //     success: true,
-      //      data: JSON.parse(cached)
-      //    });
-      //  }
-      // Yoksa DB'den çek
-      const comments = await Comment.find({ productId: parseInt(productId) })
-                                    .sort({ date: -1 })
-                                    .populate('user', 'email');
+      if (!mongoose.Types.ObjectId.isValid(req.params.productId)) {
+        return res.status(400).json({ message: 'Geçersiz ürün ID' });
+      }
+      // Sadece productId'si geçerli ObjectId olan yorumları getir
+      const comments = await Comment.find({
+        productId: req.params.productId,
+        user: { $exists: true, $ne: null }
+      }).sort({ date: -1 }).populate('user', 'email');
+      
       const formattedComments = comments.map(comment => ({
         id: comment._id,
         productId: comment.productId,
@@ -119,19 +118,10 @@ const commentController = {
         user: comment.user?._id,
         userEmail: comment.user?.email
       }));
-      // Redis'e yaz (ör: 1 saatlik)
-      // await redisClient.set(cacheKey, JSON.stringify(formattedComments), { EX: 3600 });
-      res.status(200).json({
-        success: true,
-        data: formattedComments
-      });
+      res.status(200).json({ success: true, data: formattedComments });
     } catch (error) {
       console.error('Yorumları getirme hatası:', error);
-      res.status(500).json({ 
-        success: false,
-        message: 'Yorumlar getirilirken hata oluştu',
-        error: error.message 
-      });
+      res.status(500).json({ message: 'Yorumlar getirilirken hata oluştu' });
     }
   },
 
@@ -266,6 +256,9 @@ const commentController = {
         { new: true }
       );
 
+      // userEmail için populate
+      const populatedComment = await Comment.findById(updatedComment._id).populate('user', 'email');
+
       // Yorum güncellendikten sonra cache'i sil
       // if (existingComment && existingComment.productId) {
       //   await redisClient.del(`product:${existingComment.productId}:comments`);
@@ -275,11 +268,13 @@ const commentController = {
         success: true,
         message: 'Yorum başarıyla güncellendi.',
         data: {
-          id: updatedComment._id,
-          productId: updatedComment.productId,
-          text: updatedComment.text,
-          rating: updatedComment.rating,
-          date: updatedComment.date.toLocaleDateString('tr-TR')
+          id: populatedComment._id,
+          productId: populatedComment.productId,
+          text: populatedComment.text,
+          rating: populatedComment.rating,
+          date: populatedComment.date.toLocaleDateString('tr-TR'),
+          user: populatedComment.user?._id,
+          userEmail: populatedComment.user?.email
         }
       });
       

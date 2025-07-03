@@ -145,6 +145,11 @@ function ProductDetails() {
             <span className="discounted-price">{product.price}TL</span>
           </p>
           <p className="product-code">Ürün Kodu: {product._id}</p>
+          {typeof product.averageRating === 'number' && !isNaN(product.averageRating) ? (
+            <p className="product-rating">Ortalama Puan: {product.averageRating} / 5</p>
+          ) : (
+            <p className="product-rating">Henüz puanlanmamış</p>
+          )}
           <br />
           <div className="size-quantities">
             <p>small (S): {product.sizes?.S || 0} adet</p>
@@ -211,7 +216,7 @@ function ProductDetails() {
         </div>
       </div>
       <div className="comment-section">
-        <AddComment productId={id} />
+        <AddComment productId={product._id} />
       </div>
     </div>
   );

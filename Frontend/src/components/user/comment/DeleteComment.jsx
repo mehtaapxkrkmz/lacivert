@@ -11,9 +11,9 @@ const DeleteComment = ({ comment, onDelete, setFeedbackMessage, user }) => {
     setIsDeleting(true);
 
     try {
-      console.log('Silme isteği gönderiliyor:', `${API_URL}/api/comments/${comment.id}`);
+      console.log('Silme isteği gönderiliyor:', `${API_URL}/api/comments/${comment.id || comment._id}`);
 
-      const response = await fetch(`${API_URL}/api/comments/${comment.id}`, {
+      const response = await fetch(`${API_URL}/api/comments/${comment.id || comment._id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ const DeleteComment = ({ comment, onDelete, setFeedbackMessage, user }) => {
 
       if (result.success) {
         setFeedbackMessage('Yorumunuz başarıyla silindi.');
-        const deletedId = result.data?.deletedCommentId || comment.id;
+        const deletedId = result.data?.deletedCommentId || comment.id || comment._id;
         onDelete(deletedId);
         alert('Yorumunuz başarıyla silindi!');
       } else {

@@ -228,7 +228,7 @@ const AddComment = ({ productId }) => {
       {comments.length > 0 ? (
         <ul className="comments-list">
           {comments.map((item) => (
-            <li key={item.id} className="comment-item">
+            <li key={item.id || item._id} className="comment-item">
               <div className="comment-content">
                 {item.userEmail && (
                   <span className="comment-user">{item.userEmail}</span>
