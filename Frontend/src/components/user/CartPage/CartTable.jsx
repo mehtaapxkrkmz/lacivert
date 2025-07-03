@@ -40,7 +40,8 @@ const CartTable = ({ items, removeItem, updateQuantity, backendURL }) => {
         <table className="cart-table">
             <thead>
                 <tr>
-                    <th colSpan="2">Ürün</th>
+                    <th>Ürün</th>
+                    <th> </th>
                     <th>Birim Fiyat</th>
                     <th>Adet</th>
                     <th>Toplamı</th>

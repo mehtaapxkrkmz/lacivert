@@ -1,14 +1,21 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '/src/scss/productFilter.scss';
 import Products from './Layout/Products';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import Product from './Layout/Product';
 
 const ProductFilter = ({ category }) => {
     const [activeFilters, setActiveFilters] = useState({});
-    const [selectedOptions, setSelectedOptions] = useState(
-        category ? { kategori: { [category]: true } } : {}
-    );
+    const location = useLocation();
+    const [selectedOptions, setSelectedOptions] = useState(() => {
+        if (location.state && location.state.initialFilter) {
+            return { ...location.state.initialFilter };
+        } else if (category) {
+            return { kategori: { [category]: true } };
+        } else {
+            return {};
+        }
+    });
     const [sortOrder, setSortOrder] = useState(null);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -86,6 +93,8 @@ const ProductFilter = ({ category }) => {
             }
 
             const data = await response.json();
+            console.log("filtersToSend", filtersToSend);
+            console.log("filtre data", data);
             setFilteredProducts(data);
         } catch (error) {
             console.error('Filtreleme hatası:', error);
@@ -102,10 +111,17 @@ const ProductFilter = ({ category }) => {
 
     // Kategori değiştiğinde selectedOptions'ı güncelle
     useEffect(() => {
-        if (category) {
+        if (category && !(location.state && location.state.initialFilter)) {
             setSelectedOptions({ kategori: { [categoryMap[category] || category]: true } });
         }
     }, [category]);
+
+    // Update selectedOptions when a new initialFilter is received via navigation
+    useEffect(() => {
+        if (location.state && location.state.initialFilter) {
+            setSelectedOptions({ ...location.state.initialFilter });
+        }
+    }, [location.state && location.state.initialFilter]);
 
     // Toggle dropdown visibility
     const toggleDropdown = (filterId) => {
@@ -146,7 +162,7 @@ const ProductFilter = ({ category }) => {
         const handleClickOutside = (event) => {
             const isOutsideDropdown1 = dropdownRef1.current && !dropdownRef1.current.contains(event.target);
             const isOutsideDropdown2 = dropdownRef2.current && !dropdownRef2.current.contains(event.target);
-            
+
             if (isOutsideDropdown1 && isOutsideDropdown2) {
                 setActiveFilters({});
             }
@@ -159,14 +175,14 @@ const ProductFilter = ({ category }) => {
     }, []);
 
     useEffect(() => {
-      // Eğer kategori filtresi yoksa veya hiçbiri seçili değilse, anasayfaya yönlendir
-      if (
-        category &&
-        (!selectedOptions.kategori ||
-          Object.values(selectedOptions.kategori).every(v => !v))
-      ) {
-        navigate('/');
-      }
+        // Eğer kategori filtresi yoksa veya hiçbiri seçili değilse, anasayfaya yönlendir
+        if (
+            category &&
+            (!selectedOptions.kategori ||
+                Object.values(selectedOptions.kategori).every(v => !v))
+        ) {
+            navigate('/');
+        }
     }, [selectedOptions.kategori, category, navigate]);
 
     return (
@@ -187,15 +203,15 @@ const ProductFilter = ({ category }) => {
                             onClick={() => toggleDropdown(filter.id)}
                         >
                             {filter.label === "Düğme/Fermuar" ? (
-                              <>
-                                <span className="ellipsis-label">{filter.label}</span>
-                                <span className="arrow-icon">▼</span>
-                              </>
+                                <>
+                                    <span className="ellipsis-label">{filter.label}</span>
+                                    <span className="arrow-icon">▼</span>
+                                </>
                             ) : (
-                              <>
-                                {filter.label}
-                                <span className="arrow-icon">▼</span>
-                              </>
+                                <>
+                                    {filter.label}
+                                    <span className="arrow-icon">▼</span>
+                                </>
                             )}
                         </button>
                         {activeFilters[filter.id] && (
@@ -254,15 +270,15 @@ const ProductFilter = ({ category }) => {
                             onClick={() => toggleDropdown(filter.id)}
                         >
                             {filter.label === "Düğme/Fermuar" ? (
-                              <>
-                                <span className="ellipsis-label">{filter.label}</span>
-                                <span className="arrow-icon">▼</span>
-                              </>
+                                <>
+                                    <span className="ellipsis-label">{filter.label}</span>
+                                    <span className="arrow-icon">▼</span>
+                                </>
                             ) : (
-                              <>
-                                {filter.label}
-                                <span className="arrow-icon">▼</span>
-                              </>
+                                <>
+                                    {filter.label}
+                                    <span className="arrow-icon">▼</span>
+                                </>
                             )}
                         </button>
                         {activeFilters[filter.id] && (
@@ -284,7 +300,7 @@ const ProductFilter = ({ category }) => {
             </div>
 
             <div className="filter-divider"></div>
-            
+
             {/* Seçili filtreler kutucukları */}
             <div className="selected-filters-row">
                 {Object.entries(selectedOptions).map(([filterId, options]) =>
@@ -317,21 +333,21 @@ const ProductFilter = ({ category }) => {
                         isSelected && !(filterId === 'kategori' && option === categoryMap[category])
                     )
                 ) && (
-                    <a
-                        className="clear-all-filters"
-                        href="#"
-                        onClick={e => {
-                            e.preventDefault();
-                            setSelectedOptions({
-                                kategori: { [categoryMap[category]]: true },
-                                productType: {},
-                            });
-                            setSortOrder(null);
-                        }}
-                    >
-                        Tümünü Sil
-                    </a>
-                )}
+                        <a
+                            className="clear-all-filters"
+                            href="#"
+                            onClick={e => {
+                                e.preventDefault();
+                                setSelectedOptions({
+                                    kategori: { [categoryMap[category]]: true },
+                                    productType: {},
+                                });
+                                setSortOrder(null);
+                            }}
+                        >
+                            Tümünü Sil
+                        </a>
+                    )}
             </div>
 
             {/* Filtrelenmiş ürünleri göster */}

@@ -37,14 +37,14 @@ const CartItem = ({ item, onRemove, onQuantityChange, backendURL }) => {
                                 : `${backendURL}${item.product.images[0]}`
                         }
                         alt={item.product.name}
-                        style={{ width: '80px', height: '80px', objectFit: 'cover' }}
+                        style={{ width: '90px', height: '134.58px', objectFit: 'cover' }}
                     />
                 )}
             </td>
             <td
                 className="name"
                 onClick={handleProductClick}
-                style={{ cursor: 'pointer' }}
+                style={{ cursor: 'pointer', textAlign: 'left' }}
             >
                 {item.product.name}
                 {item.size && (
@@ -73,6 +73,9 @@ const CartItem = ({ item, onRemove, onQuantityChange, backendURL }) => {
             <td>{(item.product.price * item.quantity).toFixed(2)} TL</td>
             <td>
                 <button onClick={handleRemove}>Sil</button>
+            </td>
+            <td>
+                
             </td>
         </tr>
     );

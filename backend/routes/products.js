@@ -28,10 +28,10 @@ router.get('/category/:category', async (req, res) => {
 router.post('/filter', async (req, res) => {
     try {
         const { filters, sortOrder } = req.body;
-        
+
         // Filtre objesi oluştur
         let filterQuery = {};
-        
+
         if (filters) {
             // Kategori filtresi
             if (filters.kategori && Object.keys(filters.kategori).length > 0) {
@@ -40,7 +40,7 @@ router.post('/filter', async (req, res) => {
                     filterQuery.category = { $in: selectedCategories.map(cat => cat.toLowerCase()) };
                 }
             }
-            
+
             // Fiyat filtresi
             if (filters.fiyat && Object.keys(filters.fiyat).length > 0) {
                 const selectedPrices = Object.keys(filters.fiyat).filter(key => filters.fiyat[key]);
@@ -62,7 +62,7 @@ router.post('/filter', async (req, res) => {
                     filterQuery.price = { $or: priceRanges };
                 }
             }
-            
+
             // Tema filtresi
             if (filters.tema && Object.keys(filters.tema).length > 0) {
                 const selectedThemes = Object.keys(filters.tema).filter(key => filters.tema[key]);
@@ -70,7 +70,7 @@ router.post('/filter', async (req, res) => {
                     filterQuery.theme = { $in: selectedThemes };
                 }
             }
-            
+
             // Fit/Kalıp filtresi
             if (filters.fitKalip && Object.keys(filters.fitKalip).length > 0) {
                 const selectedFits = Object.keys(filters.fitKalip).filter(key => filters.fitKalip[key]);
@@ -78,7 +78,7 @@ router.post('/filter', async (req, res) => {
                     filterQuery.fit = { $in: selectedFits };
                 }
             }
-            
+
             // Renk filtresi
             if (filters.renk && Object.keys(filters.renk).length > 0) {
                 const selectedColors = Object.keys(filters.renk).filter(key => filters.renk[key]);
@@ -86,7 +86,7 @@ router.post('/filter', async (req, res) => {
                     filterQuery.color = { $in: selectedColors };
                 }
             }
-            
+
             // Bel filtresi
             if (filters.bel && Object.keys(filters.bel).length > 0) {
                 const selectedWaists = Object.keys(filters.bel).filter(key => filters.bel[key]);
@@ -94,7 +94,7 @@ router.post('/filter', async (req, res) => {
                     filterQuery.waist = { $in: selectedWaists };
                 }
             }
-            
+
             // Paça filtresi
             if (filters.paça && Object.keys(filters.paça).length > 0) {
                 const selectedLegs = Object.keys(filters.paça).filter(key => filters.paça[key]);
@@ -102,7 +102,7 @@ router.post('/filter', async (req, res) => {
                     filterQuery.leg = { $in: selectedLegs };
                 }
             }
-            
+
             // Boy filtresi
             if (filters.boy && Object.keys(filters.boy).length > 0) {
                 const selectedLengths = Object.keys(filters.boy).filter(key => filters.boy[key]);
@@ -110,7 +110,7 @@ router.post('/filter', async (req, res) => {
                     filterQuery.length = { $in: selectedLengths };
                 }
             }
-            
+
             // Kapüşon filtresi
             if (filters.kapüşon && Object.keys(filters.kapüşon).length > 0) {
                 const selectedHoods = Object.keys(filters.kapüşon).filter(key => filters.kapüşon[key]);
@@ -118,7 +118,7 @@ router.post('/filter', async (req, res) => {
                     filterQuery.hood = { $in: selectedHoods };
                 }
             }
-            
+
             // Yaka filtresi
             if (filters.yaka && Object.keys(filters.yaka).length > 0) {
                 const selectedCollars = Object.keys(filters.yaka).filter(key => filters.yaka[key]);
@@ -126,7 +126,7 @@ router.post('/filter', async (req, res) => {
                     filterQuery.collar = { $in: selectedCollars };
                 }
             }
-            
+
             // Düğme/Fermuar filtresi
             if (filters.dugme && Object.keys(filters.dugme).length > 0) {
                 const selectedClosures = Object.keys(filters.dugme).filter(key => filters.dugme[key]);
@@ -134,7 +134,7 @@ router.post('/filter', async (req, res) => {
                     filterQuery.closure = { $in: selectedClosures };
                 }
             }
-            
+
             // Kol filtresi
             if (filters.kol && Object.keys(filters.kol).length > 0) {
                 const selectedSleeves = Object.keys(filters.kol).filter(key => filters.kol[key]);
@@ -142,7 +142,7 @@ router.post('/filter', async (req, res) => {
                     filterQuery.sleeve = { $in: selectedSleeves };
                 }
             }
-            
+
             // Alt kategori (productType) filtresi
             if (filters.productType && Object.keys(filters.productType).length > 0) {
                 const selectedTypes = Object.keys(filters.productType).filter(key => filters.productType[key]);
@@ -151,7 +151,7 @@ router.post('/filter', async (req, res) => {
                 }
             }
         }
-        
+
         // Sıralama
         let sortQuery = {};
         if (sortOrder) {
@@ -166,10 +166,10 @@ router.post('/filter', async (req, res) => {
                     sortQuery.createdAt = -1; // Varsayılan sıralama
             }
         }
-        
+
         const products = await Product.find(filterQuery).sort(sortQuery);
         res.json(products);
-        
+
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

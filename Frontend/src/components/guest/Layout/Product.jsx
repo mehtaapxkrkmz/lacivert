@@ -4,7 +4,7 @@ import { useAuth } from "../../../context/AuthContext";
 
 function Product({ product, toggleFavorite }) {
   const navigate = useNavigate();
-  const backendUrl =(import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, '');
+  const backendUrl = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, '');
   const { isAuthenticated } = useAuth();
 
   const [hoveredImageIndex, setHoveredImageIndex] = useState(0);
