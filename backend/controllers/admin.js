@@ -4,6 +4,7 @@ const path = require('path');
 const { promisify } = require('util');
 const unlinkAsync = promisify(fs.unlink);
 const Comment = require('../models/comment');
+const User = require('../models/User');
 
 // Controller fonksiyonları:
 
@@ -208,5 +209,26 @@ exports.updateProduct = async (req, res) => {
     } catch (err) {
         console.error('Ürün güncelleme hatası:', err);
         res.status(500).json({ message: 'Ürün güncellenirken bir hata oluştu.', error: err.message });
+    }
+};
+
+// Admin dashboard istatistikleri
+exports.getDashboardStats = async (req, res) => {
+    try {
+        // Toplam ürün sayısı
+        const totalProducts = await Product.countDocuments();
+        // Ürünlerin toplam fiyatı
+        const products = await Product.find({}, 'price');
+        const totalRevenue = products.reduce((sum, p) => sum + (p.price || 0), 0);
+        // Toplam kullanıcı sayısı
+        const totalUsers = await User.countDocuments();
+        res.status(200).json({
+            totalProducts,
+            totalRevenue,
+            totalUsers
+        });
+    } catch (err) {
+        console.error('Dashboard stats hatası:', err);
+        res.status(500).json({ message: 'Dashboard verileri alınırken hata oluştu.', error: err.message });
     }
 };
