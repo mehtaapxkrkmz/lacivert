@@ -199,6 +199,7 @@ const commentController = {
       }
       await Comment.findByIdAndDelete(id);
       
+      
       // Yorum silindikten sonra cache'i sil
       //  if (comment && comment.productId) { //
       //    await redisClient.del(`product:${comment.productId}:comments`); // 
