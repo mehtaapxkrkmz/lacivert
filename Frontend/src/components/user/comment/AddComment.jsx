@@ -14,7 +14,10 @@ const AddComment = ({ productId }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [feedbackMessage, setFeedbackMessage] = useState('');
   const [loading, setLoading] = useState(false);
-  const [showPopup, setShowPopup] = useState(!user);
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState('');
+  const [showSystemMsg, setShowSystemMsg] = useState(false);
+  const [systemMsg, setSystemMsg] = useState('');
 
   const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, '');
   
@@ -27,6 +30,12 @@ const AddComment = ({ productId }) => {
       setShowPopup(true);
     } else {
       setShowPopup(false);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (!user) {
+      alert('Yorum yapmak için kullanıcı girişi yapmalısınız.');
     }
   }, [user]);
 
@@ -74,14 +83,14 @@ const AddComment = ({ productId }) => {
     e.preventDefault();
 
     if (!user) {
-      setErrorMessage('Yorum yapmak için giriş yapmalısınız!');
-      setTimeout(() => setErrorMessage(''), 3000);
+      setPopupMessage('Yorum yapmak için giriş yapmalısınız!');
+      setShowPopup(true);
       return;
     }
 
     if (newComment.trim() === '') {
-      setErrorMessage('Yorum alanı boş olamaz!');
-      setTimeout(() => setErrorMessage(''), 3000);
+      setPopupMessage('Yorum alanı boş olamaz!');
+      setShowPopup(true);
       return;
     }
 
@@ -90,7 +99,10 @@ const AddComment = ({ productId }) => {
 
       const response = await fetch(`${API_URL}/api/comments`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(user && user.token ? { 'Authorization': 'Bearer ' + user.token } : {})
+        },
         body: JSON.stringify({
           productId: productId,
           text: newComment,
@@ -105,23 +117,29 @@ const AddComment = ({ productId }) => {
           id: result.data.id,
           text: result.data.text,
           rating: result.data.rating,
-          date: result.data.date
+          date: result.data.date,
+          user: user._id || user.id,
+          userEmail: user.email
         };
 
         setComments([newCommentObj, ...comments]);
         setNewComment("");
         setCharCount(0);
         setNewRating(0);
-        setFeedbackMessage('Yorum başarıyla eklendi!');
-        setTimeout(() => setFeedbackMessage(''), 3000);
+        alert('Yorum başarıyla eklendi!');
+        setShowPopup(true);
+        setSystemMsg('Yorum başarıyla eklendi!');
+        setShowSystemMsg(true);
       } else {
         setErrorMessage(result.message || 'Yorum eklenirken hata oluştu');
-        setTimeout(() => setErrorMessage(''), 3000);
+        setPopupMessage(result.message || 'Yorum eklenirken hata oluştu');
+        setShowPopup(true);
       }
     } catch (error) {
       console.error('Yorum ekleme hatası:', error);
       setErrorMessage('Sunucu ile bağlantı kurulamadı');
-      setTimeout(() => setErrorMessage(''), 3000);
+      setPopupMessage('Sunucu ile bağlantı kurulamadı');
+      setShowPopup(true);
 
       // Yerel fallback
       const newCommentObj = {
@@ -212,6 +230,9 @@ const AddComment = ({ productId }) => {
           {comments.map((item) => (
             <li key={item.id} className="comment-item">
               <div className="comment-content">
+                {item.userEmail && (
+                  <span className="comment-user">{item.userEmail}</span>
+                )}
                 <p className="comment-text">{item.text}</p>
                 {item.rating > 0 && (
                   <div className="rating-box">
@@ -223,18 +244,22 @@ const AddComment = ({ productId }) => {
                 {item.date && <p className="comment-date">{item.date}</p>}
               </div>
               <div className="comment-actions">
-                <UpdateComment
-                  comment={item}
-                  user={user}
-                  onUpdate={(updatedText, updatedRating) => handleUpdate(updatedText, item.id, updatedRating)}
-                  setFeedbackMessage={setFeedbackMessage}
-                />
-                <DeleteComment
-                  comment={item}
-                  user={user}
-                  onDelete={() => handleDelete(item.id)}
-                  setFeedbackMessage={setFeedbackMessage}
-                />
+                {user && item.user === user._id && (
+                  <>
+                    <UpdateComment
+                      comment={item}
+                      user={user}
+                      onUpdate={(updatedText, updatedRating) => handleUpdate(updatedText, item.id, updatedRating)}
+                      setFeedbackMessage={setFeedbackMessage}
+                    />
+                    <DeleteComment
+                      comment={item}
+                      user={user}
+                      onDelete={() => handleDelete(item.id)}
+                      setFeedbackMessage={setFeedbackMessage}
+                    />
+                  </>
+                )}
               </div>
             </li>
           ))}

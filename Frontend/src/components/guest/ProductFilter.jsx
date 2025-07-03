@@ -5,9 +5,14 @@ import { useNavigate, Link } from 'react-router-dom';
 import Product from './Layout/Product';
 
 const ProductFilter = ({ category }) => {
+    const categoryMap = {
+        "Kadın": "woman",
+        "Erkek": "man",
+        "Çocuk": "child"
+    };
     const [activeFilters, setActiveFilters] = useState({});
     const [selectedOptions, setSelectedOptions] = useState(
-        category ? { kategori: { [category]: true } } : {}
+        category ? { kategori: { [categoryMap[category] || category]: true } } : {}
     );
     const [sortOrder, setSortOrder] = useState(null);
     const [filteredProducts, setFilteredProducts] = useState([]);
@@ -16,12 +21,7 @@ const ProductFilter = ({ category }) => {
     const dropdownRef2 = useRef(null);
     const backendUrl = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, ''); // Backend URL'ini environment variable'dan al
     const navigate = useNavigate();
-
-    const categoryMap = {
-        "Kadın": "woman",
-        "Erkek": "man",
-        "Çocuk": "child"
-    };
+    const [resetFlag, setResetFlag] = useState(false);
 
     // Filter options for each category
     const filterOptions = {
@@ -100,12 +100,33 @@ const ProductFilter = ({ category }) => {
         fetchFilteredProducts();
     }, [selectedOptions, sortOrder]);
 
+    // Kategori değiştiğinde ve selectedOptions.kategori güncellendiğinde ürünleri hemen getir
+    useEffect(() => {
+        if (
+            category &&
+            selectedOptions.kategori &&
+            selectedOptions.kategori[categoryMap[category] || category]
+        ) {
+            fetchFilteredProducts();
+        }
+    }, [category, selectedOptions.kategori]);
+
     // Kategori değiştiğinde selectedOptions'ı güncelle
     useEffect(() => {
         if (category) {
             setSelectedOptions({ kategori: { [categoryMap[category] || category]: true } });
+            setActiveFilters({});
+            setSortOrder(null);
+            setResetFlag(true);
         }
     }, [category]);
+
+    useEffect(() => {
+        if (resetFlag) {
+            fetchFilteredProducts();
+            setResetFlag(false);
+        }
+    }, [selectedOptions, resetFlag]);
 
     // Toggle dropdown visibility
     const toggleDropdown = (filterId) => {

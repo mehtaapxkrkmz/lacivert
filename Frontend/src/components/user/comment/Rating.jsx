@@ -4,6 +4,8 @@ import "/src/scss/comment/rating.scss";
 const Rating = ({ currentRating = 0, onStarClick, user }) => {
   const [selectedRating, setSelectedRating] = useState(currentRating);
   const [hoveredStar, setHoveredStar] = useState(0);
+  const [showSystemMsg, setShowSystemMsg] = useState(false);
+  const [systemMsg, setSystemMsg] = useState('');
 
   useEffect(() => {
     setSelectedRating(currentRating);
@@ -14,6 +16,9 @@ const Rating = ({ currentRating = 0, onStarClick, user }) => {
     if (onStarClick) {
       onStarClick(star); // dışarıdan gelen callback'i çağır
     }
+    setSystemMsg('Puanınız kaydedildi!');
+    setShowSystemMsg(true);
+    alert('Puanınız başarıyla güncellendi!');
   };
 
   const handleMouseEnter = (star) => {

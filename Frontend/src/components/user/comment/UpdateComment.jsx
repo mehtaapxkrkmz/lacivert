@@ -9,6 +9,8 @@ const UpdateComment = ({ onUpdate, comment, user }) => {
   const [rating, setRating] = useState(comment?.rating || 0);
   const [feedbackMessage, setFeedbackMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showSystemMsg, setShowSystemMsg] = useState(false);
+  const [systemMsg, setSystemMsg] = useState('');
 
   const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, '');
 
@@ -53,7 +55,10 @@ const UpdateComment = ({ onUpdate, comment, user }) => {
       setFeedbackMessage('');
       const response = await fetch(`${API_URL}/api/comments/${comment.id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(user && user.token ? { 'Authorization': 'Bearer ' + user.token } : {})
+        },
         body: JSON.stringify({
           text: editedText.trim(),
           rating: Number(rating),
@@ -67,9 +72,11 @@ const UpdateComment = ({ onUpdate, comment, user }) => {
         setIsEditing(false);
         setFeedbackMessage('Yorumunuz başarıyla güncellendi.');
         setTimeout(() => setFeedbackMessage(''), 3000);
+        alert('Yorumunuz başarıyla güncellendi!');
       } else {
         setFeedbackMessage(result.message || 'Yorumunuz güncellenemedi. Lütfen tekrar deneyin.');
         setTimeout(() => setFeedbackMessage(''), 3000);
+        alert('Yorum güncellenirken hata oluştu!');
       }
     } catch (error) {
       console.error('Yorum güncelleme hatası:', error);
@@ -79,6 +86,7 @@ const UpdateComment = ({ onUpdate, comment, user }) => {
       onUpdate(editedText.trim(), comment.id, Number(rating));
       setIsEditing(false);
       setTimeout(() => setFeedbackMessage(''), 3000);
+      alert('Yorum güncellenirken hata oluştu!');
     } finally {
       setLoading(false);
     }
@@ -124,6 +132,7 @@ const UpdateComment = ({ onUpdate, comment, user }) => {
                   key={star}
                   className={star <= rating ? 'star filled' : 'star'}
                   onClick={() => handleStarClick(star)}
+                  style={{ color: star <= rating ? '#FFD700' : '#ccc', fontSize: '2em', cursor: 'pointer', transition: 'color 0.2s' }}
                 >
                   ★
                 </span>

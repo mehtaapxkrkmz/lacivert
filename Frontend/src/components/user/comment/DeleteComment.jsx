@@ -17,6 +17,7 @@ const DeleteComment = ({ comment, onDelete, setFeedbackMessage, user }) => {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
+          ...(user && user.token ? { 'Authorization': 'Bearer ' + user.token } : {})
         },
         credentials: 'include',
       });
@@ -37,6 +38,7 @@ const DeleteComment = ({ comment, onDelete, setFeedbackMessage, user }) => {
         setFeedbackMessage('Yorumunuz başarıyla silindi.');
         const deletedId = result.data?.deletedCommentId || comment.id;
         onDelete(deletedId);
+        alert('Yorumunuz başarıyla silindi!');
       } else {
         throw new Error(result.message || 'Silme işlemi başarısız');
       }
@@ -44,6 +46,7 @@ const DeleteComment = ({ comment, onDelete, setFeedbackMessage, user }) => {
     } catch (error) {
       console.error('Yorum silme hatası:', error);
       setFeedbackMessage(`Yorumunuz silinemedi: ${error.message}`);
+      alert('Yorum silinirken hata oluştu!');
     } finally {
       setIsDeleting(false);
       setShowConfirm(false);

@@ -58,9 +58,9 @@ const AppContent = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} /> {/* Ana sayfa */}
-          <Route path="kadin" element={<ProductFilter category="Kadın" />} />
-          <Route path="erkek" element={<ProductFilter category="Erkek" />} />
-          <Route path="cocuk" element={<ProductFilter category="Çocuk" />} />
+          <Route path="kadin" element={<ProductFilter key="kadin" category="Kadın" />} />
+          <Route path="erkek" element={<ProductFilter key="erkek" category="Erkek" />} />
+          <Route path="cocuk" element={<ProductFilter key="cocuk" category="Çocuk" />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           
           <Route path="/login" element={<Login />} />

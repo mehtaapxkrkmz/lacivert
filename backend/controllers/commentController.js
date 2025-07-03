@@ -20,7 +20,8 @@ const commentController = {
         productId: parseInt(productId), // Number'a çevir
         text: text.trim(),
         rating: rating || 0,
-        date: new Date()
+        date: new Date(),
+        user: req.user.id // Kullanıcı ID'si eklendi (JWT'den id geliyor)
       });
 
       const savedComment = await newComment.save();
@@ -107,13 +108,16 @@ const commentController = {
       //  }
       // Yoksa DB'den çek
       const comments = await Comment.find({ productId: parseInt(productId) })
-                                    .sort({ date: -1 });
+                                    .sort({ date: -1 })
+                                    .populate('user', 'email');
       const formattedComments = comments.map(comment => ({
         id: comment._id,
         productId: comment.productId,
         text: comment.text,
         rating: comment.rating,
-        date: comment.date.toLocaleDateString('tr-TR')
+        date: comment.date.toLocaleDateString('tr-TR'),
+        user: comment.user?._id,
+        userEmail: comment.user?.email
       }));
       // Redis'e yaz (ör: 1 saatlik)
       // await redisClient.set(cacheKey, JSON.stringify(formattedComments), { EX: 3600 });
@@ -134,14 +138,16 @@ const commentController = {
   // GET /api/comments - Tüm yorumları getir
   getAllComments: async (req, res) => {
     try {
-      const comments = await Comment.find().sort({ date: -1 });
+      const comments = await Comment.find().sort({ date: -1 }).populate('user', 'email');
       
       const formattedComments = comments.map(comment => ({
         id: comment._id,
         productId: comment.productId,
         text: comment.text,
         rating: comment.rating,
-        date: comment.date.toLocaleDateString('tr-TR')
+        date: comment.date.toLocaleDateString('tr-TR'),
+        user: comment.user?._id,
+        userEmail: comment.user?.email
       }));
 
       res.status(200).json({
@@ -183,6 +189,12 @@ const commentController = {
       }
 
       // Yorumu sil
+      if (!comment.user) {
+        return res.status(403).json({ success: false, message: 'Bu yorumun sahibi yok, işlem yapılamaz.' });
+      }
+      if (comment.user.toString() !== req.user.id) {
+        return res.status(403).json({ success: false, message: 'Bu yorumu sadece sahibi silebilir.' });
+      }
       await Comment.findByIdAndDelete(id);
       
       // Yorum silindikten sonra cache'i sil
@@ -242,6 +254,12 @@ const commentController = {
       }
 
       // Yorumu güncelle
+      if (!existingComment.user) {
+        return res.status(403).json({ success: false, message: 'Bu yorumun sahibi yok, işlem yapılamaz.' });
+      }
+      if (existingComment.user.toString() !== req.user.id) {
+        return res.status(403).json({ success: false, message: 'Bu yorumu sadece sahibi güncelleyebilir.' });
+      }
       const updatedComment = await Comment.findByIdAndUpdate(
         id,
         { text, rating },
