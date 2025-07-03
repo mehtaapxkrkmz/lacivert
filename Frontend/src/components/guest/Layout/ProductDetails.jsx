@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import "../../../scss/index.scss";
 import "../../../scss/ProductDetails.scss";
 import { useOutletContext } from 'react-router-dom';
+import { useParams } from "react-router-dom";
+import { useAuth } from '../../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 import AddComment from "../../user/comment/AddComment";
 import Rating from "../../user/comment/Rating";
 import DeleteComment from "../../user/comment/DeleteComment";
 import UpdateComment from "../../user/comment/UpdateComment";
 import Select from "react-select";
-import { useParams } from "react-router-dom";
 
 function ProductDetails() {
   const [openAccordion, setOpenAccordion] = useState(null);
@@ -16,6 +18,8 @@ function ProductDetails() {
   const [selectedSize, setSelectedSize] = useState(null);
   const { id } = useParams();
   const { refreshCartCount } = useOutletContext();
+  const { isAuthenticated, user, token } = useAuth();
+  const navigate = useNavigate();
 
   const backendUrl = (import.meta.env.VITE_API_URL || "http://localhost:5000").replace(/\/$/, ''); // Backend adresi
 
@@ -40,6 +44,12 @@ function ProductDetails() {
   const handleAddToCart = async (e) => {
     e.preventDefault();
 
+    if (!isAuthenticated) {
+      alert("Sepete eklemek için giriş yapmalısınız!");
+      navigate("/login");
+      return;
+    }
+
     if (!selectedSize) {
       alert("Lütfen beden seçiniz.");
       return;
@@ -51,32 +61,27 @@ function ProductDetails() {
       return;
     }
 
-    const userId = "686139539cfeaf8e64211422";
+    if (!user || !token) return;
+    const res = await fetch(`${backendUrl}/api/cart/add/${user._id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        productId: product._id,
+        size: selectedSize.value,
+        quantity: 1,
+      }),
+    });
 
-    try {
-      const res = await fetch(`${backendUrl}/api/cart/add/${userId}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          productId: product._id,
-          size: selectedSize.value,
-          quantity: 1,
-        }),
-      });
+    const data = await res.json();
 
-      const data = await res.json();
-
-      if (res.ok) {
-        alert("Ürün sepete eklendi!");
-        refreshCartCount(); // Update cart count in header immediately
-      } else {
-        alert(data.message || "Hata oluştu.");
-      }
-    } catch (error) {
-      console.error("Sepete ekleme hatası:", error);
-      alert("Sunucu hatası.");
+    if (res.ok) {
+      alert("Ürün sepete eklendi!");
+      refreshCartCount(); // Update cart count in header immediately
+    } else {
+      alert(data.message || "Hata oluştu.");
     }
   };
 
