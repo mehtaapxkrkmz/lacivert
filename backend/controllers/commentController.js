@@ -198,6 +198,7 @@ const commentController = {
         return res.status(403).json({ success: false, message: 'Bu yorumu sadece sahibi silebilir.' });
       }
       await Comment.findByIdAndDelete(id);
+
       
       
       // Yorum silindikten sonra cache'i sil
