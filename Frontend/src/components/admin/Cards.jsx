@@ -12,11 +12,12 @@ function Cards() {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/admin/dashboard');
+        const response = await fetch(`${apiUrl}/admin/dashboard`);
         if (!response.ok) throw new Error('Veriler alınamadı');
         const data = await response.json();
         setDashboardData(data);
