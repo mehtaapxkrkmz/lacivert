@@ -1,6 +1,6 @@
 const Comment = require('../models/comment');
 const mongoose = require('mongoose');
-// const redisClient = require('../utils/redisClient');
+//const redisClient = require('../utils/redisClient'); 
 
 const commentController = {
   // POST /api/comments - Yorum ekleme
@@ -30,7 +30,7 @@ const commentController = {
       const populatedComment = await Comment.findById(savedComment._id).populate('user', 'email');
       
       // Yorum eklendikten sonra cache'i sil
-      //  await redisClient.del(`product:${productId}:comments`);
+      // await redisClient.del(`product:${productId}:comments`); //
       
       res.status(201).json({
         success: true,
@@ -103,6 +103,16 @@ const commentController = {
       if (!mongoose.Types.ObjectId.isValid(req.params.productId)) {
         return res.status(400).json({ message: 'Geçersiz ürün ID' });
       }
+      // const cacheKey = `product:${req.params.productId}:comments`;
+      // // Önce Redis'te var mı bak
+      // const cached = await redisClient.get(cacheKey);
+      // if (cached) {
+      //   console.log("Redis cache'den geldi!");
+      //   return res.status(200).json({
+      //     success: true,
+      //     data: JSON.parse(cached)
+      //   });
+      // }
       // Sadece productId'si geçerli ObjectId olan yorumları getir
       const comments = await Comment.find({
         productId: req.params.productId,
@@ -118,6 +128,8 @@ const commentController = {
         user: comment.user?._id,
         userEmail: comment.user?.email
       }));
+      // Redis'e yaz (ör: 1 saatlik)
+      // await redisClient.set(cacheKey, JSON.stringify(formattedComments), { EX: 3600 });
       res.status(200).json({ success: true, data: formattedComments });
     } catch (error) {
       console.error('Yorumları getirme hatası:', error);
@@ -188,9 +200,9 @@ const commentController = {
       await Comment.findByIdAndDelete(id);
       
       // Yorum silindikten sonra cache'i sil
-      //  if (comment && comment.productId) {
-      //    await redisClient.del(`product:${comment.productId}:comments`);
-      //  }
+      //  if (comment && comment.productId) { //
+      //    await redisClient.del(`product:${comment.productId}:comments`); // 
+      //  } //
       
       res.status(200).json({
         success: true,
@@ -259,10 +271,10 @@ const commentController = {
       // userEmail için populate
       const populatedComment = await Comment.findById(updatedComment._id).populate('user', 'email');
 
-      // Yorum güncellendikten sonra cache'i sil
-      // if (existingComment && existingComment.productId) {
-      //   await redisClient.del(`product:${existingComment.productId}:comments`);
-      //  }
+      // Yorum güncellendikten sonra cache'i sil 
+      //if (existingComment && existingComment.productId) { //
+      //  await redisClient.del(`product:${existingComment.productId}:comments`); //
+      //}
 
       res.status(200).json({
         success: true,
