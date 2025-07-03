@@ -3,6 +3,8 @@ import CartSummary from './CartSummary';
 import CartTable from './CartTable';
 import '../../../scss/Cart.scss';
 import { useOutletContext } from 'react-router-dom';
+import { useAuth } from '../../../context/AuthContext';
+import { Link, useNavigate } from 'react-router-dom';
 
 const CartPage = () => {
     const [cart, setCart] = useState([]);
@@ -10,20 +12,33 @@ const CartPage = () => {
     const [error, setError] = useState(null);
 
     const backendURL = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, '');
-    const userId = "686139539cfeaf8e64211422";
+    const { isAuthenticated, user, token } = useAuth();
+    const navigate = useNavigate();
 
     const { refreshCartCount } = useOutletContext();
 
     // Fetch cart on mount
     useEffect(() => {
         fetchCart();
-    }, []);
+    }, [user]);
 
     const fetchCart = async () => {
         setLoading(true);
         try {
-            const response = await fetch(`${backendURL}/api/cart/${userId}`);
+            if (!user || !token) {
+                console.log("user: ", user);
+                setCart([]);
+                setLoading(false);
+                return;
+            }
+            console.log("user: ", user);
+            const response = await fetch(`${backendURL}/api/cart/${user._id}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
             const data = await response.json();
+            console.log("cart fetch data:", data);
             const formattedCart = data.cart?.items?.map(item => ({
                 ...item,
                 id: item.product.id,
@@ -48,11 +63,15 @@ const CartPage = () => {
             const itemToUpdate = cart.find(item => item._id === id && item.size === size);
             if (!itemToUpdate) return;
 
-            const response = await fetch(`${backendURL}/api/cart/update/${userId}`, {
+            if (!user || !token) return;
+            const response = await fetch(`${backendURL}/api/cart/update/${user._id}`, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
                 body: JSON.stringify({
-                    userId,
+                    userId: user._id,
                     productId: itemToUpdate.id,
                     size: itemToUpdate.size,
                     quantity: Number(quantity)
@@ -81,9 +100,13 @@ const CartPage = () => {
     // Remove single item (optimistic update)
     const removeItem = async (id, size) => {
         try {
-            const response = await fetch(`${backendURL}/api/cart/remove/${userId}/${id}/${size}`, {
+            if (!user || !token) return;
+            const response = await fetch(`${backendURL}/api/cart/remove/${user._id}/${id}/${size}`, {
                 method: 'DELETE',
-                headers: { 'Content-Type': 'application/json' }
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
             });
 
             if (response.ok) {
@@ -100,9 +123,13 @@ const CartPage = () => {
     // Remove all items (optimistic update)
     const removeAllItems = async () => {
         try {
-            const response = await fetch(`${backendURL}/api/cart/clear/${userId}`, {
+            if (!user || !token) return;
+            const response = await fetch(`${backendURL}/api/cart/clear/${user._id}`, {
                 method: 'DELETE',
-                headers: { 'Content-Type': 'application/json' }
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
             });
 
             if (response.ok) {
@@ -120,6 +147,26 @@ const CartPage = () => {
 
     if (loading) return <div className="cart-page"><div className="cart-loading">Sepet yükleniyor...</div></div>;
     if (error) return <div className="cart-page"><div className="cart-error">{error}</div></div>;
+
+    if (!isAuthenticated) {
+        return (
+            <div className="cart-page">
+                <div className="cart-empty-warning">
+                    <div className="content">
+                        <div className="message">
+                            <h2>Sepeti görüntülemek için giriş yapmalısınız.</h2>
+                            <h3>Giriş Yap veya Kayıt Ol</h3>
+                            <p>
+                                <Link to="/login">Giriş Yap</Link> veya{' '}
+                                <Link to="/register">Kayıt Ol</Link>
+                                {' '}yaparak sepetinizi görüntüleyebilirsiniz.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="cart-page">

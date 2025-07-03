@@ -6,6 +6,7 @@ const CartItem = ({ item, onRemove, onQuantityChange, backendURL }) => {
 
     console.log("CartItem item:", item); // item yapısını kontrol et
     console.log("cart.item.product:", item.product);
+    
 
     if (!item.product) {
         return null;

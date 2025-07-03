@@ -31,7 +31,7 @@ const Header = ({ cartItemCount }) => {
         { path: '/cocuk', label: 'ÇOCUK' },
     ];
 
-    
+    console.log("cart item count: ", cartItemCount);
 
     return (
         <div className='header'>

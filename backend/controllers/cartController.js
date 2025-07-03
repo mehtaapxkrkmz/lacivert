@@ -8,6 +8,9 @@ const cartController = {
     getCart: async (req, res) => {
         try {
             const { userId } = req.params;
+            if (!req.user || req.user.id !== userId) {
+                return res.status(403).json({ message: 'Bu işlemi yapmaya yetkiniz yok.' });
+            }
 
             // Kullanıcı ID validasyonu
             if (!userId) {
@@ -93,6 +96,9 @@ const cartController = {
         try {
             //const userId = req.user._id;
             const { userId } = req.params; //gecici
+            if (!req.user || req.user.id !== userId) {
+                return res.status(403).json({ message: 'Bu işlemi yapmaya yetkiniz yok.' });
+            }
             const { productId, size, quantity } = req.body;
 
             // Gerekli alanları kontrol et
@@ -158,6 +164,9 @@ const cartController = {
     updateCartItem: async (req, res) => {
         try {
             const { userId } = req.params; //gecici
+            if (!req.user || req.user.id !== userId) {
+                return res.status(403).json({ message: 'Bu işlemi yapmaya yetkiniz yok.' });
+            }
             //const userId = req.user._id; // veya req.params.userId
             const { productId, size, quantity } = req.body;
 
@@ -193,6 +202,9 @@ const cartController = {
     removeFromCart: async (req, res) => {
         try {
             const { userId, productId, size } = req.params;
+            if (!req.user || req.user.id !== userId) {
+                return res.status(403).json({ message: 'Bu işlemi yapmaya yetkiniz yok.' });
+            }
             const cart = await Cart.findOne({ user: userId });
             if (!cart) return res.status(404).json({ message: 'Cart not found' });
 
@@ -212,6 +224,9 @@ const cartController = {
     clearCart: async (req, res) => {
         try {
             const { userId } = req.params;
+            if (!req.user || req.user.id !== userId) {
+                return res.status(403).json({ message: 'Bu işlemi yapmaya yetkiniz yok.' });
+            }
             const cart = await Cart.findOne({ user: userId });
             if (!cart) return res.status(404).json({ message: 'Cart not found' });
 
