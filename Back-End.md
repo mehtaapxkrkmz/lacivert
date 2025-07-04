@@ -4,18 +4,20 @@ Docker: Kullanıldı.
 
 REST API: Kullanıldı.
 
-Redis:Kullanıldı.
+Redis: Kullanıldı.
 
 RabbitMQ: Kullanıldı.
 
 CI/CD: Kullanıldı.
 
 # Enis Özgür Backend #
-1. Kayıt Ol
-2. Giriş Yap
-3. 2FA Sayfası
-4. .....
-5. .....
+1. Ürün detaylarını görüntüleme
+2. Ürün ekleme
+3. Ürün silme
+4. Ürün bilgisi güncelleme
+5. Slayt görüntüleme
+6. İndirimli ürün görseline etiket yerleştirme
+7. Admin özet panelini görüntüleme
 
 # Mehtap Korkmaz Backend #
 1. Yorum Ekleme
@@ -27,17 +29,20 @@ CI/CD: Kullanıldı.
 
 
 # Nida Ekinci Backend #
-1. ....
-2. ....
-3. ....
-4. ....
-5. ....
+1. Sepete ürün ekleme
+2. Sepetten ürün silme
+3. Sepet güncelleme
+4. Sepeti görüntüleme
+5. Kategorilere göre filtreleme
+6. Ürün arama
 
 
 # Sude Melek Acar Backend #
 1. Giriş yapma
-2. Kayıt olma
-3. Profil güncelleme
-4. Hesabı  Kapatma
-5. Favori yapma
-6. Favoriden çıkarma
+2. Üye olma
+3. Şifre kurtarma
+4. Profil güncelleme
+5. Hesabı  Kapatma
+6. Favori ürünleri ekleme
+7. Favori ürünleri silme
+8. Favorileri görüntüleme
