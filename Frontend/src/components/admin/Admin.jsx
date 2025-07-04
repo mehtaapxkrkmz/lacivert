@@ -3,6 +3,7 @@ import '../../scss/index.scss'
 import SideBar from './SideBar'
 import Content from './Content'
 
+
 function Admin() { 
   const [isOpen,setMenu] = React.useState(false)
   return (
