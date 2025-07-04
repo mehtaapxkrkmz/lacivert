@@ -12,7 +12,7 @@ function Cards() {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const apiUrl = import.meta.env.VITE_API_URL;
+  const apiUrl = (import.meta.env.VITE_API_URL).replace(/\/$/, '');
 
   useEffect(() => {
     const fetchDashboardData = async () => {
