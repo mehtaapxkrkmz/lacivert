@@ -184,6 +184,43 @@
                         font-size: 1.5rem;
                     }
 
+                    .logout {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        gap: 0.5rem;
+                        background-color: white;
+                        color: #e74c3c; // red for logout
+                        font-size: 1.5rem;
+                        cursor: pointer;
+                        border: none;
+                        transition: color 0.2s;
+                      
+                        &:hover {
+                          color: #c0392b;
+                        }
+                      
+                        @media (max-width: 576px) {
+                          display: none;
+                        }
+                    }
+                      
+                    .logout-icon {
+                        transform: rotate(180deg);
+                    }
+
+                    .logout-mobile {
+                        color: #e74c3c;
+                        font-weight: 600;
+                        display: flex;
+                        align-items: center;
+                        cursor: pointer;
+                        &:hover {
+                          background-color: #fbe9e7;
+                          color: #c0392b;
+                        }
+                    }
+
                     .shopping-bag {
                         position: relative;
                         display: flex;

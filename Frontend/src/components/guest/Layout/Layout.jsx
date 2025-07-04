@@ -21,10 +21,15 @@ const Layout = () => {
         }
         setLoading(true);
         try {
-            const response = await fetch(`${backendURL}/api/cart/${user._id}`);
+            const response = await fetch(`${backendURL}/api/cart/${user._id}`, {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`, // token varsa
+                    'Content-Type': 'application/json',
+                },
+            });
             const data = await response.json();
             const items = data.cart?.items || [];
-            setCart(items);
+            setCart(data.cart?.items || []);
             setError(null);
         } catch (err) {
             setError(err.message);
@@ -42,8 +47,9 @@ const Layout = () => {
     }, [user && user._id]);
 
     useEffect(() => {
-        setCartItemCount((cart.items || []).reduce((sum, item) => sum + item.quantity, 0));
+        setCartItemCount(cart.length);
       }, [cart]);
+      
 
     return (
         <div className='layout'>
