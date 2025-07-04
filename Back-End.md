@@ -26,6 +26,7 @@ CI/CD: Kullanıldı.
 4. Puanlama
 5. Ürün Sıralama
 6. Ürün Filtreleme
+7. Kullanıcının sadece kendi yorumunda işlem yapabilmesi
 
 
 # Nida Ekinci Backend #
