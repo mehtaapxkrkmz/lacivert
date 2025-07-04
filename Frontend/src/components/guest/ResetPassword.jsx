@@ -47,7 +47,7 @@ function ResetPassword() {
           boxShadow: '0 0 10px rgba(0,0,0,0.1)',
         }}
       >
-        <h2 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '8px' }}>
+        <h2 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '8px',color:black}}>
           Yeni Şifre Oluştur
         </h2>
         <form onSubmit={handleSubmit}>
@@ -63,6 +63,7 @@ function ResetPassword() {
               border: '1px solid #ccc',
               borderRadius: '6px',
               marginBottom: '12px',
+              color:black,
             }}
           />
 
