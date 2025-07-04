@@ -21,7 +21,25 @@ const ProductFilter = ({ category }) => {
     const dropdownRef2 = useRef(null);
     const backendUrl = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, ''); // Backend URL'ini environment variable'dan al
     const navigate = useNavigate();
+    const location = useLocation();
     const [resetFlag, setResetFlag] = useState(false);
+    const [initialFilterApplied, setInitialFilterApplied] = useState(false);
+
+    // Handle initial filter from navigation
+    useEffect(() => {
+        if (location.state && location.state.initialFilter && !initialFilterApplied) {
+            console.log("Applying initial filter:", location.state.initialFilter);
+            setSelectedOptions(location.state.initialFilter);
+            setInitialFilterApplied(true);
+            // Clear the location state to prevent it from persisting
+            navigate(location.pathname, { replace: true, state: {} });
+        }
+    }, [location.state, navigate, location.pathname, initialFilterApplied]);
+
+    // Reset initialFilterApplied when pathname changes (new navigation)
+    useEffect(() => {
+        setInitialFilterApplied(false);
+    }, [location.pathname]);
 
     // Filter options for each category
     const filterOptions = {
@@ -70,6 +88,7 @@ const ProductFilter = ({ category }) => {
                 kategori: { [categoryMap[category] || category]: true },
                 ...selectedOptions,
             };
+            console.log("Fetching products with filters:", filtersToSend);
             const response = await fetch(`${backendUrl}/api/products/filter`, {
                 method: 'POST',
                 headers: {
@@ -99,8 +118,10 @@ const ProductFilter = ({ category }) => {
 
     // Filtreler değiştiğinde ürünleri yeniden getir
     useEffect(() => {
+        console.log("selectedOptions changed:", selectedOptions);
+        console.log("initialFilterApplied:", initialFilterApplied);
         fetchFilteredProducts();
-    }, [selectedOptions, sortOrder]);
+    }, [selectedOptions, sortOrder, initialFilterApplied]);
 
     // Kategori değiştiğinde ve selectedOptions.kategori güncellendiğinde ürünleri hemen getir
     useEffect(() => {
@@ -115,13 +136,14 @@ const ProductFilter = ({ category }) => {
 
     // Kategori değiştiğinde selectedOptions'ı güncelle
     useEffect(() => {
-        if (category && !(location.state && location.state.initialFilter)) {
+        if (category && !initialFilterApplied) {
+            console.log("Category changed, resetting filters for:", category);
             setSelectedOptions({ kategori: { [categoryMap[category] || category]: true } });
             setActiveFilters({});
             setSortOrder(null);
             setResetFlag(true);
         }
-    }, [category]);
+    }, [category, initialFilterApplied]);
 
     useEffect(() => {
         if (resetFlag) {
