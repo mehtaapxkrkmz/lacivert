@@ -57,9 +57,10 @@ const CategoryNavMenu = () => {
             ...(mainCategory || {}),
             [filterKey]: { [value]: true }
         };
+        console.log("Navigating to:", mainCategoryPath, "with filter:", filterObj);
         navigate(mainCategoryPath, {
             state: {
-                initialFilter: filterObj 
+                initialFilter: filterObj
             }
         });
     };

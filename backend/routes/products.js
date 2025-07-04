@@ -28,6 +28,8 @@ router.get('/category/:category', async (req, res) => {
 router.post('/filter', async (req, res) => {
     try {
         const { filters, sortOrder } = req.body;
+        console.log("Received filters:", filters);
+        console.log("Received sortOrder:", sortOrder);
 
         // Filtre objesi oluştur
         let filterQuery = {};
@@ -167,7 +169,10 @@ router.post('/filter', async (req, res) => {
             }
         }
 
+        console.log("Final filterQuery:", filterQuery);
+        console.log("Final sortQuery:", sortQuery);
         const products = await Product.find(filterQuery).sort(sortQuery);
+        console.log("Found products count:", products.length);
         res.json(products);
 
     } catch (error) {
